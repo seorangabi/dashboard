@@ -5,26 +5,22 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/common/components/ui/chart";
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import { cn } from "@/common/lib/utils";
 
 const chartData = [
-  { month: "Dio", desktop: 186, mobile: 80 },
-  { month: "Monezilus", desktop: 305, mobile: 200 },
-  { month: "Vinn", desktop: 237, mobile: 120 },
-  { month: "Pandji", desktop: 73, mobile: 190 },
-  { month: "Dekkun", desktop: 209, mobile: 130 },
-  { month: "Kluqis", desktop: 214, mobile: 140 },
+  { team: "Dio", image: 186 },
+  { team: "Monezilus", image: 305 },
+  { team: "Vinn", image: 237 },
+  { team: "Pandji", image: 73 },
+  { team: "Dekkun", image: 209 },
+  { team: "Kluqis", image: 214 },
 ];
 
 const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "#2563eb",
-  },
-  mobile: {
-    label: "Mobile",
-    color: "#60a5fa",
+  image: {
+    label: "Image",
+    color: "#0a0a0a",
   },
 } satisfies ChartConfig;
 
@@ -39,14 +35,16 @@ const ImagePerWeekChart: FC<{ className?: string; label: string }> = ({
         <BarChart accessibilityLayer data={chartData}>
           <CartesianGrid vertical={false} />
           <XAxis
-            dataKey="month"
+            dataKey="team"
             tickLine={false}
             tickMargin={10}
             axisLine={false}
             tickFormatter={(value) => value.slice(0, 3)}
           />
+          <YAxis />
+
           <ChartTooltip content={<ChartTooltipContent />} />
-          <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
+          <Bar dataKey="image" fill="var(--color-image)" radius={5} />
         </BarChart>
       </ChartContainer>
     </div>

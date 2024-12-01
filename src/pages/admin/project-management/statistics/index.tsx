@@ -1,5 +1,5 @@
 import Layout from "@/common/components/Layout";
-import Statistics from "@/modules/project-management/statistics/main";
+import Statistics from "@/modules/project-management/statistics/components/main";
 import { NextPage } from "next";
 import React from "react";
 
