@@ -17,7 +17,7 @@ model Project {
   id         String   @id @default(uuid())
   name       String
   fee        String // default value for Offering
-  note       String // default value for Offering
+  note       String? // default value for Offering
   deadline   DateTime // default value for Offering
   imageRatio String // default value for Offering
   done       Boolean  @default(false)
@@ -29,11 +29,12 @@ model Project {
 }
 
 model Team {
-  id           String     @id @default(uuid())
-  name         String
-  bankNumber   String?
-  bankProvider String?
-  offering     Offering[]
+  id                String     @id @default(uuid())
+  name              String
+  bankNumber        String?
+  bankAccountHolder String?
+  bankProvider      String?
+  offering          Offering[]
 
   @@index([id])
 }
