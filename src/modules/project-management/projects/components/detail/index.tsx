@@ -2,8 +2,11 @@ import React from "react";
 import ProjectDetailBreadcrumb from "./Breadcrumb";
 import DeleteProjectDialog from "../main/DeleteProjectDialog";
 import UpdateProjectDialog from "../main/UpdateProjectDialog";
+import { useRouter } from "next/router";
 
 const ProjectDetail = () => {
+  const router = useRouter();
+  const projectId = router.query.projectId as string;
   return (
     <div>
       <ProjectDetailBreadcrumb />
@@ -11,7 +14,7 @@ const ProjectDetail = () => {
       <div className="flex justify-between items-center mt-6 mb-5">
         <h1 className="text-2xl font-medium">Project Detail</h1>
         <div className="space-x-2">
-          <DeleteProjectDialog />
+          <DeleteProjectDialog id={projectId} />
           <UpdateProjectDialog />
         </div>
       </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import {
   ChartConfig,
   ChartContainer,
@@ -6,6 +6,7 @@ import {
   ChartTooltipContent,
 } from "@/common/components/ui/chart";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import { cn } from "@/common/lib/utils";
 
 const chartData = [
   { month: "Dio", desktop: 186, mobile: 80 },
@@ -27,22 +28,28 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-const ImagePerWeekChart = () => {
+const ImagePerWeekChart: FC<{ className?: string; label: string }> = ({
+  className,
+  label,
+}) => {
   return (
-    <ChartContainer config={chartConfig} className="h-[200px] w-full">
-      <BarChart accessibilityLayer data={chartData}>
-        <CartesianGrid vertical={false} />
-        <XAxis
-          dataKey="month"
-          tickLine={false}
-          tickMargin={10}
-          axisLine={false}
-          tickFormatter={(value) => value.slice(0, 3)}
-        />
-        <ChartTooltip content={<ChartTooltipContent />} />
-        <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-      </BarChart>
-    </ChartContainer>
+    <div className={cn("p-4", className)}>
+      <div className="mb-5 text-center">{label}</div>
+      <ChartContainer config={chartConfig} className="h-[200px] w-full">
+        <BarChart accessibilityLayer data={chartData}>
+          <CartesianGrid vertical={false} />
+          <XAxis
+            dataKey="month"
+            tickLine={false}
+            tickMargin={10}
+            axisLine={false}
+            tickFormatter={(value) => value.slice(0, 3)}
+          />
+          <ChartTooltip content={<ChartTooltipContent />} />
+          <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
+        </BarChart>
+      </ChartContainer>
+    </div>
   );
 };
 

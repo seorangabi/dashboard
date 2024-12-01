@@ -20,7 +20,7 @@ import React, { FC } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Check, ChevronsUpDown, Plus } from "lucide-react";
+import { Check, ChevronsUpDown, Pencil } from "lucide-react";
 import { Textarea } from "@/common/components/ui/textarea";
 import DateTimePicker24h from "@/common/components/DateTimePicker24h";
 import {
@@ -63,7 +63,7 @@ const UpdateProjectDialog = () => {
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="default" size="sm">
-          <Plus />
+          <Pencil />
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">

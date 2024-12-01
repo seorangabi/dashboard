@@ -16,11 +16,13 @@ import {
 type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  isLoading?: boolean;
 };
 
 const DataTable = <TData, TValue>({
   columns,
   data,
+  isLoading,
 }: DataTableProps<TData, TValue>) => {
   const table = useReactTable({
     data,
@@ -54,7 +56,14 @@ const DataTable = <TData, TValue>({
           ))}
         </TableHeader>
         <TableBody>
-          {table.getRowModel().rows?.length ? (
+          {isLoading && (
+            <TableRow>
+              <TableCell colSpan={columns.length} className="h-24 text-center">
+                Loading...
+              </TableCell>
+            </TableRow>
+          )}
+          {!!table.getRowModel().rows?.length &&
             table.getRowModel().rows.map((row) => (
               <TableRow
                 key={row.id}
@@ -66,8 +75,9 @@ const DataTable = <TData, TValue>({
                   </TableCell>
                 ))}
               </TableRow>
-            ))
-          ) : (
+            ))}
+
+          {!isLoading && !table.getRowModel().rows?.length && (
             <TableRow>
               <TableCell colSpan={columns.length} className="h-24 text-center">
                 No results.

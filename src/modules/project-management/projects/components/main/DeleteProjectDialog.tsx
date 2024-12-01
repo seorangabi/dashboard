@@ -10,10 +10,26 @@ import {
   AlertDialogTrigger,
 } from "@/common/components/ui/alert-dialog";
 import { Button } from "@/common/components/ui/button";
+import { generateErrorMessage } from "@/common/lib/utils";
+import useDeleteProjectMutation from "@/common/mutations/deleteProjectMutation";
 import { Trash } from "lucide-react";
-import React from "react";
+import React, { FC } from "react";
+import { toast } from "sonner";
 
-const DeleteProjectDialog = () => {
+const DeleteProjectDialog: FC<{ id: string }> = ({ id }) => {
+  const { mutateAsync, isPending } = useDeleteProjectMutation({});
+
+  const handleDelete = async () => {
+    try {
+      await mutateAsync({ id });
+
+      toast.success("Project deleted successfully");
+    } catch (error) {
+      console.error(error);
+      toast.error(generateErrorMessage(error));
+    }
+  };
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -29,8 +45,10 @@ const DeleteProjectDialog = () => {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Yes</AlertDialogAction>
+          <AlertDialogCancel disabled={isPending}>Cancel</AlertDialogCancel>
+          <AlertDialogAction onClick={handleDelete} disabled={isPending}>
+            Yes
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

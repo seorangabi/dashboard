@@ -6,18 +6,9 @@ import { Eye } from "lucide-react";
 import Link from "next/link";
 import DeleteProjectDialog from "./DeleteProjectDialog";
 import UpdateProjectDialog from "./UpdateProjectDialog";
-
-export type Project = {
-  id: string;
-  name: string;
-};
-
-const data: Project[] = [
-  {
-    id: "m5gr84i9",
-    name: "RHINO FWOG",
-  },
-];
+import useProjectListQuery from "@/common/queries/projectListQuery";
+import { useMemo } from "react";
+import { Project } from "@/common/types/project";
 
 export const columns: ColumnDef<Project>[] = [
   {
@@ -33,7 +24,7 @@ export const columns: ColumnDef<Project>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex gap-x-2">
-          <DeleteProjectDialog />
+          <DeleteProjectDialog id={row.original.id} />
 
           <UpdateProjectDialog />
           <Link
@@ -53,7 +44,13 @@ export const columns: ColumnDef<Project>[] = [
 ];
 
 const ProjectsTable = () => {
-  return <DataTable columns={columns} data={data} />;
+  const { data: projectData, isLoading } = useProjectListQuery();
+  const data = useMemo(() => {
+    if (!projectData?.data?.docs?.length) return [];
+    return projectData.data.docs;
+  }, [projectData]);
+
+  return <DataTable isLoading={isLoading} columns={columns} data={data} />;
 };
 
 export default ProjectsTable;

@@ -16,7 +16,7 @@ import {
   FormMessage,
 } from "@/common/components/ui/form";
 import { Input } from "@/common/components/ui/input";
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -36,31 +36,47 @@ import {
   CommandItem,
   CommandList,
 } from "@/common/components/ui/command";
-import { cn } from "@/common/lib/utils";
+import { cn, generateErrorMessage } from "@/common/lib/utils";
+import useCreateProjectMutation from "@/common/mutations/createProjectMutation";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   name: z.string(),
   fee: z.number(),
-  deadline: z.string(),
+  deadline: z.date(),
   imageRatio: z.string(),
   note: z.string().optional(),
   artistId: z.string(),
 });
 
 const AddProjectDialog = () => {
+  const [open, setOpen] = useState(false);
+  const { mutateAsync } = useCreateProjectMutation({});
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      deadline: new Date().toISOString(),
+      deadline: new Date(),
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-  }
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      await mutateAsync({
+        ...values,
+        deadline: values.deadline.toISOString(),
+      });
+
+      toast.success("Project created successfully");
+
+      setOpen(false);
+    } catch (error) {
+      console.error(error);
+      toast.error(generateErrorMessage(error));
+    }
+  };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="default" size="sm">
           <Plus />
@@ -94,7 +110,14 @@ const AddProjectDialog = () => {
                   <FormItem>
                     <FormLabel>Fee*</FormLabel>
                     <FormControl>
-                      <Input type="number" placeholder="200.000" {...field} />
+                      <Input
+                        type="number"
+                        placeholder="200.000"
+                        {...field}
+                        onChange={(event) =>
+                          field.onChange(+event.target.value)
+                        }
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -108,8 +131,8 @@ const AddProjectDialog = () => {
                     <FormLabel>Deadline*</FormLabel>
                     <FormControl>
                       <DateTimePicker24h
-                        date={field.value ? new Date(field.value) : undefined}
-                        setDate={(date) => field.onChange(date?.toISOString())}
+                        date={field.value}
+                        setDate={(date) => field.onChange(date)}
                       />
                     </FormControl>
                     <FormMessage />

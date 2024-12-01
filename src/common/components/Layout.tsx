@@ -20,6 +20,7 @@ import {
   Users,
 } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const projectManagementItems = [
   {
@@ -52,7 +53,24 @@ const websiteManagementItems = [
   },
 ];
 
+const menuItems = [
+  {
+    title: "Project Management",
+    subMenu: projectManagementItems,
+  },
+  {
+    title: "Website Management",
+    subMenu: websiteManagementItems,
+  },
+];
+
 const AppSidebar = () => {
+  const router = useRouter();
+
+  const isMenuActive = (url: string) => {
+    return router.pathname === url;
+  };
+
   return (
     <Sidebar>
       <SidebarHeader className="text-center font-bold">
@@ -74,40 +92,28 @@ const AppSidebar = () => {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        <SidebarGroup>
-          <SidebarGroupLabel>Project Management</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {projectManagementItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <Link href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-        <SidebarGroup>
-          <SidebarGroupLabel>Website Management</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {websiteManagementItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <Link href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+        {menuItems.map((item) => (
+          <SidebarGroup key={item.title}>
+            <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {item.subMenu.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton
+                      asChild
+                      isActive={isMenuActive(item.url)}
+                    >
+                      <Link href={item.url}>
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        ))}
       </SidebarContent>
     </Sidebar>
   );
