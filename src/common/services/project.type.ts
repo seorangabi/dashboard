@@ -28,3 +28,18 @@ export type CreateProjectBody = {
 };
 export type CreateProjectResponse = ApiResponse<{ doc: Project }>;
 // #endregion
+
+// #region PATCH /api/v1/project
+export type UpdateProjectParam = {
+  id: string;
+};
+export type UpdateProjectBody = {
+  name?: string;
+  fee?: number;
+  deadline?: string;
+  imageRatio?: string;
+  note?: string | null;
+  artistId?: string;
+};
+export type UpdateProjectResponse = ApiResponse<{ doc: Project }>;
+// #endregion

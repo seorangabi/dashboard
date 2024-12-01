@@ -16,51 +16,72 @@ import {
   FormMessage,
 } from "@/common/components/ui/form";
 import { Input } from "@/common/components/ui/input";
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Check, ChevronsUpDown, Pencil } from "lucide-react";
+import { Pencil } from "lucide-react";
 import { Textarea } from "@/common/components/ui/textarea";
 import DateTimePicker24h from "@/common/components/DateTimePicker24h";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/common/components/ui/popover";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/common/components/ui/command";
-import { cn } from "@/common/lib/utils";
+
+import { generateErrorMessage } from "@/common/lib/utils";
+import { toast } from "sonner";
+import useUpdateProjectMutation from "@/common/mutations/updateProjectMutation";
+import { Project } from "@/common/types/project";
 
 const formSchema = z.object({
   name: z.string(),
   fee: z.number(),
-  deadline: z.string(),
+  deadline: z.date(),
   imageRatio: z.string(),
   note: z.string().optional(),
   artistId: z.string(),
 });
 
-const UpdateProjectDialog = () => {
+const UpdateProjectDialog: FC<{ project: Project | undefined }> = ({
+  project,
+}) => {
+  const [open, setOpen] = useState(false);
+  const { mutateAsync } = useUpdateProjectMutation({});
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      deadline: new Date().toISOString(),
+      name: project?.name || "",
+      fee: project?.fee || 0,
+      artistId: "",
+      imageRatio: project?.imageRatio || "",
+      note: project?.note || "",
+      deadline: new Date(),
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-  }
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      await mutateAsync({
+        id: project?.id || "",
+        ...values,
+        deadline: values.deadline.toISOString(),
+      });
+
+      toast.success("Project updated successfully");
+      form.reset();
+      setOpen(false);
+    } catch (error) {
+      console.error(error);
+      toast.error(generateErrorMessage(error));
+    }
+  };
 
   return (
-    <Dialog>
+    <Dialog
+      open={open}
+      onOpenChange={(newOpen) => {
+        if (newOpen) form.reset();
+
+        setOpen(newOpen);
+      }}
+    >
       <DialogTrigger asChild>
         <Button variant="default" size="sm">
           <Pencil />
@@ -131,22 +152,6 @@ const UpdateProjectDialog = () => {
               />
               <FormField
                 control={form.control}
-                name="artistId"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Artist</FormLabel>
-                    <FormControl>
-                      <SelectArtist
-                        value={field.value}
-                        onChange={field.onChange}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
                 name="note"
                 render={({ field }) => (
                   <FormItem>
@@ -171,74 +176,6 @@ const UpdateProjectDialog = () => {
         </Form>
       </DialogContent>
     </Dialog>
-  );
-};
-
-const SelectArtist: FC<{
-  value: string | undefined;
-  onChange: (value: string | undefined) => void;
-}> = ({ value, onChange }) => {
-  const [open, setOpen] = React.useState(false);
-
-  const artists = [
-    {
-      value: "sveltekit",
-      label: "SvelteKit",
-    },
-    {
-      value: "remix",
-      label: "Remix",
-    },
-    {
-      value: "astro",
-      label: "Astro",
-    },
-  ];
-
-  return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          className="justify-between w-full"
-        >
-          {value
-            ? artists.find((framework) => framework.value === value)?.label
-            : "Select an artist..."}
-          <ChevronsUpDown className="opacity-50" />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className={cn("w-[370px] p-0")}>
-        <Command>
-          <CommandInput placeholder="Search artist..." className="h-9" />
-          <CommandList>
-            <CommandEmpty>No artist found.</CommandEmpty>
-            <CommandGroup>
-              {artists.map((framework) => (
-                <CommandItem
-                  key={framework.value}
-                  value={framework.value}
-                  onSelect={(currentValue) => {
-                    onChange(currentValue === value ? "" : currentValue);
-                    setOpen(false);
-                  }}
-                >
-                  {framework.label}
-                  <Check
-                    className={cn(
-                      "ml-auto",
-                      value === framework.value ? "opacity-100" : "opacity-0"
-                    )}
-                  />
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
   );
 };
 

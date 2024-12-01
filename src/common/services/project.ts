@@ -5,6 +5,9 @@ import {
   DeleteProjectParam,
   DeleteProjectResponse,
   GetProjectListResponse,
+  UpdateProjectBody,
+  UpdateProjectParam,
+  UpdateProjectResponse,
 } from "./project.type";
 
 const projectService = {
@@ -18,6 +21,18 @@ const projectService = {
   },
   createProject: async ({ body }: { body: CreateProjectBody }) => {
     return apiInstance.post<CreateProjectResponse>(`api/v1/project`, body);
+  },
+  updateProject: async ({
+    param,
+    body,
+  }: {
+    param: UpdateProjectParam;
+    body: UpdateProjectBody;
+  }) => {
+    return apiInstance.patch<UpdateProjectResponse>(
+      `api/v1/project/${param.id}`,
+      body
+    );
   },
 };
 

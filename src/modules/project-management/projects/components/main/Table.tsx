@@ -26,7 +26,7 @@ export const columns: ColumnDef<Project>[] = [
         <div className="flex gap-x-2">
           <DeleteProjectDialog id={row.original.id} />
 
-          <UpdateProjectDialog />
+          <UpdateProjectDialog project={row.original} />
           <Link
             href={{
               pathname: "/admin/project-management/projects/[projectId]",

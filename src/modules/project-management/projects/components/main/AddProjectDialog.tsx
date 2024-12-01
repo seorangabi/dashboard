@@ -67,7 +67,7 @@ const AddProjectDialog = () => {
       });
 
       toast.success("Project created successfully");
-
+      form.reset();
       setOpen(false);
     } catch (error) {
       console.error(error);
