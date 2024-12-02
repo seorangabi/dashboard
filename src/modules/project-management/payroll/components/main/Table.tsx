@@ -9,7 +9,7 @@ import { Payroll } from "@/common/types/payroll";
 import DeletePayrollDialog from "./DeletePayrollDialog";
 import usePayrollListQuery from "@/common/queries/payrollListQuery";
 import { format } from "date-fns";
-import UpdateStatusDialog from "./UpdateStatusDialog";
+import UpdatePayrollStatusDialog from "./UpdatePayrollStatusDialog";
 
 export const columns: ColumnDef<Payroll>[] = [
   {
@@ -42,7 +42,7 @@ export const columns: ColumnDef<Payroll>[] = [
             <span>
               {row.original.status === "DRAFT" ? "Draft" : row.original.status}
             </span>
-            <UpdateStatusDialog id={row.original.id} />
+            <UpdatePayrollStatusDialog id={row.original.id} />
           </div>
         )}
       </div>

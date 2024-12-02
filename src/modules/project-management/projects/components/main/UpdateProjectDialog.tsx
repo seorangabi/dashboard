@@ -35,12 +35,13 @@ const formSchema = z.object({
   deadline: z.date(),
   imageRatio: z.string(),
   note: z.string().optional(),
-  artistId: z.string(),
+  teamId: z.string(),
 });
 
-const UpdateProjectDialog: FC<{ project: Project | undefined }> = ({
-  project,
-}) => {
+const UpdateProjectDialog: FC<{
+  project: Project | undefined;
+  onSuccess?: () => void;
+}> = ({ project, onSuccess }) => {
   const [open, setOpen] = useState(false);
   const { mutateAsync } = useUpdateProjectMutation({});
 
@@ -58,8 +59,8 @@ const UpdateProjectDialog: FC<{ project: Project | undefined }> = ({
       });
 
       toast.success("Project updated successfully");
-      form.reset();
       setOpen(false);
+      onSuccess?.();
     } catch (error) {
       console.error(error);
       toast.error(generateErrorMessage(error));
@@ -74,7 +75,7 @@ const UpdateProjectDialog: FC<{ project: Project | undefined }> = ({
           form.reset({
             name: project?.name || "",
             fee: project?.fee || 0,
-            artistId: "",
+            teamId: "",
             imageRatio: project?.imageRatio || "",
             note: project?.note || "",
             deadline: new Date(),
@@ -84,7 +85,11 @@ const UpdateProjectDialog: FC<{ project: Project | undefined }> = ({
       }}
     >
       <DialogTrigger asChild>
-        <Button variant="default" size="sm">
+        <Button
+          variant="default"
+          size="sm"
+          disabled={project?.status !== "OFFERING"}
+        >
           <Pencil />
         </Button>
       </DialogTrigger>

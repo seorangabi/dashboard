@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -7,8 +7,9 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/common/components/ui/breadcrumb";
+import { Team } from "@/common/types/team";
 
-const TeamDetailBreadcrumb = () => {
+const TeamDetailBreadcrumb: FC<{ team: Team | undefined }> = ({ team }) => {
   return (
     <Breadcrumb>
       <BreadcrumbList>
@@ -25,7 +26,7 @@ const TeamDetailBreadcrumb = () => {
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbPage>Leanne Graham</BreadcrumbPage>
+          <BreadcrumbPage>{team?.name ?? "..."}</BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>

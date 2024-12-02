@@ -4,6 +4,7 @@ import {
   CreateTeamResponse,
   DeleteTeamParam,
   DeleteTeamResponse,
+  GetTeamListQuery,
   GetTeamListResponse,
   UpdateTeamBody,
   UpdateTeamParam,
@@ -11,8 +12,10 @@ import {
 } from "./team.type";
 
 const teamService = {
-  getTeamList: async () => {
-    return apiInstance.get<GetTeamListResponse>("/api/v1/team/list");
+  getTeamList: async ({ query }: { query?: GetTeamListQuery }) => {
+    return apiInstance.get<GetTeamListResponse>("/api/v1/team/list", {
+      params: query,
+    });
   },
   deleteTeam: async ({ param }: { param: DeleteTeamParam }) => {
     return apiInstance.delete<DeleteTeamResponse>(`api/v1/team/${param.id}`);

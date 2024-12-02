@@ -15,7 +15,7 @@ export const columns: ColumnDef<Team>[] = [
     id: "name",
     accessorKey: "name",
     header: "Name",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("name")}</div>,
+    cell: ({ row }) => <div>{row.getValue("name")}</div>,
   },
   {
     id: "actions",

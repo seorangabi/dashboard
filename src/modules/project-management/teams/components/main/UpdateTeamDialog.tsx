@@ -34,7 +34,7 @@ const formSchema = z.object({
 });
 
 const UpdateTeamDialog: FC<{
-  team: Team;
+  team: Team | undefined;
 }> = ({ team }) => {
   const [open, setOpen] = useState(false);
   const { mutateAsync } = useUpdateTeamMutation({});

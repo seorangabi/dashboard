@@ -12,17 +12,8 @@ import {
   TableHeader,
   TableRow,
 } from "./ui/table";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "./ui/pagination";
-import { Button, buttonVariants } from "./ui/button";
-import { cn } from "../lib/utils";
+import { Pagination, PaginationContent, PaginationItem } from "./ui/pagination";
+import { Button } from "./ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 type DataTableProps<TData, TValue> = {

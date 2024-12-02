@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -7,8 +7,11 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/common/components/ui/breadcrumb";
+import { Project } from "@/common/types/project";
 
-const ProjectDetailBreadcrumb = () => {
+const ProjectDetailBreadcrumb: FC<{ project: Project | undefined }> = ({
+  project,
+}) => {
   return (
     <Breadcrumb>
       <BreadcrumbList>
@@ -25,7 +28,7 @@ const ProjectDetailBreadcrumb = () => {
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbPage>RHINO FWOG</BreadcrumbPage>
+          <BreadcrumbPage>{project?.name ?? "..."}</BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>

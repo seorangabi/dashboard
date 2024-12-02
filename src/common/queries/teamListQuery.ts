@@ -15,7 +15,9 @@ const useTeamListQuery = ({ query, options }: UseTeamListQueryProps = {}) => {
     ...options,
     queryKey: ["team", "list", query],
     queryFn: async () => {
-      const res = await teamService.getTeamList();
+      const res = await teamService.getTeamList({
+        query,
+      });
       return res.data;
     },
   });

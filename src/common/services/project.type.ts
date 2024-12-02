@@ -5,9 +5,12 @@ import { Project } from "../types/project";
 export type GetProjectListQuery = {
   id_eq?: string;
   team_id_eq?: string;
+  status_eq?: "OFFERING" | "IN_PROGRESS" | "REVISION" | "DONE";
+  is_paid_eq?: boolean;
   with?: "team"[];
   skip?: number;
   limit?: number;
+  sort?: ("created_at:asc" | "created_at:desc")[];
 };
 export type GetProjectListResponse = ApiResponse<{
   docs: Project[];
@@ -44,7 +47,7 @@ export type UpdateProjectBody = {
   deadline?: string;
   imageRatio?: string;
   note?: string | null;
-  artistId?: string;
+  teamId?: string;
 };
 export type UpdateProjectResponse = ApiResponse<{ doc: Project }>;
 // #endregion

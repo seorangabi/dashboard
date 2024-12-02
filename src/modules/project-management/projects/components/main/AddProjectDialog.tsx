@@ -176,7 +176,7 @@ const AddProjectDialog = () => {
                 name="teamId"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Artist</FormLabel>
+                    <FormLabel>Team</FormLabel>
                     <FormControl>
                       <SelectTeam
                         value={field.value}

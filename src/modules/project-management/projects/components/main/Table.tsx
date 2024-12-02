@@ -9,6 +9,7 @@ import UpdateProjectDialog from "./UpdateProjectDialog";
 import useProjectListQuery from "@/common/queries/projectListQuery";
 import { useMemo, useState } from "react";
 import { Project } from "@/common/types/project";
+import { PROJECT_STATUS } from "@/modules/project-management/payroll/constants";
 
 export const columns: ColumnDef<Project>[] = [
   {
@@ -28,7 +29,9 @@ export const columns: ColumnDef<Project>[] = [
     id: "status",
     header: "Status",
     cell: ({ row }) => (
-      <div className="capitalize">{row.original.status ?? "N/A"}</div>
+      <div className="capitalize">
+        {PROJECT_STATUS[row.original.status] ?? row.original.status ?? "N/A"}
+      </div>
     ),
   },
   {
@@ -38,7 +41,7 @@ export const columns: ColumnDef<Project>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex gap-x-2">
-          <DeleteProjectDialog id={row.original.id} />
+          <DeleteProjectDialog project={row.original} />
 
           <UpdateProjectDialog project={row.original} />
           <Link
@@ -67,6 +70,7 @@ const ProjectsTable = () => {
       with: ["team"],
       skip: (pagination.page - 1) * pagination.pageSize,
       limit: pagination.pageSize,
+      sort: ["created_at:desc"],
     },
   });
   const data = useMemo(() => {

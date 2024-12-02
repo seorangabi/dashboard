@@ -11,13 +11,12 @@ import {
 } from "@/common/components/ui/alert-dialog";
 import { Button } from "@/common/components/ui/button";
 import { generateErrorMessage } from "@/common/lib/utils";
-import useDeletePayrollMutation from "@/common/mutations/deletePayrollMutation";
 import useUpdatePayrollMutation from "@/common/mutations/updatePayrollMutation";
-import { Pencil, Trash } from "lucide-react";
+import { Pencil } from "lucide-react";
 import React, { FC } from "react";
 import { toast } from "sonner";
 
-const UpdateStatusDialog: FC<{ id: string }> = ({ id }) => {
+const UpdatePayrollStatusDialog: FC<{ id: string }> = ({ id }) => {
   const { mutateAsync, isPending } = useUpdatePayrollMutation({});
 
   const handleUpdate = async () => {
@@ -56,4 +55,4 @@ const UpdateStatusDialog: FC<{ id: string }> = ({ id }) => {
   );
 };
 
-export default UpdateStatusDialog;
+export default UpdatePayrollStatusDialog;

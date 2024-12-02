@@ -27,7 +27,6 @@ import DatePickerSingle from "@/common/components/DatePickerSingle";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableFooter,
   TableHead,
