@@ -1,4 +1,4 @@
-import { ApiResponse } from "../types";
+import { ApiResponse, Pagination } from "../types";
 import { Project } from "../types/project";
 
 // #region GET /api/v1/project/list
@@ -6,9 +6,12 @@ export type GetProjectListQuery = {
   id_eq?: string;
   team_id_eq?: string;
   with?: "team"[];
+  skip?: number;
+  limit?: number;
 };
 export type GetProjectListResponse = ApiResponse<{
   docs: Project[];
+  pagination: Pagination;
 }>;
 // #endregion
 

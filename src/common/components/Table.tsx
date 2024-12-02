@@ -12,17 +12,38 @@ import {
   TableHeader,
   TableRow,
 } from "./ui/table";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "./ui/pagination";
+import { Button, buttonVariants } from "./ui/button";
+import { cn } from "../lib/utils";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   isLoading?: boolean;
+  pagination?: {
+    page: number;
+    pageSize: number;
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+    onNext: () => void;
+    onPrev: () => void;
+  };
 };
 
 const DataTable = <TData, TValue>({
   columns,
   data,
   isLoading,
+  pagination,
 }: DataTableProps<TData, TValue>) => {
   const table = useReactTable({
     data,
@@ -86,6 +107,40 @@ const DataTable = <TData, TValue>({
           )}
         </TableBody>
       </Table>
+
+      {!!pagination && (
+        <Pagination className="mb-3 border-t pt-3">
+          <PaginationContent>
+            <PaginationItem>
+              <Button
+                variant="ghost"
+                size="sm"
+                disabled={!pagination.hasPreviousPage}
+                onClick={pagination.onPrev}
+              >
+                <ChevronLeft className="h-4 w-4" />
+                Prev
+              </Button>
+            </PaginationItem>
+            <PaginationItem>
+              <Button variant="ghost" size="sm">
+                {pagination.page}
+              </Button>
+            </PaginationItem>
+            <PaginationItem>
+              <Button
+                variant="ghost"
+                size="sm"
+                disabled={!pagination.hasNextPage}
+                onClick={pagination.onNext}
+              >
+                Next
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      )}
     </div>
   );
 };

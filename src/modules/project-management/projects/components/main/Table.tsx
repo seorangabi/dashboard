@@ -7,7 +7,7 @@ import Link from "next/link";
 import DeleteProjectDialog from "./DeleteProjectDialog";
 import UpdateProjectDialog from "./UpdateProjectDialog";
 import useProjectListQuery from "@/common/queries/projectListQuery";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Project } from "@/common/types/project";
 
 export const columns: ColumnDef<Project>[] = [
@@ -58,9 +58,15 @@ export const columns: ColumnDef<Project>[] = [
 ];
 
 const ProjectsTable = () => {
+  const [pagination, setPagination] = useState({
+    page: 1,
+    pageSize: 50,
+  });
   const { data: projectData, isLoading } = useProjectListQuery({
     query: {
       with: ["team"],
+      skip: (pagination.page - 1) * pagination.pageSize,
+      limit: pagination.pageSize,
     },
   });
   const data = useMemo(() => {
@@ -68,7 +74,33 @@ const ProjectsTable = () => {
     return projectData.data.docs;
   }, [projectData]);
 
-  return <DataTable isLoading={isLoading} columns={columns} data={data} />;
+  return (
+    <div>
+      <DataTable
+        isLoading={isLoading}
+        columns={columns}
+        data={data}
+        pagination={{
+          page: pagination.page,
+          pageSize: pagination.pageSize,
+          hasNextPage: projectData?.data?.pagination?.hasNext ?? false,
+          hasPreviousPage: projectData?.data?.pagination?.hasPrev ?? false,
+          onNext: () => {
+            setPagination((prev) => ({
+              ...prev,
+              page: prev.page + 1,
+            }));
+          },
+          onPrev: () => {
+            setPagination((prev) => ({
+              ...prev,
+              page: prev.page - 1,
+            }));
+          },
+        }}
+      />
+    </div>
+  );
 };
 
 export default ProjectsTable;
