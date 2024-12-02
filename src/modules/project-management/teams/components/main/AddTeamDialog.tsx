@@ -16,31 +16,50 @@ import {
   FormMessage,
 } from "@/common/components/ui/form";
 import { Input } from "@/common/components/ui/input";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus } from "lucide-react";
+import useCreateTeamMutation from "@/common/mutations/createTeamMutation";
+import { toast } from "sonner";
+import { generateErrorMessage } from "@/common/lib/utils";
 
 const formSchema = z.object({
   name: z.string(),
-  bankNumber: z.number().optional(),
+  bankNumber: z.string().optional(),
   bankAccountHolder: z.string().optional(),
   bankProvider: z.string().optional(),
 });
 
 const AddTeamDialog = () => {
+  const [open, setOpen] = useState(false);
+  const { mutateAsync } = useCreateTeamMutation({});
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {},
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-  }
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      await mutateAsync({
+        name: values.name,
+        bankNumber: values.bankNumber || null,
+        bankAccountHolder: values.bankAccountHolder || null,
+        bankProvider: values.bankProvider || null,
+      });
+
+      toast.success("Team created successfully");
+      form.reset();
+      setOpen(false);
+    } catch (error) {
+      console.error(error);
+      toast.error(generateErrorMessage(error));
+    }
+  };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="default" size="sm">
           <Plus />
@@ -87,11 +106,7 @@ const AddTeamDialog = () => {
                   <FormItem>
                     <FormLabel>Bank Number</FormLabel>
                     <FormControl>
-                      <Input
-                        type="number"
-                        placeholder="Bank Number"
-                        {...field}
-                      />
+                      <Input placeholder="Bank Number" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

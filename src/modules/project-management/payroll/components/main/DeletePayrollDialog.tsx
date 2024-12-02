@@ -11,19 +11,22 @@ import {
 } from "@/common/components/ui/alert-dialog";
 import { Button } from "@/common/components/ui/button";
 import { generateErrorMessage } from "@/common/lib/utils";
-import useDeleteTeamMutation from "@/common/mutations/deleteTeamMutation";
+import useDeletePayrollMutation from "@/common/mutations/deletePayrollMutation";
 import { Trash } from "lucide-react";
 import React, { FC } from "react";
 import { toast } from "sonner";
 
-const DeleteTeamDialog: FC<{ id: string }> = ({ id }) => {
-  const { mutateAsync, isPending } = useDeleteTeamMutation({});
+const DeletePayrollDialog: FC<{ id: string; disabled?: boolean }> = ({
+  id,
+  disabled,
+}) => {
+  const { mutateAsync, isPending } = useDeletePayrollMutation({});
 
   const handleDelete = async () => {
     try {
       await mutateAsync({ id });
 
-      toast.success("Project deleted successfully");
+      toast.success("Payroll deleted successfully");
     } catch (error) {
       console.error(error);
       toast.error(generateErrorMessage(error));
@@ -33,7 +36,7 @@ const DeleteTeamDialog: FC<{ id: string }> = ({ id }) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="default" size="sm">
+        <Button variant="default" size="sm" disabled={disabled}>
           <Trash />
         </Button>
       </AlertDialogTrigger>
@@ -41,7 +44,7 @@ const DeleteTeamDialog: FC<{ id: string }> = ({ id }) => {
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This will delete your team!
+            This will delete your payroll!
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -55,4 +58,4 @@ const DeleteTeamDialog: FC<{ id: string }> = ({ id }) => {
   );
 };
 
-export default DeleteTeamDialog;
+export default DeletePayrollDialog;

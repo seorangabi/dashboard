@@ -3,8 +3,13 @@ import DeleteTeamDialog from "../main/DeleteTeamDialog";
 import TeamDetailBreadcrumb from "./Breadcrumb";
 import { Dot, Mail, Phone } from "lucide-react";
 import UpdateTeamDialog from "../main/UpdateTeamDialog";
+import { useRouter } from "next/router";
 
 const TeamDetail = () => {
+  const router = useRouter();
+
+  const id = router.query.id as string;
+
   return (
     <div>
       <TeamDetailBreadcrumb />
@@ -12,7 +17,7 @@ const TeamDetail = () => {
       <div className="flex justify-between items-center mt-6 mb-5">
         <h1 className="text-2xl font-medium">Team Detail</h1>
         <div className="space-x-2">
-          <DeleteTeamDialog />
+          <DeleteTeamDialog id={id} />
           <UpdateTeamDialog />
         </div>
       </div>

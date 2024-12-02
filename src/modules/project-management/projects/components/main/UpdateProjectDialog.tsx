@@ -46,14 +46,7 @@ const UpdateProjectDialog: FC<{ project: Project | undefined }> = ({
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: project?.name || "",
-      fee: project?.fee || 0,
-      artistId: "",
-      imageRatio: project?.imageRatio || "",
-      note: project?.note || "",
-      deadline: new Date(),
-    },
+    defaultValues: {},
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -77,7 +70,15 @@ const UpdateProjectDialog: FC<{ project: Project | undefined }> = ({
     <Dialog
       open={open}
       onOpenChange={(newOpen) => {
-        if (newOpen) form.reset();
+        if (newOpen)
+          form.reset({
+            name: project?.name || "",
+            fee: project?.fee || 0,
+            artistId: "",
+            imageRatio: project?.imageRatio || "",
+            note: project?.note || "",
+            deadline: new Date(),
+          });
 
         setOpen(newOpen);
       }}

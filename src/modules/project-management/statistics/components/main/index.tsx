@@ -1,9 +1,23 @@
 import React, { useState } from "react";
 import ImagePerWeekChart from "./ImagePerWeekChart";
 import MonthPickerInput from "@/common/components/MonthPickerInput";
+import useImageProductionPerWeekQuery from "@/common/queries/imageProductionPerWeekQuery";
+import { Skeleton } from "@/common/components/ui/skeleton";
+import { cn } from "@/common/lib/utils";
 
 const Statistics = () => {
   const [date, setDate] = useState<Date>(new Date());
+
+  const { data: imageProductionPerWeekData, isLoading } =
+    useImageProductionPerWeekQuery({
+      query: {
+        monthIndex: date.getMonth(),
+        year: date.getFullYear(),
+      },
+      options: {
+        enabled: !!date,
+      },
+    });
 
   return (
     <div>
@@ -23,10 +37,41 @@ const Statistics = () => {
           </div>
         </div>
         <div className="grid grid-cols-2">
-          <ImagePerWeekChart label="week 1" className="border-r border-b" />
-          <ImagePerWeekChart label="week 2" className="border-b" />
-          <ImagePerWeekChart label="week 3" className="border-r" />
-          <ImagePerWeekChart label="week 4" />
+          {!!imageProductionPerWeekData?.data?.docs?.length &&
+            !isLoading &&
+            imageProductionPerWeekData?.data.docs.map((week, index) => {
+              const currentIsEven = index % 2 === 0;
+
+              const totalIsEven =
+                imageProductionPerWeekData.data.docs.length % 2 === 0;
+              const showBorderBottom = !(totalIsEven
+                ? index === imageProductionPerWeekData.data.docs.length - 1 ||
+                  index === imageProductionPerWeekData.data.docs.length - 2
+                : index === imageProductionPerWeekData.data.docs.length - 1);
+
+              return (
+                <ImagePerWeekChart
+                  key={week.start}
+                  label={`week ${index + 1}`}
+                  data={week}
+                  className={cn("border-b", {
+                    "border-r": currentIsEven,
+                    "border-b": showBorderBottom,
+                  })}
+                />
+              );
+            })}
+
+          {isLoading && (
+            <>
+              <Skeleton className="h-[250px] m-2" />
+              <Skeleton className="h-[250px] m-2" />
+              <Skeleton className="h-[250px] m-2" />
+              <Skeleton className="h-[250px] m-2" />
+              <Skeleton className="h-[250px] m-2" />
+              <Skeleton className="h-[250px] m-2" />
+            </>
+          )}
         </div>
       </div>
     </div>

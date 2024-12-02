@@ -10,7 +10,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarProvider,
-  //   SidebarTrigger,
+  SidebarTrigger,
 } from "./ui/sidebar";
 import {
   ChartNoAxesCombined,
@@ -123,7 +123,8 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main className="p-6 w-full mx-auto max-w-screen-xl">
+
+      <main className="p-6 w-full mx-auto max-w-screen-2xl relative">
         {/* <SidebarTrigger /> */}
         {children}
       </main>

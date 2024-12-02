@@ -18,6 +18,20 @@ export const columns: ColumnDef<Project>[] = [
     cell: ({ row }) => <div className="capitalize">{row.getValue("name")}</div>,
   },
   {
+    id: "team",
+    header: "Team",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.original?.team?.name ?? "N/A"}</div>
+    ),
+  },
+  {
+    id: "status",
+    header: "Status",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.original.status ?? "N/A"}</div>
+    ),
+  },
+  {
     id: "actions",
     header: "Actions",
     size: 100,
@@ -44,7 +58,11 @@ export const columns: ColumnDef<Project>[] = [
 ];
 
 const ProjectsTable = () => {
-  const { data: projectData, isLoading } = useProjectListQuery();
+  const { data: projectData, isLoading } = useProjectListQuery({
+    query: {
+      with: ["team"],
+    },
+  });
   const data = useMemo(() => {
     if (!projectData?.data?.docs?.length) return [];
     return projectData.data.docs;

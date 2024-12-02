@@ -11,10 +11,9 @@ import { FC, useState } from "react";
 import { format } from "date-fns";
 
 const DatePickerSingle: FC<{
-  dateFormat?: string;
   date: Date | undefined;
   setDate: (date: Date | undefined) => void;
-}> = ({ dateFormat = "dd/MM/yyyy", date, setDate }) => {
+}> = ({ date, setDate }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -28,11 +27,7 @@ const DatePickerSingle: FC<{
           )}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
-          {date ? (
-            format(date, dateFormat ?? "dd/MM/yyyy")
-          ) : (
-            <span>{dateFormat}</span>
-          )}
+          {date ? format(date, "dd MMM yyyy") : <span>{"Select a date"}</span>}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">

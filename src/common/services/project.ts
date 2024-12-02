@@ -4,6 +4,7 @@ import {
   CreateProjectResponse,
   DeleteProjectParam,
   DeleteProjectResponse,
+  GetProjectListQuery,
   GetProjectListResponse,
   UpdateProjectBody,
   UpdateProjectParam,
@@ -11,8 +12,10 @@ import {
 } from "./project.type";
 
 const projectService = {
-  getProjectList: async () => {
-    return apiInstance.get<GetProjectListResponse>("/api/v1/project/list");
+  getProjectList: async ({ query }: { query?: GetProjectListQuery }) => {
+    return apiInstance.get<GetProjectListResponse>("/api/v1/project/list", {
+      params: query,
+    });
   },
   deleteProject: async ({ param }: { param: DeleteProjectParam }) => {
     return apiInstance.delete<DeleteProjectResponse>(

@@ -16,31 +16,68 @@ import {
   FormMessage,
 } from "@/common/components/ui/form";
 import { Input } from "@/common/components/ui/input";
-import React from "react";
+import React, { FC, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Pencil } from "lucide-react";
+import useUpdateTeamMutation from "@/common/mutations/updateTeamMutation";
+import { Team } from "@/common/types/team";
+import { toast } from "sonner";
+import { generateErrorMessage } from "@/common/lib/utils";
 
 const formSchema = z.object({
   name: z.string(),
-  bankNumber: z.number().optional(),
+  bankNumber: z.string().optional(),
   bankAccountHolder: z.string().optional(),
   bankProvider: z.string().optional(),
 });
 
-const UpdateTeamDialog = () => {
+const UpdateTeamDialog: FC<{
+  team: Team;
+}> = ({ team }) => {
+  const [open, setOpen] = useState(false);
+  const { mutateAsync } = useUpdateTeamMutation({});
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {},
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-  }
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      await mutateAsync({
+        id: team?.id || "",
+        name: values.name || "",
+        bankNumber: values.bankNumber || null,
+        bankAccountHolder: values.bankAccountHolder || null,
+        bankProvider: values.bankProvider || null,
+      });
+
+      toast.success("Team updated successfully");
+      form.reset();
+      setOpen(false);
+    } catch (error) {
+      console.error(error);
+      toast.error(generateErrorMessage(error));
+    }
+  };
 
   return (
-    <Dialog>
+    <Dialog
+      open={open}
+      onOpenChange={(newOpen) => {
+        if (newOpen)
+          form.reset({
+            name: team?.name || "",
+            bankNumber: team?.bankNumber || "",
+            bankAccountHolder: team?.bankAccountHolder || "",
+            bankProvider: team?.bankProvider || "",
+          });
+
+        setOpen(newOpen);
+      }}
+    >
       <DialogTrigger asChild>
         <Button variant="default" size="sm">
           <Pencil />
@@ -87,11 +124,7 @@ const UpdateTeamDialog = () => {
                   <FormItem>
                     <FormLabel>Bank Number</FormLabel>
                     <FormControl>
-                      <Input
-                        type="number"
-                        placeholder="Bank Number"
-                        {...field}
-                      />
+                      <Input placeholder="Bank Number" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

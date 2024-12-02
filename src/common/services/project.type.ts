@@ -3,7 +3,9 @@ import { Project } from "../types/project";
 
 // #region GET /api/v1/project/list
 export type GetProjectListQuery = {
-  done_eq?: boolean;
+  id_eq?: string;
+  team_id_eq?: string;
+  with?: "team"[];
 };
 export type GetProjectListResponse = ApiResponse<{
   docs: Project[];
@@ -24,7 +26,7 @@ export type CreateProjectBody = {
   deadline: string;
   imageRatio: string;
   note?: string;
-  artistId: string;
+  teamId: string;
 };
 export type CreateProjectResponse = ApiResponse<{ doc: Project }>;
 // #endregion

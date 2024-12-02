@@ -7,6 +7,8 @@ import {
 } from "@/common/components/ui/chart";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import { cn } from "@/common/lib/utils";
+import { ImageProductionPerWeek } from "@/common/services/statistic.type";
+import { format } from "date-fns";
 
 const chartData = [
   { team: "Dio", image: 186 },
@@ -24,18 +26,24 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-const ImagePerWeekChart: FC<{ className?: string; label: string }> = ({
-  className,
-  label,
-}) => {
+const ImagePerWeekChart: FC<{
+  className?: string;
+  label: string;
+  data: ImageProductionPerWeek;
+}> = ({ className, data, label }) => {
   return (
     <div className={cn("p-4", className)}>
-      <div className="mb-5 text-center">{label}</div>
+      <div className="flex justify-between mb-5 px-8">
+        <div className="text-center">{label}</div>
+        <div>
+          {format(data.start, "d MMM yyyy")} - {format(data.end, "d MMM yyyy")}
+        </div>
+      </div>
       <ChartContainer config={chartConfig} className="h-[200px] w-full">
-        <BarChart accessibilityLayer data={chartData}>
+        <BarChart accessibilityLayer data={data.teams}>
           <CartesianGrid vertical={false} />
           <XAxis
-            dataKey="team"
+            dataKey="name"
             tickLine={false}
             tickMargin={10}
             axisLine={false}
@@ -44,7 +52,7 @@ const ImagePerWeekChart: FC<{ className?: string; label: string }> = ({
           <YAxis />
 
           <ChartTooltip content={<ChartTooltipContent />} />
-          <Bar dataKey="image" fill="var(--color-image)" radius={5} />
+          <Bar dataKey="count" fill="var(--color-image)" radius={5} />
         </BarChart>
       </ChartContainer>
     </div>

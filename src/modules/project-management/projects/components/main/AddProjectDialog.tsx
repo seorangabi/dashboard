@@ -16,37 +16,27 @@ import {
   FormMessage,
 } from "@/common/components/ui/form";
 import { Input } from "@/common/components/ui/input";
-import React, { FC, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Check, ChevronsUpDown, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { Textarea } from "@/common/components/ui/textarea";
 import DateTimePicker24h from "@/common/components/DateTimePicker24h";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/common/components/ui/popover";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/common/components/ui/command";
-import { cn, generateErrorMessage } from "@/common/lib/utils";
+
+import { generateErrorMessage } from "@/common/lib/utils";
 import useCreateProjectMutation from "@/common/mutations/createProjectMutation";
 import { toast } from "sonner";
+import SelectTeam from "@/common/components/SelectTeam";
 
 const formSchema = z.object({
   name: z.string(),
   fee: z.number(),
+  imageCount: z.number(),
   deadline: z.date(),
   imageRatio: z.string(),
   note: z.string().optional(),
-  artistId: z.string(),
+  teamId: z.string(),
 });
 
 const AddProjectDialog = () => {
@@ -56,6 +46,7 @@ const AddProjectDialog = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       deadline: new Date(),
+      imageCount: 1,
     },
   });
 
@@ -112,10 +103,38 @@ const AddProjectDialog = () => {
                     <FormControl>
                       <Input
                         type="number"
-                        placeholder="200.000"
+                        placeholder="200000"
                         {...field}
                         onChange={(event) =>
-                          field.onChange(+event.target.value)
+                          field.onChange(
+                            event.target.value
+                              ? Number(event.target.value)
+                              : null
+                          )
+                        }
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="imageCount"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Image*</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        placeholder="1"
+                        {...field}
+                        onChange={(event) =>
+                          field.onChange(
+                            event.target.value
+                              ? Number(event.target.value)
+                              : null
+                          )
                         }
                       />
                     </FormControl>
@@ -154,12 +173,12 @@ const AddProjectDialog = () => {
               />
               <FormField
                 control={form.control}
-                name="artistId"
+                name="teamId"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Artist</FormLabel>
                     <FormControl>
-                      <SelectArtist
+                      <SelectTeam
                         value={field.value}
                         onChange={field.onChange}
                       />
@@ -194,74 +213,6 @@ const AddProjectDialog = () => {
         </Form>
       </DialogContent>
     </Dialog>
-  );
-};
-
-const SelectArtist: FC<{
-  value: string | undefined;
-  onChange: (value: string | undefined) => void;
-}> = ({ value, onChange }) => {
-  const [open, setOpen] = React.useState(false);
-
-  const artists = [
-    {
-      value: "sveltekit",
-      label: "SvelteKit",
-    },
-    {
-      value: "remix",
-      label: "Remix",
-    },
-    {
-      value: "astro",
-      label: "Astro",
-    },
-  ];
-
-  return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          className="justify-between w-full"
-        >
-          {value
-            ? artists.find((framework) => framework.value === value)?.label
-            : "Select an artist..."}
-          <ChevronsUpDown className="opacity-50" />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className={cn("w-[370px] p-0")}>
-        <Command>
-          <CommandInput placeholder="Search artist..." className="h-9" />
-          <CommandList>
-            <CommandEmpty>No artist found.</CommandEmpty>
-            <CommandGroup>
-              {artists.map((framework) => (
-                <CommandItem
-                  key={framework.value}
-                  value={framework.value}
-                  onSelect={(currentValue) => {
-                    onChange(currentValue === value ? "" : currentValue);
-                    setOpen(false);
-                  }}
-                >
-                  {framework.label}
-                  <Check
-                    className={cn(
-                      "ml-auto",
-                      value === framework.value ? "opacity-100" : "opacity-0"
-                    )}
-                  />
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
   );
 };
 

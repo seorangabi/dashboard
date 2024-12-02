@@ -18,7 +18,9 @@ const useProjectListQuery = ({
     ...options,
     queryKey: ["project", "list", query],
     queryFn: async () => {
-      const res = await projectService.getProjectList();
+      const res = await projectService.getProjectList({
+        query,
+      });
       return res.data;
     },
   });

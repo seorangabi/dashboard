@@ -6,18 +6,9 @@ import { Eye } from "lucide-react";
 import Link from "next/link";
 import DeleteTeamDialog from "./DeleteTeamDialog";
 import UpdateTeamDialog from "./UpdateTeamDialog";
-
-export type Team = {
-  id: string;
-  name: string;
-};
-
-const data: Team[] = [
-  {
-    id: "m5gr84i9",
-    name: "Leanne Graham",
-  },
-];
+import { Team } from "@/common/types/team";
+import { useMemo } from "react";
+import useTeamListQuery from "@/common/queries/teamListQuery";
 
 export const columns: ColumnDef<Team>[] = [
   {
@@ -33,9 +24,9 @@ export const columns: ColumnDef<Team>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex gap-x-2">
-          <DeleteTeamDialog />
+          <DeleteTeamDialog id={row.original.id} />
 
-          <UpdateTeamDialog />
+          <UpdateTeamDialog team={row.original} />
           <Link
             href={{
               pathname: "/admin/project-management/teams/[teamId]",
@@ -53,7 +44,13 @@ export const columns: ColumnDef<Team>[] = [
 ];
 
 const TeamsTable = () => {
-  return <DataTable columns={columns} data={data} />;
+  const { data: teamData, isLoading } = useTeamListQuery();
+  const data = useMemo(() => {
+    if (!teamData?.data?.docs?.length) return [];
+    return teamData.data.docs;
+  }, [teamData]);
+
+  return <DataTable isLoading={isLoading} columns={columns} data={data} />;
 };
 
 export default TeamsTable;

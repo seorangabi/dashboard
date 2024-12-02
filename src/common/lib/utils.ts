@@ -8,7 +8,15 @@ export function cn(...inputs: ClassValue[]) {
 
 export const generateErrorMessage = (error: unknown) => {
   if (axios.isAxiosError(error)) {
-    return error.response?.data?.message;
+    if (error.response?.data?.message) {
+      return error.response.data.message;
+    }
+
+    if (error.response?.data?.error?.name) {
+      return error.response.data.error?.name;
+    }
+
+    return "Axios error";
   }
 
   if (error instanceof Error) {
