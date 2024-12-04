@@ -3,11 +3,6 @@ import {
   useQueryClient,
   type UseMutationOptions,
 } from "@tanstack/react-query";
-import type {
-  CreateProjectBody,
-  CreateProjectResponse,
-} from "../services/project.type";
-import projectService from "../services/project";
 import payrollService from "../services/payroll";
 import {
   CreatePayrollBody,

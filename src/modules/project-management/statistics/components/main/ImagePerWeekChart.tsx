@@ -10,15 +10,6 @@ import { cn } from "@/common/lib/utils";
 import { ImageProductionPerWeek } from "@/common/services/statistic.type";
 import { format } from "date-fns";
 
-const chartData = [
-  { team: "Dio", image: 186 },
-  { team: "Monezilus", image: 305 },
-  { team: "Vinn", image: 237 },
-  { team: "Pandji", image: 73 },
-  { team: "Dekkun", image: 209 },
-  { team: "Kluqis", image: 214 },
-];
-
 const chartConfig = {
   image: {
     label: "Image",
