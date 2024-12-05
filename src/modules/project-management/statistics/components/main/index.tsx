@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import ImagePerWeekChart from "./ImagePerWeekChart";
 import MonthPickerInput from "@/common/components/MonthPickerInput";
 import useImageProductionPerWeekQuery from "@/common/queries/imageProductionPerWeekQuery";
@@ -19,6 +19,16 @@ const Statistics = () => {
       },
     });
 
+  const overallImage = useMemo(() => {
+    if (!imageProductionPerWeekData?.data?.docs?.length) return 0;
+
+    return imageProductionPerWeekData?.data.docs.reduce(
+      (accumulator, current) =>
+        current.teams.reduce((acc, team) => acc + team.count, 0) + accumulator,
+      0
+    );
+  }, [imageProductionPerWeekData?.data.docs]);
+
   return (
     <div>
       <div className="border rounded-md">
@@ -32,7 +42,7 @@ const Statistics = () => {
             </div>
           </div>
           <div className="flex items-center justify-center flex-col">
-            <div className="text-2xl font-semibold">300</div>
+            <div className="text-2xl font-semibold">{overallImage}</div>
             <div className="text-muted-foreground">Overall Image</div>
           </div>
         </div>
