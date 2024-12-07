@@ -5,8 +5,10 @@ import UpdateProjectDialog from "../main/UpdateProjectDialog";
 import { useRouter } from "next/router";
 import useProjectListQuery from "@/common/queries/projectListQuery";
 import { format } from "date-fns";
-import { PROJECT_STATUS } from "@/modules/project-management/payroll/constants";
+import { PROJECT_STATUS_LABEL } from "@/modules/project-management/payroll/constants";
 import UpdateProjectStatusDialog from "./UpdateProjectStatusDialog";
+import { formatRupiah } from "@/common/lib/utils";
+import OfferingsTable from "./OfferingTable";
 
 const ProjectDetail = () => {
   const router = useRouter();
@@ -45,7 +47,7 @@ const ProjectDetail = () => {
         </div>
       </div>
 
-      <div className="border rounded-md p-4">
+      <div className="border rounded-md p-4 mb-4">
         <div className="gap-x-6 gap-y-5 flex flex-wrap items-center [&>*]:border-r">
           <div className="px-6">
             <div className="text-muted-foreground text-xs">Project Name</div>
@@ -60,13 +62,15 @@ const ProjectDetail = () => {
           <div className="px-6">
             <div className="text-muted-foreground text-xs">Status</div>
             <h1 className="text-lg font-medium">
-              {project?.status ? PROJECT_STATUS[project?.status] : "N/A"}
+              {project?.status ? PROJECT_STATUS_LABEL[project?.status] : "N/A"}
               <UpdateProjectStatusDialog project={project} />
             </h1>
           </div>
           <div className="px-6">
             <div className="text-muted-foreground text-xs">Fee</div>
-            <h1 className="text-lg font-medium">{project?.fee || "N/A"}</h1>
+            <h1 className="text-lg font-medium">
+              {project?.fee ? formatRupiah(project?.fee) : "N/A"}
+            </h1>
           </div>
           <div className="px-6">
             <div className="text-muted-foreground text-xs">Deadline</div>
@@ -74,6 +78,12 @@ const ProjectDetail = () => {
               {project?.deadline
                 ? format(new Date(project.deadline), "d MMM yyyy HH:mm")
                 : "N/A"}
+            </h1>
+          </div>
+          <div className="px-6">
+            <div className="text-muted-foreground text-xs">Client Name</div>
+            <h1 className="text-lg font-medium">
+              {project?.clientName || "N/A"}
             </h1>
           </div>
           <div className="px-6">
@@ -94,6 +104,11 @@ const ProjectDetail = () => {
             <h1 className="text-lg font-medium">{project?.note || "N/A"}</h1>
           </div>
         </div>
+      </div>
+
+      <div>
+        <div className="text-xl mb-2 font-medium">Offering List</div>
+        <OfferingsTable />
       </div>
     </div>
   );

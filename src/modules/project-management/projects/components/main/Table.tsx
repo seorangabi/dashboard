@@ -7,9 +7,11 @@ import Link from "next/link";
 import DeleteProjectDialog from "./DeleteProjectDialog";
 import UpdateProjectDialog from "./UpdateProjectDialog";
 import useProjectListQuery from "@/common/queries/projectListQuery";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Project } from "@/common/types/project";
-import { PROJECT_STATUS } from "@/modules/project-management/payroll/constants";
+import { PROJECT_STATUS_LABEL } from "@/modules/project-management/payroll/constants";
+import useMainPageQueryState from "../../hooks/useMainPageQueryState";
+import { GetProjectListQuery } from "@/common/services/project.type";
 
 export const columns: ColumnDef<Project>[] = [
   {
@@ -30,7 +32,9 @@ export const columns: ColumnDef<Project>[] = [
     header: "Status",
     cell: ({ row }) => (
       <div className="capitalize">
-        {PROJECT_STATUS[row.original.status] ?? row.original.status ?? "N/A"}
+        {PROJECT_STATUS_LABEL[row.original.status] ??
+          row.original.status ??
+          "N/A"}
       </div>
     ),
   },
@@ -61,16 +65,18 @@ export const columns: ColumnDef<Project>[] = [
 ];
 
 const ProjectsTable = () => {
-  const [pagination, setPagination] = useState({
-    page: 1,
-    pageSize: 50,
-  });
+  const { query, setQuery } = useMainPageQueryState();
+  const page = parseInt(query.page);
+  const pageSize = parseInt(query.pageSize);
+
   const { data: projectData, isLoading } = useProjectListQuery({
     query: {
       with: ["team"],
-      skip: (pagination.page - 1) * pagination.pageSize,
-      limit: pagination.pageSize,
+      skip: (page - 1) * pageSize,
+      limit: pageSize,
       sort: ["created_at:desc"],
+      team_id_eq: query.teamId,
+      status_eq: query.status as GetProjectListQuery["status_eq"],
     },
   });
   const data = useMemo(() => {
@@ -85,21 +91,21 @@ const ProjectsTable = () => {
         columns={columns}
         data={data}
         pagination={{
-          page: pagination.page,
-          pageSize: pagination.pageSize,
+          page,
+          pageSize,
           hasNextPage: projectData?.data?.pagination?.hasNext ?? false,
           hasPreviousPage: projectData?.data?.pagination?.hasPrev ?? false,
           onNext: () => {
-            setPagination((prev) => ({
-              ...prev,
-              page: prev.page + 1,
-            }));
+            setQuery({
+              ...query,
+              page: (page + 1).toString(),
+            });
           },
           onPrev: () => {
-            setPagination((prev) => ({
-              ...prev,
-              page: prev.page - 1,
-            }));
+            setQuery({
+              ...query,
+              page: (page - 1).toString(),
+            });
           },
         }}
       />

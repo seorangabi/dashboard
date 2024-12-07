@@ -19,6 +19,8 @@ export type DeleteTeamResponse = ApiResponse<{ doc: Team }>;
 // #region POST /api/v1/team
 export type CreateTeamBody = {
   name: string;
+  discordUserId: string;
+  discordChannelId: string;
   bankNumber: string | null;
   bankAccountHolder: string | null;
   bankProvider: string | null;
@@ -32,6 +34,8 @@ export type UpdateTeamParam = {
 };
 export type UpdateTeamBody = {
   name?: string;
+  discordUserId?: string | null;
+  discordChannelId?: string | null;
   bankNumber?: string | null;
   bankAccountHolder?: string | null;
   bankProvider?: string | null;

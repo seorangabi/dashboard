@@ -20,18 +20,26 @@ import { cn } from "../lib/utils";
 const SelectTeam: FC<{
   value: string | undefined;
   onChange: (value: string | undefined) => void;
-}> = ({ value, onChange }) => {
+  popoverContentClassName?: string;
+}> = ({ value, onChange, popoverContentClassName }) => {
+  const [search, setSearch] = useState<string>("");
   const [open, setOpen] = useState(false);
   const { data } = useTeamListQuery({});
 
   const teams = useMemo(() => {
     if (!data?.data?.docs.length) return [];
 
-    return data.data.docs.map((team) => ({
+    const docs = data.data.docs;
+
+    const filteredDocs = docs.filter((team) =>
+      team.name.toLowerCase().includes(search.toLowerCase())
+    );
+
+    return filteredDocs.map((team) => ({
       value: team.id,
       label: team.name,
     }));
-  }, [data?.data?.docs]);
+  }, [data?.data?.docs, search]);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -43,31 +51,36 @@ const SelectTeam: FC<{
           className="justify-between w-full"
         >
           {value
-            ? teams.find((framework) => framework.value === value)?.label
+            ? teams.find((team) => team.value === value)?.label
             : "Select a team..."}
           <ChevronsUpDown className="opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className={cn("w-[370px] p-0")}>
-        <Command>
-          <CommandInput placeholder="Search team..." className="h-9" />
+      <PopoverContent className={cn("w-[370px] p-0", popoverContentClassName)}>
+        <Command shouldFilter={false}>
+          <CommandInput
+            value={search}
+            onValueChange={setSearch}
+            placeholder="Search team..."
+            className="h-9"
+          />
           <CommandList>
             <CommandEmpty>No team found.</CommandEmpty>
             <CommandGroup>
-              {teams.map((framework) => (
+              {teams.map((team) => (
                 <CommandItem
-                  key={framework.value}
-                  value={framework.value}
+                  key={team.value}
+                  value={team.value}
                   onSelect={(currentValue) => {
                     onChange(currentValue === value ? "" : currentValue);
                     setOpen(false);
                   }}
                 >
-                  {framework.label}
+                  {team.label}
                   <Check
                     className={cn(
                       "ml-auto",
-                      value === framework.value ? "opacity-100" : "opacity-0"
+                      value === team.value ? "opacity-100" : "opacity-0"
                     )}
                   />
                 </CommandItem>

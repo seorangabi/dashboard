@@ -37,6 +37,7 @@ const formSchema = z.object({
   imageRatio: z.string(),
   note: z.string().optional(),
   teamId: z.string(),
+  clientName: z.string(),
 });
 
 const AddProjectDialog = () => {
@@ -89,6 +90,19 @@ const AddProjectDialog = () => {
                     <FormLabel>Name*</FormLabel>
                     <FormControl>
                       <Input placeholder="Name" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="clientName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Client*</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Client name" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -176,7 +190,7 @@ const AddProjectDialog = () => {
                 name="teamId"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Team</FormLabel>
+                    <FormLabel>Team*</FormLabel>
                     <FormControl>
                       <SelectTeam
                         value={field.value}

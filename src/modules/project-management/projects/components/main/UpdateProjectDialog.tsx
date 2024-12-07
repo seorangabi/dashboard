@@ -35,7 +35,6 @@ const formSchema = z.object({
   deadline: z.date(),
   imageRatio: z.string(),
   note: z.string().optional(),
-  teamId: z.string(),
 });
 
 const UpdateProjectDialog: FC<{
@@ -75,7 +74,6 @@ const UpdateProjectDialog: FC<{
           form.reset({
             name: project?.name || "",
             fee: project?.fee || 0,
-            teamId: "",
             imageRatio: project?.imageRatio || "",
             note: project?.note || "",
             deadline: new Date(),

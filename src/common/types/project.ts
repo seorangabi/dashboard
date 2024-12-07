@@ -8,10 +8,11 @@ export type Project = {
   note: string | null; // default value for Offering
   deadline: DateTime; // default value for Offering
   imageRatio: string; // default value for Offering
-  status: "OFFERING" | "IN_PROGRESS" | "REVISION" | "DONE";
+  status: "OFFERING" | "IN_PROGRESS" | "DONE" | "CANCELLED";
   createdAt: DateTime;
   teamId: string;
   imageCount: number;
+  clientName: string;
 
   isPaid: boolean;
   payrollId: string | null;

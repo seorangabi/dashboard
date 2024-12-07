@@ -15,7 +15,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/common/components/ui/form";
-import React, { FC, useState } from "react";
+import React, { FC, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -32,10 +32,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/common/components/ui/select";
-import { PROJECT_STATUS } from "@/modules/project-management/payroll/constants";
+import { PROJECT_STATUS_LABEL } from "@/modules/project-management/payroll/constants";
 
 const formSchema = z.object({
-  status: z.enum(["OFFERING", "IN_PROGRESS", "REVISION", "DONE"]),
+  status: z.enum(["OFFERING", "IN_PROGRESS", "DONE", "CANCELLED"]),
 });
 
 const UpdateProjectStatusDialog: FC<{ project: Project | undefined }> = ({
@@ -49,6 +49,28 @@ const UpdateProjectStatusDialog: FC<{ project: Project | undefined }> = ({
       status: project?.status,
     },
   });
+
+  const options = useMemo(() => {
+    if (!project?.status) return [];
+
+    const temp: {
+      label: string;
+      value: Project["status"];
+    }[] = [];
+
+    const keys = ["OFFERING", "IN_PROGRESS", "DONE", "CANCELLED"] as const;
+
+    for (const key of keys) {
+      if (project.status !== "OFFERING" && key === "OFFERING") continue;
+
+      temp.push({
+        label: PROJECT_STATUS_LABEL[key],
+        value: key,
+      });
+    }
+
+    return temp;
+  }, [project?.status]);
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
@@ -82,7 +104,13 @@ const UpdateProjectStatusDialog: FC<{ project: Project | undefined }> = ({
       }}
     >
       <DialogTrigger asChild>
-        <Button variant="link" size="sm" disabled={project?.status === "DONE"}>
+        <Button
+          variant="link"
+          size="sm"
+          disabled={
+            project?.status === "DONE" || project?.status === "CANCELLED"
+          }
+        >
           <Pencil />
         </Button>
       </DialogTrigger>
@@ -110,18 +138,11 @@ const UpdateProjectStatusDialog: FC<{ project: Project | undefined }> = ({
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="OFFERING">
-                          {PROJECT_STATUS.OFFERING}
-                        </SelectItem>
-                        <SelectItem value="IN_PROGRESS">
-                          {PROJECT_STATUS.IN_PROGRESS}
-                        </SelectItem>
-                        <SelectItem value="REVISION">
-                          {PROJECT_STATUS.REVISION}
-                        </SelectItem>
-                        <SelectItem value="DONE">
-                          {PROJECT_STATUS.DONE}
-                        </SelectItem>
+                        {options.map((option) => (
+                          <SelectItem key={option.value} value={option.value}>
+                            {option.label}
+                          </SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                     <FormMessage />

@@ -26,7 +26,9 @@ import { toast } from "sonner";
 import { generateErrorMessage } from "@/common/lib/utils";
 
 const formSchema = z.object({
-  name: z.string(),
+  name: z.string().min(1),
+  discordUserId: z.string().min(1),
+  discordChannelId: z.string().min(1),
   bankNumber: z.string().optional(),
   bankAccountHolder: z.string().optional(),
   bankProvider: z.string().optional(),
@@ -44,6 +46,8 @@ const AddTeamDialog = () => {
     try {
       await mutateAsync({
         name: values.name,
+        discordUserId: values.discordUserId,
+        discordChannelId: values.discordChannelId,
         bankNumber: values.bankNumber || null,
         bankAccountHolder: values.bankAccountHolder || null,
         bankProvider: values.bankProvider || null,
@@ -81,6 +85,32 @@ const AddTeamDialog = () => {
                     <FormLabel>Name*</FormLabel>
                     <FormControl>
                       <Input placeholder="Name" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="discordUserId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Discord User ID*</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Discord User ID" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="discordChannelId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Discord Channel ID*</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Discord Channel ID" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

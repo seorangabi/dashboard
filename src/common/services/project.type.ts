@@ -33,6 +33,7 @@ export type CreateProjectBody = {
   imageRatio: string;
   note?: string;
   teamId: string;
+  clientName: string;
 };
 export type CreateProjectResponse = ApiResponse<{ doc: Project }>;
 // #endregion
@@ -48,6 +49,8 @@ export type UpdateProjectBody = {
   imageRatio?: string;
   note?: string | null;
   teamId?: string;
+  clientName?: string;
+  status?: Project["status"];
 };
 export type UpdateProjectResponse = ApiResponse<{ doc: Project }>;
 // #endregion

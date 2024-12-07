@@ -27,7 +27,9 @@ import { toast } from "sonner";
 import { generateErrorMessage } from "@/common/lib/utils";
 
 const formSchema = z.object({
-  name: z.string(),
+  name: z.string().min(1),
+  discordUserId: z.string().min(1),
+  discordChannelId: z.string().min(1),
   bankNumber: z.string().optional(),
   bankAccountHolder: z.string().optional(),
   bankProvider: z.string().optional(),
@@ -48,6 +50,8 @@ const UpdateTeamDialog: FC<{
     try {
       await mutateAsync({
         id: team?.id || "",
+        discordUserId: values.discordUserId,
+        discordChannelId: values.discordChannelId,
         name: values.name || "",
         bankNumber: values.bankNumber || null,
         bankAccountHolder: values.bankAccountHolder || null,
@@ -70,6 +74,8 @@ const UpdateTeamDialog: FC<{
         if (newOpen)
           form.reset({
             name: team?.name || "",
+            discordUserId: team?.discordUserId || "",
+            discordChannelId: team?.discordChannelId || "",
             bankNumber: team?.bankNumber || "",
             bankAccountHolder: team?.bankAccountHolder || "",
             bankProvider: team?.bankProvider || "",
@@ -99,6 +105,32 @@ const UpdateTeamDialog: FC<{
                     <FormLabel>Name*</FormLabel>
                     <FormControl>
                       <Input placeholder="Name" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="discordUserId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Discord User ID*</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Discord User ID" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="discordChannelId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Discord Channel ID*</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Discord Channel ID" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
