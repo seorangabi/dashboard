@@ -1,6 +1,6 @@
 import { ApiResponse } from "../types";
 
-// #region GET /api/v1/statistic/image-production-per-week
+// #region GET /v1/statistic/image-production-per-week
 export type GetImageProductionPerWeekQuery = {
   year: number;
   monthIndex: number;

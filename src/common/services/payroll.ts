@@ -13,17 +13,17 @@ import {
 
 const payrollService = {
   getPayrollList: async ({ query }: { query?: GetPayrollListQuery }) => {
-    return apiInstance.get<GetPayrollListResponse>("/api/v1/payroll/list", {
+    return apiInstance.get<GetPayrollListResponse>("/v1/payroll/list", {
       params: query,
     });
   },
   deletePayroll: async ({ param }: { param: DeletePayrollParam }) => {
     return apiInstance.delete<DeletePayrollResponse>(
-      `api/v1/payroll/${param.id}`
+      `/v1/payroll/${param.id}`
     );
   },
   createPayroll: async ({ body }: { body: CreatePayrollBody }) => {
-    return apiInstance.post<CreatePayrollResponse>(`api/v1/payroll`, body);
+    return apiInstance.post<CreatePayrollResponse>(`/v1/payroll`, body);
   },
   updatePayroll: async ({
     param,
@@ -33,7 +33,7 @@ const payrollService = {
     body: UpdatePayrollBody;
   }) => {
     return apiInstance.patch<UpdatePayrollResponse>(
-      `api/v1/payroll/${param.id}`,
+      `/v1/payroll/${param.id}`,
       body
     );
   },

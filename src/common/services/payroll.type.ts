@@ -1,7 +1,7 @@
 import { ApiResponse, DateTime } from "../types";
 import { Payroll } from "../types/payroll";
 
-// #region GET /api/v1/payroll/list
+// #region GET /v1/payroll/list
 export type GetPayrollListQuery = {
   id_eq?: string;
   team_id_eq?: string;
@@ -13,14 +13,14 @@ export type GetPayrollListResponse = ApiResponse<{
 }>;
 // #endregion
 
-// #region DELETE /api/v1/payroll/:id
+// #region DELETE /v1/payroll/:id
 export type DeletePayrollParam = {
   id: string;
 };
 export type DeletePayrollResponse = ApiResponse<{ doc: Payroll }>;
 // #endregion
 
-// #region POST /api/v1/payroll
+// #region POST /v1/payroll
 export type CreatePayrollBody = {
   periodStart: DateTime;
   periodEnd: DateTime;
@@ -31,7 +31,7 @@ export type CreatePayrollBody = {
 export type CreatePayrollResponse = ApiResponse<{ doc: Payroll }>;
 // #endregion
 
-// #region PATCH /api/v1/payroll
+// #region PATCH /v1/payroll
 export type UpdatePayrollParam = {
   id: string;
 };

@@ -13,15 +13,15 @@ import {
 
 const teamService = {
   getTeamList: async ({ query }: { query?: GetTeamListQuery }) => {
-    return apiInstance.get<GetTeamListResponse>("/api/v1/team/list", {
+    return apiInstance.get<GetTeamListResponse>("/v1/team/list", {
       params: query,
     });
   },
   deleteTeam: async ({ param }: { param: DeleteTeamParam }) => {
-    return apiInstance.delete<DeleteTeamResponse>(`api/v1/team/${param.id}`);
+    return apiInstance.delete<DeleteTeamResponse>(`/v1/team/${param.id}`);
   },
   createTeam: async ({ body }: { body: CreateTeamBody }) => {
-    return apiInstance.post<CreateTeamResponse>(`api/v1/team`, body);
+    return apiInstance.post<CreateTeamResponse>(`/v1/team`, body);
   },
   updateTeam: async ({
     param,
@@ -31,7 +31,7 @@ const teamService = {
     body: UpdateTeamBody;
   }) => {
     return apiInstance.patch<UpdateTeamResponse>(
-      `api/v1/team/${param.id}`,
+      `/v1/team/${param.id}`,
       body
     );
   },

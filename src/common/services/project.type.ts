@@ -1,7 +1,7 @@
 import { ApiResponse, Pagination } from "../types";
 import { Project } from "../types/project";
 
-// #region GET /api/v1/project/list
+// #region GET /v1/project/list
 export type GetProjectListQuery = {
   id_eq?: string;
   team_id_eq?: string;
@@ -18,14 +18,14 @@ export type GetProjectListResponse = ApiResponse<{
 }>;
 // #endregion
 
-// #region DELETE /api/v1/project/:id
+// #region DELETE /v1/project/:id
 export type DeleteProjectParam = {
   id: string;
 };
 export type DeleteProjectResponse = ApiResponse<{ doc: Project }>;
 // #endregion
 
-// #region POST /api/v1/project
+// #region POST /v1/project
 export type CreateProjectBody = {
   name: string;
   fee: number;
@@ -38,7 +38,7 @@ export type CreateProjectBody = {
 export type CreateProjectResponse = ApiResponse<{ doc: Project }>;
 // #endregion
 
-// #region PATCH /api/v1/project
+// #region PATCH /v1/project
 export type UpdateProjectParam = {
   id: string;
 };

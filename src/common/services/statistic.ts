@@ -11,7 +11,7 @@ export const statisticService = {
     query: GetImageProductionPerWeekQuery;
   }) => {
     return apiInstance.get<GetImageProductionPerWeekResponse>(
-      "/api/v1/statistic/image-production-per-week",
+      "/v1/statistic/image-production-per-week",
       {
         params: query,
       }

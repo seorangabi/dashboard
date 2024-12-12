@@ -1,7 +1,7 @@
 import { ApiResponse } from "../types";
 import { Team } from "../types/team";
 
-// #region GET /api/v1/team/list
+// #region GET /v1/team/list
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export type GetTeamListQuery = {};
 export type GetTeamListResponse = ApiResponse<{
@@ -9,14 +9,14 @@ export type GetTeamListResponse = ApiResponse<{
 }>;
 // #endregion
 
-// #region DELETE /api/v1/team/:id
+// #region DELETE /v1/team/:id
 export type DeleteTeamParam = {
   id: string;
 };
 export type DeleteTeamResponse = ApiResponse<{ doc: Team }>;
 // #endregion
 
-// #region POST /api/v1/team
+// #region POST /v1/team
 export type CreateTeamBody = {
   name: string;
   discordUserId: string;
@@ -28,7 +28,7 @@ export type CreateTeamBody = {
 export type CreateTeamResponse = ApiResponse<{ doc: Team }>;
 // #endregion
 
-// #region PATCH /api/v1/team
+// #region PATCH /v1/team
 export type UpdateTeamParam = {
   id: string;
 };
