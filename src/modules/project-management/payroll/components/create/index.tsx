@@ -38,6 +38,7 @@ import Link from "next/link";
 import useProjectListQuery from "@/common/queries/projectListQuery";
 import { startOfDay } from "date-fns";
 import { useRouter } from "next/router";
+import { LoaderCircle } from "lucide-react";
 
 const formSchema = z.object({
   teamId: z.string(),
@@ -55,7 +56,7 @@ const formSchema = z.object({
 
 const CreatePayroll = () => {
   const router = useRouter();
-  const { mutateAsync } = useCreatePayrollMutation({});
+  const { mutateAsync, isPending } = useCreatePayrollMutation({});
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -366,7 +367,8 @@ const CreatePayroll = () => {
               />
             </div>
 
-            <Button type="submit" className="mt-6">
+            <Button type="submit" className="mt-6" disabled={isPending}>
+              {isPending && <LoaderCircle className="animate-spin" />}
               Create Payroll
             </Button>
           </form>

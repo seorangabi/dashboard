@@ -12,7 +12,7 @@ import {
 import { Button } from "@/common/components/ui/button";
 import { generateErrorMessage } from "@/common/lib/utils";
 import useUpdatePayrollMutation from "@/common/mutations/updatePayrollMutation";
-import { Pencil } from "lucide-react";
+import { LoaderCircle, Pencil } from "lucide-react";
 import React, { FC } from "react";
 import { toast } from "sonner";
 
@@ -47,6 +47,7 @@ const UpdatePayrollStatusDialog: FC<{ id: string }> = ({ id }) => {
         <AlertDialogFooter>
           <AlertDialogCancel disabled={isPending}>Cancel</AlertDialogCancel>
           <AlertDialogAction onClick={handleUpdate} disabled={isPending}>
+            {isPending && <LoaderCircle className="animate-spin" />}
             Yes
           </AlertDialogAction>
         </AlertDialogFooter>

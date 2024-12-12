@@ -20,7 +20,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Plus } from "lucide-react";
+import { LoaderCircle, Plus } from "lucide-react";
 import { Textarea } from "@/common/components/ui/textarea";
 import DateTimePicker24h from "@/common/components/DateTimePicker24h";
 
@@ -42,7 +42,7 @@ const formSchema = z.object({
 
 const AddProjectDialog = () => {
   const [open, setOpen] = useState(false);
-  const { mutateAsync } = useCreateProjectMutation({});
+  const { mutateAsync, isPending } = useCreateProjectMutation({});
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -221,7 +221,10 @@ const AddProjectDialog = () => {
             </div>
 
             <DialogFooter>
-              <Button type="submit">Add</Button>
+              <Button type="submit" disabled={isPending}>
+                {isPending && <LoaderCircle className="animate-spin" />}
+                Add
+              </Button>
             </DialogFooter>
           </form>
         </Form>

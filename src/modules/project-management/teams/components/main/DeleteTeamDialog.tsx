@@ -12,7 +12,7 @@ import {
 import { Button } from "@/common/components/ui/button";
 import { generateErrorMessage } from "@/common/lib/utils";
 import useDeleteTeamMutation from "@/common/mutations/deleteTeamMutation";
-import { Trash } from "lucide-react";
+import { LoaderCircle, Trash } from "lucide-react";
 import React, { FC } from "react";
 import { toast } from "sonner";
 
@@ -47,6 +47,7 @@ const DeleteTeamDialog: FC<{ id: string }> = ({ id }) => {
         <AlertDialogFooter>
           <AlertDialogCancel disabled={isPending}>Cancel</AlertDialogCancel>
           <AlertDialogAction onClick={handleDelete} disabled={isPending}>
+            {isPending && <LoaderCircle className="animate-spin" />}
             Yes
           </AlertDialogAction>
         </AlertDialogFooter>

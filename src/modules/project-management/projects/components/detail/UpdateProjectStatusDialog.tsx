@@ -19,7 +19,7 @@ import React, { FC, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Pencil } from "lucide-react";
+import { LoaderCircle, Pencil } from "lucide-react";
 
 import { generateErrorMessage } from "@/common/lib/utils";
 import { toast } from "sonner";
@@ -153,6 +153,7 @@ const UpdateProjectStatusDialog: FC<{ project: Project | undefined }> = ({
 
             <DialogFooter>
               <Button type="submit" disabled={isPending}>
+                {isPending && <LoaderCircle className="animate-spin" />}
                 Update
               </Button>
             </DialogFooter>

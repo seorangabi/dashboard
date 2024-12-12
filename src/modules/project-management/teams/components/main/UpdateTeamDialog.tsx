@@ -20,7 +20,7 @@ import React, { FC, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Pencil } from "lucide-react";
+import { LoaderCircle, Pencil } from "lucide-react";
 import useUpdateTeamMutation from "@/common/mutations/updateTeamMutation";
 import { Team } from "@/common/types/team";
 import { toast } from "sonner";
@@ -39,7 +39,7 @@ const UpdateTeamDialog: FC<{
   team: Team | undefined;
 }> = ({ team }) => {
   const [open, setOpen] = useState(false);
-  const { mutateAsync } = useUpdateTeamMutation({});
+  const { mutateAsync, isPending } = useUpdateTeamMutation({});
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -178,7 +178,10 @@ const UpdateTeamDialog: FC<{
             </div>
 
             <DialogFooter>
-              <Button type="submit">Update</Button>
+              <Button type="submit" disabled={isPending}>
+                {isPending && <LoaderCircle className="animate-spin" />}
+                Update
+              </Button>
             </DialogFooter>
           </form>
         </Form>

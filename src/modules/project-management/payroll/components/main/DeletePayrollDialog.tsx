@@ -12,7 +12,7 @@ import {
 import { Button } from "@/common/components/ui/button";
 import { generateErrorMessage } from "@/common/lib/utils";
 import useDeletePayrollMutation from "@/common/mutations/deletePayrollMutation";
-import { Trash } from "lucide-react";
+import { LoaderCircle, Trash } from "lucide-react";
 import React, { FC } from "react";
 import { toast } from "sonner";
 
@@ -50,6 +50,7 @@ const DeletePayrollDialog: FC<{ id: string; disabled?: boolean }> = ({
         <AlertDialogFooter>
           <AlertDialogCancel disabled={isPending}>Cancel</AlertDialogCancel>
           <AlertDialogAction onClick={handleDelete} disabled={isPending}>
+            {isPending && <LoaderCircle className="animate-spin" />}
             Yes
           </AlertDialogAction>
         </AlertDialogFooter>
