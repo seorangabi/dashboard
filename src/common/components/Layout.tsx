@@ -2,6 +2,7 @@ import { FC, ReactNode } from "react";
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -20,6 +21,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Head from "next/head";
+import { Button } from "./ui/button";
 
 const projectManagementItems = [
   {
@@ -114,6 +117,9 @@ const AppSidebar = () => {
           </SidebarGroup>
         ))}
       </SidebarContent>
+      <SidebarFooter>
+        <Button variant="ghost">Logout</Button>
+      </SidebarFooter>
     </Sidebar>
   );
 };
@@ -121,6 +127,11 @@ const AppSidebar = () => {
 const Layout: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <SidebarProvider>
+      <Head>
+        <title>Studio Seorangabi</title>
+        <link rel="icon" type="image/x-icon" href="/favicon.png" />
+      </Head>
+
       <AppSidebar />
 
       <main className="p-6 w-full mx-auto max-w-screen-2xl relative">

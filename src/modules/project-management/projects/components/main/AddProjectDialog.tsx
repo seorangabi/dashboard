@@ -20,14 +20,22 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoaderCircle, Plus } from "lucide-react";
+import { Check, LoaderCircle, Plus } from "lucide-react";
 import { Textarea } from "@/common/components/ui/textarea";
 import DateTimePicker24h from "@/common/components/DateTimePicker24h";
 
-import { generateErrorMessage } from "@/common/lib/utils";
+import { cn, generateErrorMessage } from "@/common/lib/utils";
 import useCreateProjectMutation from "@/common/mutations/createProjectMutation";
 import { toast } from "sonner";
 import SelectTeam from "@/common/components/SelectTeam";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/common/components/ui/popover";
+import { Command, CommandList } from "cmdk";
+import { CommandEmpty, CommandItem } from "@/common/components/ui/command";
+import CurrencyInput from "@/common/components/CurrencyInput";
 
 const formSchema = z.object({
   name: z.string(),
@@ -39,8 +47,16 @@ const formSchema = z.object({
   teamId: z.string(),
   clientName: z.string(),
 });
+const options = [
+  { value: "STANDART (1:1)" },
+  { value: "STANDART (16:9)" },
+  { value: "GIFs (1:1)" },
+  { value: "PFP (Profile Picture) (1:1)" },
+  { value: "BANNER (3:1)" },
+];
 
 const AddProjectDialog = () => {
+  const [openRatioDropdown, setOpenRatioDropdown] = useState(false);
   const [open, setOpen] = useState(false);
   const { mutateAsync, isPending } = useCreateProjectMutation({});
   const form = useForm<z.infer<typeof formSchema>>({
@@ -59,8 +75,8 @@ const AddProjectDialog = () => {
       });
 
       toast.success("Project created successfully");
-      form.reset();
-      setOpen(false);
+      // form.reset();
+      // setOpen(false);
     } catch (error) {
       console.error(error);
       toast.error(generateErrorMessage(error));
@@ -115,17 +131,11 @@ const AddProjectDialog = () => {
                   <FormItem>
                     <FormLabel>Fee*</FormLabel>
                     <FormControl>
-                      <Input
-                        type="number"
-                        placeholder="200000"
+                      <CurrencyInput
+                        placeholder="200,000"
                         {...field}
-                        onChange={(event) =>
-                          field.onChange(
-                            event.target.value
-                              ? Number(event.target.value)
-                              : null
-                          )
-                        }
+                        onChange={(value) => field.onChange(value)}
+                        value={field.value}
                       />
                     </FormControl>
                     <FormMessage />
@@ -179,7 +189,52 @@ const AddProjectDialog = () => {
                   <FormItem>
                     <FormLabel>Image Ratio*</FormLabel>
                     <FormControl>
-                      <Input placeholder="1:1" {...field} />
+                      <Popover
+                        open={openRatioDropdown}
+                        onOpenChange={setOpenRatioDropdown}
+                      >
+                        <PopoverTrigger asChild>
+                          <div>
+                            <Input
+                              placeholder="1:1"
+                              autoCorrect="off"
+                              autoFocus={false}
+                              autoComplete="off"
+                              {...field}
+                            />
+                          </div>
+                        </PopoverTrigger>
+                        <PopoverContent
+                          className="w-[370px] p-0"
+                          onOpenAutoFocus={(e) => e.preventDefault()}
+                        >
+                          <Command>
+                            <CommandList>
+                              <CommandEmpty>No option found.</CommandEmpty>
+                              {options.map((option) => (
+                                <CommandItem
+                                  key={option.value}
+                                  onSelect={() => {
+                                    field.onChange(option.value);
+                                    setOpenRatioDropdown(false);
+                                  }}
+                                  className="justify-between"
+                                >
+                                  {option.value}
+                                  <Check
+                                    className={cn(
+                                      "mr-2 h-4 w-4",
+                                      field.value === option.value
+                                        ? "opacity-100"
+                                        : "opacity-0"
+                                    )}
+                                  />
+                                </CommandItem>
+                              ))}
+                            </CommandList>
+                          </Command>
+                        </PopoverContent>
+                      </Popover>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
