@@ -23,6 +23,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import { Button } from "./ui/button";
+import { signOut } from "next-auth/react";
 
 const projectManagementItems = [
   {
@@ -118,7 +119,16 @@ const AppSidebar = () => {
         ))}
       </SidebarContent>
       <SidebarFooter>
-        <Button variant="ghost">Logout</Button>
+        <Button
+          variant="ghost"
+          onClick={() => {
+            signOut({
+              callbackUrl: "/",
+            });
+          }}
+        >
+          Logout
+        </Button>
       </SidebarFooter>
     </Sidebar>
   );
