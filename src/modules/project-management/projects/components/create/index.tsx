@@ -54,6 +54,12 @@ const CreateProject = () => {
     try {
       await mutateAsync({
         ...values,
+        tasks: values.tasks.map((task) => {
+          return {
+            ...task,
+            file: task.file,
+          };
+        }),
         deadline: values.deadline.toISOString(),
       });
 

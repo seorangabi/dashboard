@@ -31,7 +31,6 @@ const Tasks: FC<{
           type="button"
           variant="ghost"
           size="sm"
-          // @ts-expect-error Is fine
           onClick={() => append({ fee: 0, note: "", imageCount: 1 })}
         >
           <Plus />
