@@ -18,12 +18,40 @@ const projectService = {
     });
   },
   deleteProject: async ({ param }: { param: DeleteProjectParam }) => {
-    return apiInstance.delete<DeleteProjectResponse>(
-      `/v1/project/${param.id}`
-    );
+    return apiInstance.delete<DeleteProjectResponse>(`/v1/project/${param.id}`);
   },
   createProject: async ({ body }: { body: CreateProjectBody }) => {
-    return apiInstance.post<CreateProjectResponse>(`/v1/project`, body);
+    const formData = new FormData();
+
+    // Append top-level fields
+    formData.append("name", body.name);
+    formData.append("deadline", body.deadline);
+    formData.append("imageRatio", body.imageRatio);
+    formData.append("teamId", body.teamId);
+    formData.append("clientName", body.clientName);
+
+    // Append tasks array
+    body.tasks.forEach((task, index) => {
+      formData.append(`tasks[${index}][fee]`, task.fee.toString());
+      formData.append(
+        `tasks[${index}][imageCount]`,
+        task.imageCount.toString()
+      );
+      formData.append(`tasks[${index}][note]`, task.note);
+      formData.append(`tasks[${index}][file]`, task.file);
+    });
+
+    return apiInstance.post<CreateProjectResponse>(`/v1/project`, body, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      // formSerializer: {
+      //   // indexes: true,
+      //   // dots: true,
+      //   indexes: false,
+      //   // metaTokens: true,
+      // },
+    });
   },
   updateProject: async ({
     param,

@@ -28,12 +28,16 @@ export type DeleteProjectResponse = ApiResponse<{ doc: Project }>;
 // #region POST /v1/project
 export type CreateProjectBody = {
   name: string;
-  fee: number;
   deadline: string;
   imageRatio: string;
-  note?: string;
   teamId: string;
   clientName: string;
+  tasks: {
+    fee: number;
+    imageCount: number;
+    note: string;
+    file: File;
+  }[];
 };
 export type CreateProjectResponse = ApiResponse<{ doc: Project }>;
 // #endregion

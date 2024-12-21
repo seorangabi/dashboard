@@ -8,7 +8,18 @@ import { format } from "date-fns";
 import { PROJECT_STATUS_LABEL } from "@/modules/project-management/payroll/constants";
 import UpdateProjectStatusDialog from "./UpdateProjectStatusDialog";
 import { formatRupiah } from "@/common/lib/utils";
-import OfferingsTable from "./OfferingTable";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/common/components/ui/tabs";
+import dynamic from "next/dynamic";
+import Tasks from "./Tasks";
+
+const OfferingsTable = dynamic(() => import("./OfferingTable"), {
+  ssr: false,
+});
 
 const ProjectDetail = () => {
   const router = useRouter();
@@ -67,7 +78,7 @@ const ProjectDetail = () => {
             </h1>
           </div>
           <div className="px-6">
-            <div className="text-muted-foreground text-xs">Fee</div>
+            <div className="text-muted-foreground text-xs">Total Fee</div>
             <h1 className="text-lg font-medium">
               {project?.fee ? formatRupiah(project?.fee) : "N/A"}
             </h1>
@@ -93,23 +104,26 @@ const ProjectDetail = () => {
             </h1>
           </div>
           <div className="px-6">
-            <div className="text-muted-foreground text-xs">Image Count</div>
+            <div className="text-muted-foreground text-xs">Total Image</div>
             <h1 className="text-lg font-medium">
               {project?.imageCount || "N/A"}
             </h1>
           </div>
-
-          <div className="px-6">
-            <div className="text-muted-foreground text-xs">Note</div>
-            <h1 className="text-lg font-medium">{project?.note || "N/A"}</h1>
-          </div>
         </div>
       </div>
 
-      <div>
-        <div className="text-xl mb-2 font-medium">Offering List</div>
-        <OfferingsTable />
-      </div>
+      <Tabs defaultValue="tasks">
+        <TabsList>
+          <TabsTrigger value="tasks">Tasks</TabsTrigger>
+          <TabsTrigger value="offerings">Offerings</TabsTrigger>
+        </TabsList>
+        <TabsContent value="tasks">
+          <Tasks projectId={projectId} />
+        </TabsContent>
+        <TabsContent value="offerings">
+          <OfferingsTable />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };
