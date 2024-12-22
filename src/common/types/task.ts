@@ -5,4 +5,5 @@ export type Task = {
   imageCount: number;
   note: string;
   createdAt: string;
+  attachmentUrl: string;
 };

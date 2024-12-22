@@ -24,6 +24,7 @@ export type CreateTaskBody = {
   fee: number;
   imageCount: number;
   note: string;
+  attachmentUrl: string;
 };
 export type CreateTaskResponse = ApiResponse<{ doc: Task }>;
 // #endregion
@@ -36,6 +37,7 @@ export type UpdateTaskBody = {
   fee?: number;
   imageCount?: number;
   note?: string;
+  attachmentUrl?: string;
 };
 export type UpdateTaskResponse = ApiResponse<{ doc: Task }>;
 // #endregion

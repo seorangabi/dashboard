@@ -11,7 +11,7 @@ export const formSchema = z.object({
       fee: z.number(),
       imageCount: z.number(),
       note: z.string(),
-      file: z.any(),
+      attachmentUrl: z.string(),
     })
   ),
 });

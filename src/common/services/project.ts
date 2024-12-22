@@ -21,11 +21,7 @@ const projectService = {
     return apiInstance.delete<DeleteProjectResponse>(`/v1/project/${param.id}`);
   },
   createProject: async ({ body }: { body: CreateProjectBody }) => {
-    return apiInstance.post<CreateProjectResponse>(`/v1/project`, body, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    return apiInstance.post<CreateProjectResponse>(`/v1/project`, body);
   },
   updateProject: async ({
     param,

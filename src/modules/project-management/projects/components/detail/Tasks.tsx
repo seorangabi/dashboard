@@ -33,7 +33,16 @@ const Tasks: FC<{
                 <UpdateTaskDialog task={task} />
               </div>
               <div className="mb-2">Fee: {formatRupiah(task.fee)}</div>
-              <div>{task.note}</div>
+              <div className="grid grid-cols-[1fr_300px]">
+                <div>{task.note}</div>
+                <div>
+                  <img
+                    className="object-contain w-full h-72"
+                    src={task.attachmentUrl}
+                    alt=""
+                  />
+                </div>
+              </div>
             </div>
           );
         })}

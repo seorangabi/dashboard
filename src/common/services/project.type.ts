@@ -36,8 +36,7 @@ export type CreateProjectBody = {
     fee: number;
     imageCount: number;
     note: string;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    file: any;
+    attachmentUrl: string;
   }[];
 };
 export type CreateProjectResponse = ApiResponse<{ doc: Project }>;

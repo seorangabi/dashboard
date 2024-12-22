@@ -26,10 +26,12 @@ import { generateErrorMessage } from "@/common/lib/utils";
 import { toast } from "sonner";
 import useCreateTaskMutation from "@/common/mutations/createTaskMutation";
 import CurrencyInput from "@/common/components/CurrencyInput";
+import ImageUploader from "@/common/components/ImageUploader";
 
 const formSchema = z.object({
   fee: z.number(),
   note: z.string(),
+  attachmentUrl: z.string(),
 });
 
 const CreateTaskDialog: FC<{
@@ -41,9 +43,7 @@ const CreateTaskDialog: FC<{
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      note: "",
-    },
+    defaultValues: {},
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -53,6 +53,7 @@ const CreateTaskDialog: FC<{
         fee: values.fee,
         note: values.note,
         imageCount: 1,
+        attachmentUrl: values.attachmentUrl,
       });
 
       toast.success("Task created successfully");
@@ -71,6 +72,7 @@ const CreateTaskDialog: FC<{
         if (newOpen)
           form.reset({
             note: "",
+            fee: 0,
           });
 
         setOpen(newOpen);
@@ -81,43 +83,69 @@ const CreateTaskDialog: FC<{
           <Plus />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[800px]">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
             <DialogHeader>
               <DialogTitle>Create Task</DialogTitle>
             </DialogHeader>
-
-            <div className="space-y-3">
+            <div className="grid grid-cols-2 gap-x-5">
+              <div className="space-y-3">
+                <FormField
+                  control={form.control}
+                  name="fee"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Fee*</FormLabel>
+                      <FormControl>
+                        <CurrencyInput
+                          placeholder="200.000"
+                          {...field}
+                          onChange={(value) => field.onChange(value)}
+                          value={field.value}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="note"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Note</FormLabel>
+                      <FormControl>
+                        <Textarea
+                          placeholder="Note"
+                          className="resize-none min-h-60"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
               <FormField
                 control={form.control}
-                name="fee"
-                render={({ field }) => (
+                name="attachmentUrl"
+                render={({ field: { value, onChange } }) => (
                   <FormItem>
-                    <FormLabel>Fee*</FormLabel>
+                    <FormLabel>Picture</FormLabel>
                     <FormControl>
-                      <CurrencyInput
-                        placeholder="200.000"
-                        {...field}
-                        onChange={(value) => field.onChange(value)}
-                        value={field.value}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="note"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Note</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        placeholder="Note"
-                        className="resize-none"
-                        {...field}
+                      <ImageUploader
+                        value={value}
+                        onChange={({ url }) => {
+                          onChange(url);
+                          form.clearErrors("attachmentUrl");
+                        }}
+                        onError={(error) => {
+                          form.setError("attachmentUrl", {
+                            type: "manual",
+                            message: generateErrorMessage(error),
+                          });
+                        }}
                       />
                     </FormControl>
                     <FormMessage />
