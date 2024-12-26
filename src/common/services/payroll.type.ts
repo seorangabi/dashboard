@@ -1,4 +1,4 @@
-import { ApiResponse, DateTime } from "../types";
+import { ApiResponse, DateTime, Pagination } from "../types";
 import { Payroll } from "../types/payroll";
 
 // #region GET /v1/payroll/list
@@ -6,10 +6,14 @@ export type GetPayrollListQuery = {
   id_eq?: string;
   team_id_eq?: string;
   status_eq?: "DRAFT" | "PAID";
-  with: "team"[];
+  with: ("team" | "projects")[];
+  skip?: number;
+  limit?: number;
+  sort?: ("created_at:asc" | "created_at:desc")[];
 };
 export type GetPayrollListResponse = ApiResponse<{
   docs: Payroll[];
+  pagination: Pagination;
 }>;
 // #endregion
 

@@ -10,6 +10,8 @@ import DeletePayrollDialog from "./DeletePayrollDialog";
 import usePayrollListQuery from "@/common/queries/payrollListQuery";
 import { format } from "date-fns";
 import UpdatePayrollStatusDialog from "./UpdatePayrollStatusDialog";
+import useMainPageQueryState from "../../hooks/useMainPageQueryState";
+import { GetPayrollListQuery } from "@/common/services/payroll.type";
 
 export const columns: ColumnDef<Payroll>[] = [
   {
@@ -86,9 +88,18 @@ export const columns: ColumnDef<Payroll>[] = [
 ];
 
 const PayrollTable = () => {
+  const { query, setQuery } = useMainPageQueryState();
+  const page = parseInt(query.page);
+  const pageSize = parseInt(query.pageSize);
+
   const { data: payrollData, isLoading } = usePayrollListQuery({
     query: {
       with: ["team"],
+      skip: (page - 1) * pageSize,
+      limit: pageSize,
+      sort: ["created_at:desc"],
+      team_id_eq: query.teamId,
+      status_eq: query.status as GetPayrollListQuery["status_eq"],
     },
   });
   const data = useMemo(() => {
@@ -96,7 +107,31 @@ const PayrollTable = () => {
     return payrollData.data.docs;
   }, [payrollData]);
 
-  return <DataTable isLoading={isLoading} columns={columns} data={data} />;
+  return (
+    <DataTable
+      isLoading={isLoading}
+      columns={columns}
+      data={data}
+      pagination={{
+        page,
+        pageSize,
+        hasNextPage: payrollData?.data?.pagination?.hasNext ?? false,
+        hasPreviousPage: payrollData?.data?.pagination?.hasPrev ?? false,
+        onNext: () => {
+          setQuery({
+            ...query,
+            page: (page + 1).toString(),
+          });
+        },
+        onPrev: () => {
+          setQuery({
+            ...query,
+            page: (page - 1).toString(),
+          });
+        },
+      }}
+    />
+  );
 };
 
 export default PayrollTable;

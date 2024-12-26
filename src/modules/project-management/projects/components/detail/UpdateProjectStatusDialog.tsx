@@ -32,7 +32,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/common/components/ui/select";
-import { PROJECT_STATUS_LABEL } from "@/modules/project-management/payroll/constants";
+import { PROJECT_STATUS_LABEL } from "../../constants";
 
 const formSchema = z.object({
   status: z.enum(["OFFERING", "IN_PROGRESS", "DONE", "CANCELLED"]),

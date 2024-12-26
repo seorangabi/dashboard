@@ -1,4 +1,5 @@
 import { DateTime } from ".";
+import { Project } from "./project";
 import { Team } from "./team";
 
 export type Payroll = {
@@ -11,4 +12,5 @@ export type Payroll = {
   createdAt: DateTime;
   deletedAt: DateTime | null;
   team?: Team; // query with: team
+  projects?: Project[]; // query with: projects
 };

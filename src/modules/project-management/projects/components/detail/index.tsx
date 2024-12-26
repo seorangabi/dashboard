@@ -5,7 +5,6 @@ import UpdateProjectDialog from "../main/UpdateProjectDialog";
 import { useRouter } from "next/router";
 import useProjectListQuery from "@/common/queries/projectListQuery";
 import { format } from "date-fns";
-import { PROJECT_STATUS_LABEL } from "@/modules/project-management/payroll/constants";
 import UpdateProjectStatusDialog from "./UpdateProjectStatusDialog";
 import { formatRupiah } from "@/common/lib/utils";
 import {
@@ -16,6 +15,7 @@ import {
 } from "@/common/components/ui/tabs";
 import dynamic from "next/dynamic";
 import Tasks from "./Tasks";
+import { PROJECT_STATUS_LABEL } from "../../constants";
 
 const OfferingsTable = dynamic(() => import("./OfferingTable"), {
   ssr: false,

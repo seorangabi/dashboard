@@ -99,7 +99,7 @@ const DataTable = <TData, TValue>({
         </TableBody>
       </Table>
 
-      {!!pagination && (
+      {!!pagination && !(pagination?.page === 1 && !pagination.hasNextPage) && (
         <Pagination className="mb-3 border-t pt-3">
           <PaginationContent>
             <PaginationItem>

@@ -9,9 +9,9 @@ import UpdateProjectDialog from "./UpdateProjectDialog";
 import useProjectListQuery from "@/common/queries/projectListQuery";
 import { useMemo } from "react";
 import { Project } from "@/common/types/project";
-import { PROJECT_STATUS_LABEL } from "@/modules/project-management/payroll/constants";
 import useMainPageQueryState from "../../hooks/useMainPageQueryState";
 import { GetProjectListQuery } from "@/common/services/project.type";
+import { PROJECT_STATUS_LABEL } from "../../constants";
 
 export const columns: ColumnDef<Project>[] = [
   {

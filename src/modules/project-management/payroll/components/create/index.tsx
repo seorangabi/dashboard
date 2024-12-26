@@ -81,7 +81,7 @@ const CreatePayroll = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await mutateAsync({
+      const result = await mutateAsync({
         periodStart: startOfDay(values.periodStart).toISOString(),
         periodEnd: startOfDay(values.periodEnd).toISOString(),
         projectIds: values.projects.map((project) => project.id) ?? [],
@@ -92,7 +92,7 @@ const CreatePayroll = () => {
       toast.success("Payroll created successfully");
       form.reset();
 
-      router.push("/admin/project-management/payroll/create");
+      router.push(`/admin/project-management/payroll/${result?.data?.doc?.id}`);
     } catch (error) {
       console.error(error);
       toast.error(generateErrorMessage(error));

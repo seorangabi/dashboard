@@ -77,7 +77,7 @@ const AppSidebar = () => {
   return (
     <Sidebar>
       <SidebarHeader className="text-center font-bold">
-        Seorangabi.
+        SeorangAbi.
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
@@ -138,7 +138,7 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <SidebarProvider>
       <Head>
-        <title>Studio Seorangabi</title>
+        <title>Studio SeorangAbi</title>
         <link rel="icon" type="image/x-icon" href="/favicon.png" />
       </Head>
 

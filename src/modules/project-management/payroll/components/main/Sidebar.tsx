@@ -7,13 +7,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/common/components/ui/select";
-import useMainPageQueryState from "../../hooks/useMainPageQueryState";
 import { Button } from "@/common/components/ui/button";
 import { cn } from "@/common/lib/utils";
 import { useState } from "react";
-import { PROJECT_STATUS_LABEL } from "../../constants";
+import useMainPageQueryState from "../../hooks/useMainPageQueryState";
+import { PAYROLL_STATUS_LABEL } from "../../constants";
+import { Payroll } from "@/common/types/payroll";
 
-const ProjectSidebar = () => {
+const PayrollSidebar = () => {
   const [key, setKey] = useState(+new Date());
   const { query, setQuery } = useMainPageQueryState();
 
@@ -52,19 +53,11 @@ const ProjectSidebar = () => {
                 <SelectValue placeholder="Select a status" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="OFFERING">
-                  {PROJECT_STATUS_LABEL.OFFERING}
-                </SelectItem>
-                <SelectItem value="IN_PROGRESS">
-                  {PROJECT_STATUS_LABEL.IN_PROGRESS}
-                </SelectItem>
-                <SelectItem value="DONE">
-                  {PROJECT_STATUS_LABEL.DONE}
-                </SelectItem>
-                <SelectItem value="CANCELLED">
-                  {PROJECT_STATUS_LABEL.CANCELLED}
-                </SelectItem>
-
+                {Object.keys(PAYROLL_STATUS_LABEL).map((status) => (
+                  <SelectItem key={status} value={status}>
+                    {PAYROLL_STATUS_LABEL[status as Payroll["status"]]}
+                  </SelectItem>
+                ))}
                 <Button
                   className="w-full px-2"
                   variant="secondary"
@@ -89,4 +82,4 @@ const ProjectSidebar = () => {
   );
 };
 
-export default ProjectSidebar;
+export default PayrollSidebar;
