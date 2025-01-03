@@ -32,6 +32,7 @@ export type CreateProjectBody = {
   imageRatio: string;
   teamId: string;
   clientName: string;
+  confirmationDuration: number;
   tasks: {
     fee: number;
     imageCount: number;

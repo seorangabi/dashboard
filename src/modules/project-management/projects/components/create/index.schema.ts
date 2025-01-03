@@ -14,6 +14,7 @@ export const formSchema = z.object({
       attachmentUrl: z.string(),
     })
   ),
+  confirmationDuration: z.number(),
 });
 
 export type FormSchema = z.infer<typeof formSchema>;

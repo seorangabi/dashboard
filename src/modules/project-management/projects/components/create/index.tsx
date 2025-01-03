@@ -29,6 +29,8 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { formSchema, FormSchema } from "./index.schema";
 import Tasks from "./Tasks";
+import { milliseconds } from "date-fns";
+import DurationInput from "@/common/components/DurationInput";
 
 const options = [
   { value: "STANDART (1:1)" },
@@ -47,6 +49,7 @@ const CreateProject = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       deadline: new Date(),
+      confirmationDuration: milliseconds({ minutes: 30 }),
     },
   });
 
@@ -112,6 +115,25 @@ const CreateProject = () => {
                     <DateTimePicker24h
                       date={field.value}
                       setDate={(date) => field.onChange(date)}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="confirmationDuration"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Confirmation Duration*</FormLabel>
+                  <FormControl>
+                    <DurationInput
+                      duration={field.value}
+                      onDurationChange={(date) => field.onChange(date)}
+                      classNames={{
+                        popoverContent: "w-[350px]",
+                      }}
                     />
                   </FormControl>
                   <FormMessage />
