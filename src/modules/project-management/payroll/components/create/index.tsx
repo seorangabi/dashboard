@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import { generateErrorMessage } from "@/common/lib/utils";
+import { formatRupiah, generateErrorMessage } from "@/common/lib/utils";
 import { Button } from "@/common/components/ui/button";
 import SelectTeam from "@/common/components/SelectTeam";
 import useCreatePayrollMutation from "@/common/mutations/createPayrollMutation";
@@ -229,7 +229,7 @@ const CreatePayroll = () => {
                         <TableRow key={project.id}>
                           <TableCell>{project.name}</TableCell>
                           <TableCell className="text-right">
-                            {project.fee}
+                            {formatRupiah(project.fee)}
                           </TableCell>
                           <TableCell className="text-center flex justify-center">
                             <Link
@@ -308,12 +308,12 @@ const CreatePayroll = () => {
                               <TableRow key={project.id}>
                                 <TableCell>{project.name}</TableCell>
                                 <TableCell className="text-right">
-                                  {project.fee}
+                                  {formatRupiah(project.fee)}
                                 </TableCell>
                                 <TableCell className="text-center flex justify-center">
                                   <Link
                                     href={{
-                                      pathname: `/admin/project-management/projects/[projectId]`,
+                                      pathname: '/admin/project-management/projects/[projectId]',
                                       query: { projectId: project.id },
                                     }}
                                     target="_blank"
@@ -350,10 +350,10 @@ const CreatePayroll = () => {
                             <TableRow>
                               <TableHead>Total</TableHead>
                               <TableHead className="text-right">
-                                {field.value?.reduce(
+                                {formatRupiah(field.value?.reduce(
                                   (total, project) => total + project.fee,
                                   0
-                                ) || 0}
+                                ) || 0)}
                               </TableHead>
                               <TableHead></TableHead>
                             </TableRow>
