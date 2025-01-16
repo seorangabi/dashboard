@@ -33,6 +33,7 @@ export type CreateProjectBody = {
   teamId: string;
   clientName: string;
   confirmationDuration: number;
+  note: string;
   tasks: {
     fee: number;
     imageCount: number;

@@ -15,6 +15,7 @@ export const formSchema = z.object({
     })
   ),
   confirmationDuration: z.number(),
+  note: z.string(),
 });
 
 export type FormSchema = z.infer<typeof formSchema>;

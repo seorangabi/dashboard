@@ -31,6 +31,7 @@ import { formSchema, FormSchema } from "./index.schema";
 import Tasks from "./Tasks";
 import { milliseconds } from "date-fns";
 import DurationInput from "@/common/components/DurationInput";
+import { Textarea } from "@/common/components/ui/textarea";
 
 const options = [
   { value: "STANDART (1:1)" },
@@ -212,6 +213,24 @@ const CreateProject = () => {
               )}
             />
           </div>
+
+          <FormField
+            control={form.control}
+            name="note"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel>Description</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="Note"
+                    className="resize-none min-h-24"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
           <hr />
           <Tasks form={form} />

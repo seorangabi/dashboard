@@ -5,7 +5,7 @@ export type Project = {
   id: string;
   name: string;
   fee: number; // default value for Offering
-  note: string | null; // default value for Offering
+  note: string | null;
   deadline: DateTime; // default value for Offering
   imageRatio: string; // default value for Offering
   status: "OFFERING" | "IN_PROGRESS" | "DONE" | "CANCELLED";
