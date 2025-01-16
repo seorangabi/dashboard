@@ -3,6 +3,7 @@ import { DropzoneOptions, useDropzone } from "react-dropzone";
 import { Input } from "./ui/input";
 import imageCompression, { Options } from "browser-image-compression";
 import useUploadMutation from "../mutations/uploadMutation";
+import { LoaderCircle } from "lucide-react";
 
 const ImageUploader: FC<{
   value: string;
@@ -59,23 +60,30 @@ const ImageUploader: FC<{
   });
 
   return (
-    <div
-      {...getRootProps()}
-      className="mx-auto flex cursor-pointer flex-col items-center justify-center gap-y-2 rounded-lg border p-8"
-    >
-      {value && (
-        <img
-          src={value}
-          alt="Uploaded image"
-          className="max-h-[400px] rounded-lg"
-        />
+    <div className="relative">
+      {loading && (
+        <div className="absolute top-0 bottom-0 left-0 right-0 bg-white/50 flex flex-col justify-center items-center z-10">
+          <LoaderCircle className="animate-spin" /> Loading
+        </div>
       )}
-      <Input {...getInputProps()} type="file" />
-      {isDragActive ? (
-        <p>Drop the image!</p>
-      ) : (
-        <p>Click here or drag an image to upload it</p>
-      )}
+      <div
+        {...getRootProps()}
+        className="mx-auto flex cursor-pointer flex-col items-center justify-center gap-y-2 rounded-lg border p-8"
+      >
+        {value && (
+          <img
+            src={value}
+            alt="Uploaded image"
+            className="max-h-[400px] rounded-lg"
+          />
+        )}
+        <Input {...getInputProps()} type="file" />
+        {isDragActive ? (
+          <p>Drop the image!</p>
+        ) : (
+          <p>Click here or drag an image to upload it</p>
+        )}
+      </div>
     </div>
   );
 };
