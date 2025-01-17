@@ -49,12 +49,7 @@ const ProjectDetail = () => {
               router.push("/admin/project-management/projects");
             }}
           />
-          <UpdateProjectDialog
-            project={project}
-            onSuccess={() => {
-              router.push("/admin/project-management/projects");
-            }}
-          />
+          <UpdateProjectDialog project={project} onSuccess={() => {}} />
         </div>
       </div>
 
@@ -109,6 +104,13 @@ const ProjectDetail = () => {
               {project?.imageCount || "N/A"}
             </h1>
           </div>
+        </div>
+
+        <hr className="my-3" />
+
+        <div className="px-6">
+          <div className="text-muted-foreground text-xs">Description</div>
+          <h1 className="text-lg font-medium">{project?.note || "N/A"}</h1>
         </div>
       </div>
 
