@@ -1,14 +1,14 @@
 import Layout from "@/common/components/Layout";
 import Statistics from "@/modules/project-management/statistics/components/main";
-import { NextPage } from "next";
+import type { NextPage } from "next";
 import React from "react";
 
 const StatisticsPage: NextPage = () => {
-  return (
-    <Layout>
-      <Statistics />
-    </Layout>
-  );
+	return (
+		<Layout>
+			<Statistics />
+		</Layout>
+	);
 };
 
 export default StatisticsPage;

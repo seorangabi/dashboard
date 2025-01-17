@@ -1,31 +1,31 @@
 import { useQuery, type UseQueryOptions } from "@tanstack/react-query";
 import type {
-  GetProjectListQuery,
-  GetProjectListResponse,
+	GetProjectListQuery,
+	GetProjectListResponse,
 } from "../services/project.type";
 import projectService from "../services/project";
 
 type UseProjectListQueryProps = {
-  query?: GetProjectListQuery;
-  options?: Omit<UseQueryOptions<GetProjectListResponse>, "queryKey">;
+	query?: GetProjectListQuery;
+	options?: Omit<UseQueryOptions<GetProjectListResponse>, "queryKey">;
 };
 
 const useProjectListQuery = ({
-  query,
-  options,
+	query,
+	options,
 }: UseProjectListQueryProps = {}) => {
-  const queryResult = useQuery({
-    ...options,
-    queryKey: ["project", "list", query],
-    queryFn: async () => {
-      const res = await projectService.getProjectList({
-        query,
-      });
-      return res.data;
-    },
-  });
+	const queryResult = useQuery({
+		...options,
+		queryKey: ["project", "list", query],
+		queryFn: async () => {
+			const res = await projectService.getProjectList({
+				query,
+			});
+			return res.data;
+		},
+	});
 
-  return queryResult;
+	return queryResult;
 };
 
 export default useProjectListQuery;

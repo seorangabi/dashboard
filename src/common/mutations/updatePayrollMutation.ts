@@ -1,44 +1,44 @@
 import {
-  useMutation,
-  useQueryClient,
-  type UseMutationOptions,
+	useMutation,
+	useQueryClient,
+	type UseMutationOptions,
 } from "@tanstack/react-query";
 import type {
-  UpdatePayrollBody,
-  UpdatePayrollParam,
-  UpdatePayrollResponse,
+	UpdatePayrollBody,
+	UpdatePayrollParam,
+	UpdatePayrollResponse,
 } from "../services/payroll.type";
 import payrollService from "../services/payroll";
 
 type UseUpdatePayrollMutationProps = {
-  options?: UseMutationOptions<
-    UpdatePayrollResponse,
-    unknown,
-    UpdatePayrollBody & UpdatePayrollParam
-  >;
+	options?: UseMutationOptions<
+		UpdatePayrollResponse,
+		unknown,
+		UpdatePayrollBody & UpdatePayrollParam
+	>;
 };
 
 const useUpdatePayrollMutation = ({
-  options,
+	options,
 }: UseUpdatePayrollMutationProps) => {
-  const queryClient = useQueryClient();
+	const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: async ({ id, ...body }) => {
-      const res = await payrollService.updatePayroll({
-        param: { id },
-        body: body,
-      });
+	return useMutation({
+		mutationFn: async ({ id, ...body }) => {
+			const res = await payrollService.updatePayroll({
+				param: { id },
+				body: body,
+			});
 
-      return res.data;
-    },
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: ["payroll"],
-      });
-    },
-    ...options,
-  });
+			return res.data;
+		},
+		onSuccess: async () => {
+			await queryClient.invalidateQueries({
+				queryKey: ["payroll"],
+			});
+		},
+		...options,
+	});
 };
 
 export default useUpdatePayrollMutation;

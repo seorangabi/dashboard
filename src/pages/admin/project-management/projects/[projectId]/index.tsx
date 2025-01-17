@@ -3,11 +3,11 @@ import ProjectDetail from "@/modules/project-management/projects/components/deta
 import React from "react";
 
 const ProjectDetailPage = () => {
-  return (
-    <Layout>
-      <ProjectDetail />
-    </Layout>
-  );
+	return (
+		<Layout>
+			<ProjectDetail />
+		</Layout>
+	);
 };
 
 export default ProjectDetailPage;

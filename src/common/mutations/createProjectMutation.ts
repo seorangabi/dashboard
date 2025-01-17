@@ -1,42 +1,42 @@
 import {
-  useMutation,
-  useQueryClient,
-  type UseMutationOptions,
+	useMutation,
+	useQueryClient,
+	type UseMutationOptions,
 } from "@tanstack/react-query";
 import type {
-  CreateProjectBody,
-  CreateProjectResponse,
+	CreateProjectBody,
+	CreateProjectResponse,
 } from "../services/project.type";
 import projectService from "../services/project";
 
 type UseCreateProjectMutationProps = {
-  options?: UseMutationOptions<
-    CreateProjectResponse,
-    unknown,
-    CreateProjectBody
-  >;
+	options?: UseMutationOptions<
+		CreateProjectResponse,
+		unknown,
+		CreateProjectBody
+	>;
 };
 
 const useCreateProjectMutation = ({
-  options,
+	options,
 }: UseCreateProjectMutationProps) => {
-  const queryClient = useQueryClient();
+	const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: async (body) => {
-      const res = await projectService.createProject({
-        body,
-      });
+	return useMutation({
+		mutationFn: async (body) => {
+			const res = await projectService.createProject({
+				body,
+			});
 
-      return res.data;
-    },
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: ["project"],
-      });
-    },
-    ...options,
-  });
+			return res.data;
+		},
+		onSuccess: async () => {
+			await queryClient.invalidateQueries({
+				queryKey: ["project"],
+			});
+		},
+		...options,
+	});
 };
 
 export default useCreateProjectMutation;
