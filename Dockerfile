@@ -29,6 +29,15 @@ COPY . .
 # Uncomment the following line in case you want to disable telemetry during the build.
 # ENV NEXT_TELEMETRY_DISABLED=1
 
+# Lint
+RUN \
+  if [ -f yarn.lock ]; then yarn run lint; \
+  elif [ -f package-lock.json ]; then npm run lint; \
+  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm run lint; \
+  else echo "Lockfile not found." && exit 1; \
+  fi
+
+# Build
 RUN \
   if [ -f yarn.lock ]; then yarn run build; \
   elif [ -f package-lock.json ]; then npm run build; \
