@@ -71,7 +71,7 @@ const AppSidebar = () => {
   const router = useRouter();
 
   const isMenuActive = (url: string) => {
-    return router.pathname === url;
+    return router.asPath === url;
   };
 
   return (
