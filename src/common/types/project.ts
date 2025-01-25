@@ -8,7 +8,7 @@ export type Project = {
 	note: string | null;
 	deadline: DateTime; // default value for Offering
 	imageRatio: string; // default value for Offering
-	status: "OFFERING" | "IN_PROGRESS" | "DONE" | "CANCELLED";
+	status: ProjectStatus;
 	createdAt: DateTime;
 	teamId: string;
 	imageCount: number;
@@ -19,3 +19,10 @@ export type Project = {
 
 	team?: Team; // query with: team
 };
+
+export enum ProjectStatus {
+	OFFERING = "OFFERING",
+	IN_PROGRESS = "IN_PROGRESS",
+	DONE = "DONE",
+	CANCELLED = "CANCELLED",
+}

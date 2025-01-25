@@ -12,6 +12,7 @@ import { Button } from "@/common/components/ui/button";
 import { cn } from "@/common/lib/utils";
 import { useState } from "react";
 import { PROJECT_STATUS_LABEL } from "../../constants";
+import { ProjectStatus } from "@/common/types/project";
 
 const ProjectSidebar = () => {
 	const [key, setKey] = useState(+new Date());
@@ -52,16 +53,16 @@ const ProjectSidebar = () => {
 								<SelectValue placeholder="Select a status" />
 							</SelectTrigger>
 							<SelectContent>
-								<SelectItem value="OFFERING">
+								<SelectItem value={ProjectStatus.OFFERING}>
 									{PROJECT_STATUS_LABEL.OFFERING}
 								</SelectItem>
-								<SelectItem value="IN_PROGRESS">
+								<SelectItem value={ProjectStatus.IN_PROGRESS}>
 									{PROJECT_STATUS_LABEL.IN_PROGRESS}
 								</SelectItem>
-								<SelectItem value="DONE">
+								<SelectItem value={ProjectStatus.DONE}>
 									{PROJECT_STATUS_LABEL.DONE}
 								</SelectItem>
-								<SelectItem value="CANCELLED">
+								<SelectItem value={ProjectStatus.CANCELLED}>
 									{PROJECT_STATUS_LABEL.CANCELLED}
 								</SelectItem>
 

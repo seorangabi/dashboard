@@ -24,7 +24,7 @@ import { LoaderCircle, Pencil } from "lucide-react";
 import { generateErrorMessage } from "@/common/lib/utils";
 import { toast } from "sonner";
 import useUpdateProjectMutation from "@/common/mutations/updateProjectMutation";
-import type { Project } from "@/common/types/project";
+import { ProjectStatus, type Project } from "@/common/types/project";
 import {
 	Select,
 	SelectContent,
@@ -35,7 +35,7 @@ import {
 import { PROJECT_STATUS_LABEL } from "../../constants";
 
 const formSchema = z.object({
-	status: z.enum(["OFFERING", "IN_PROGRESS", "DONE", "CANCELLED"]),
+	status: z.nativeEnum(ProjectStatus),
 });
 
 const UpdateProjectStatusDialog: FC<{ project: Project | undefined }> = ({
@@ -58,10 +58,14 @@ const UpdateProjectStatusDialog: FC<{ project: Project | undefined }> = ({
 			value: Project["status"];
 		}[] = [];
 
-		const keys = ["OFFERING", "IN_PROGRESS", "DONE", "CANCELLED"] as const;
+		const keys = Object.keys(ProjectStatus) as ProjectStatus[];
 
 		for (const key of keys) {
-			if (project.status !== "OFFERING" && key === "OFFERING") continue;
+			if (
+				project.status !== ProjectStatus.OFFERING &&
+				key === ProjectStatus.OFFERING
+			)
+				continue;
 
 			temp.push({
 				label: PROJECT_STATUS_LABEL[key],
@@ -108,7 +112,8 @@ const UpdateProjectStatusDialog: FC<{ project: Project | undefined }> = ({
 					variant="link"
 					size="sm"
 					disabled={
-						project?.status === "DONE" || project?.status === "CANCELLED"
+						project?.status === ProjectStatus.DONE ||
+						project?.status === ProjectStatus.CANCELLED
 					}
 				>
 					<Pencil />
