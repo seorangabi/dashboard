@@ -32,7 +32,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/common/components/ui/select";
-import { teamRoleLabel } from "@/modules/project-management/teams/constants";
+import { TEAM_ROLE_LABEL } from "@/modules/project-management/teams/constants";
 
 const formSchema = z.object({
 	name: z.string().min(1),
@@ -139,7 +139,7 @@ const UpdateTeamDialog: FC<{
 											<SelectContent>
 												{Object.values(TeamRole).map((role) => (
 													<SelectItem key={role} value={role}>
-														{teamRoleLabel[role]}
+														{TEAM_ROLE_LABEL[role]}
 													</SelectItem>
 												))}
 											</SelectContent>

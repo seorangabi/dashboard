@@ -4,7 +4,7 @@ import TeamDetailBreadcrumb from "./Breadcrumb";
 import UpdateTeamDialog from "../main/UpdateTeamDialog";
 import { useRouter } from "next/router";
 import useTeamListQuery from "@/common/queries/teamListQuery";
-import { teamRoleLabel } from "@/modules/project-management/teams/constants";
+import { TEAM_ROLE_LABEL } from "@/modules/project-management/teams/constants";
 
 const TeamDetail = () => {
 	const router = useRouter();
@@ -42,7 +42,7 @@ const TeamDetail = () => {
 					<div className="px-6">
 						<div className="text-muted-foreground text-xs">Role</div>
 						<h1 className="text-lg font-medium">
-							{team?.role ? teamRoleLabel[team?.role] : "N/A"}
+							{team?.role ? TEAM_ROLE_LABEL[team?.role] : "N/A"}
 						</h1>
 					</div>
 					<div></div>

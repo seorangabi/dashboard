@@ -8,9 +8,14 @@ export type Payroll = {
 	periodEnd: DateTime;
 	amount: number;
 	teamId: string;
-	status: "DRAFT" | "PAID";
+	status: PayrollStatus;
 	createdAt: DateTime;
 	deletedAt: DateTime | null;
 	team?: Team; // query with: team
 	projects?: Project[]; // query with: projects
 };
+
+export enum PayrollStatus {
+	DRAFT = "DRAFT",
+	PAID = "PAID",
+}
