@@ -32,7 +32,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/common/components/ui/select";
-import { teamRoleLabel } from "@/common/constants/team";
+import { teamRoleLabel } from "@/modules/project-management/teams/constants";
 
 const formSchema = z.object({
 	name: z.string().min(1),

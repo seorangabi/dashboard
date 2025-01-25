@@ -1,4 +1,4 @@
-import { TeamRole } from "../types/team";
+import { TeamRole } from "@/common/types/team";
 
 export const teamRoleLabel: Record<TeamRole, string> = {
 	[TeamRole.ADMIN]: "Admin",

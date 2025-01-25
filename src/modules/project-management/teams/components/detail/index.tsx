@@ -4,7 +4,7 @@ import TeamDetailBreadcrumb from "./Breadcrumb";
 import UpdateTeamDialog from "../main/UpdateTeamDialog";
 import { useRouter } from "next/router";
 import useTeamListQuery from "@/common/queries/teamListQuery";
-import { teamRoleLabel } from "@/common/constants/team";
+import { teamRoleLabel } from "@/modules/project-management/teams/constants";
 
 const TeamDetail = () => {
 	const router = useRouter();
