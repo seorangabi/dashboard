@@ -1,5 +1,5 @@
 import type { ApiResponse } from "../types";
-import type { Team } from "../types/team";
+import type { Team, TeamRole } from "../types/team";
 
 // #region GET /v1/team/list
 export type GetTeamListQuery = {};
@@ -18,6 +18,7 @@ export type DeleteTeamResponse = ApiResponse<{ doc: Team }>;
 // #region POST /v1/team
 export type CreateTeamBody = {
 	name: string;
+	role: TeamRole;
 	discordUserId: string;
 	discordChannelId: string;
 	bankNumber: string | null;
@@ -33,6 +34,7 @@ export type UpdateTeamParam = {
 };
 export type UpdateTeamBody = {
 	name?: string;
+	role?: TeamRole;
 	discordUserId?: string | null;
 	discordChannelId?: string | null;
 	bankNumber?: string | null;

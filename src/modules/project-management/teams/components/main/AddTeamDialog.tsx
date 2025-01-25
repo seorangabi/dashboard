@@ -24,6 +24,14 @@ import { LoaderCircle, Plus } from "lucide-react";
 import useCreateTeamMutation from "@/common/mutations/createTeamMutation";
 import { toast } from "sonner";
 import { generateErrorMessage } from "@/common/lib/utils";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/common/components/ui/select";
+import { TeamRole } from "@/common/types/team";
 
 const formSchema = z.object({
 	name: z.string().min(1),
@@ -32,6 +40,7 @@ const formSchema = z.object({
 	bankNumber: z.string().optional(),
 	bankAccountHolder: z.string().optional(),
 	bankProvider: z.string().optional(),
+	role: z.nativeEnum(TeamRole),
 });
 
 const AddTeamDialog = () => {
@@ -39,13 +48,16 @@ const AddTeamDialog = () => {
 	const { mutateAsync, isPending } = useCreateTeamMutation({});
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
-		defaultValues: {},
+		defaultValues: {
+			role: TeamRole.ARTIST,
+		},
 	});
 
 	const onSubmit = async (values: z.infer<typeof formSchema>) => {
 		try {
 			await mutateAsync({
 				name: values.name,
+				role: values.role,
 				discordUserId: values.discordUserId,
 				discordChannelId: values.discordChannelId,
 				bankNumber: values.bankNumber || null,
@@ -86,6 +98,31 @@ const AddTeamDialog = () => {
 										<FormControl>
 											<Input placeholder="Name" {...field} />
 										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name="role"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Role</FormLabel>
+										<Select
+											onValueChange={field.onChange}
+											defaultValue={field.value}
+										>
+											<FormControl>
+												<SelectTrigger>
+													<SelectValue placeholder="Select a role" />
+												</SelectTrigger>
+											</FormControl>
+											<SelectContent>
+												<SelectItem value={TeamRole.ARTIST}>Artist</SelectItem>
+												<SelectItem value={TeamRole.ADMIN}>Admin</SelectItem>
+												<SelectItem value={TeamRole.CODER}>Coder</SelectItem>
+											</SelectContent>
+										</Select>
 										<FormMessage />
 									</FormItem>
 								)}

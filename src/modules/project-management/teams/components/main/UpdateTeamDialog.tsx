@@ -22,12 +22,21 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderCircle, Pencil } from "lucide-react";
 import useUpdateTeamMutation from "@/common/mutations/updateTeamMutation";
-import type { Team } from "@/common/types/team";
+import { TeamRole, type Team } from "@/common/types/team";
 import { toast } from "sonner";
 import { generateErrorMessage } from "@/common/lib/utils";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/common/components/ui/select";
+import { teamRoleLabel } from "@/common/constants/team";
 
 const formSchema = z.object({
 	name: z.string().min(1),
+	role: z.nativeEnum(TeamRole),
 	discordUserId: z.string().min(1),
 	discordChannelId: z.string().min(1),
 	bankNumber: z.string().optional(),
@@ -50,6 +59,7 @@ const UpdateTeamDialog: FC<{
 		try {
 			await mutateAsync({
 				id: team?.id || "",
+				role: values.role,
 				discordUserId: values.discordUserId,
 				discordChannelId: values.discordChannelId,
 				name: values.name || "",
@@ -74,6 +84,7 @@ const UpdateTeamDialog: FC<{
 				if (newOpen)
 					form.reset({
 						name: team?.name || "",
+						role: team?.role || TeamRole.ARTIST,
 						discordUserId: team?.discordUserId || "",
 						discordChannelId: team?.discordChannelId || "",
 						bankNumber: team?.bankNumber || "",
@@ -106,6 +117,33 @@ const UpdateTeamDialog: FC<{
 										<FormControl>
 											<Input placeholder="Name" {...field} />
 										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name="role"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Role</FormLabel>
+										<Select
+											onValueChange={field.onChange}
+											defaultValue={field.value}
+										>
+											<FormControl>
+												<SelectTrigger>
+													<SelectValue placeholder="Select a role" />
+												</SelectTrigger>
+											</FormControl>
+											<SelectContent>
+												{Object.values(TeamRole).map((role) => (
+													<SelectItem key={role} value={role}>
+														{teamRoleLabel[role]}
+													</SelectItem>
+												))}
+											</SelectContent>
+										</Select>
 										<FormMessage />
 									</FormItem>
 								)}

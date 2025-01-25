@@ -16,6 +16,12 @@ import {
 import dynamic from "next/dynamic";
 import Tasks from "./Tasks";
 import { PROJECT_STATUS_LABEL } from "../../constants";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipTrigger,
+} from "@/common/components/ui/tooltip";
+import { InfoIcon } from "lucide-react";
 
 const OfferingsTable = dynamic(() => import("./OfferingTable"), {
 	ssr: false,
@@ -54,7 +60,7 @@ const ProjectDetail = () => {
 			</div>
 
 			<div className="border rounded-md p-4 mb-4">
-				<div className="gap-x-6 gap-y-5 flex flex-wrap items-center [&>*]:border-r">
+				<div className="gap-x-6 gap-y-5 grid grid-cols-3 [&>*]:border-r">
 					<div className="px-6">
 						<div className="text-muted-foreground text-xs">Project Name</div>
 						<h1 className="text-lg font-medium">{project?.name}</h1>
@@ -73,7 +79,17 @@ const ProjectDetail = () => {
 						</h1>
 					</div>
 					<div className="px-6">
-						<div className="text-muted-foreground text-xs">Total Fee</div>
+						<div className="text-muted-foreground text-xs">
+							Total Fee
+							<Tooltip>
+								<TooltipTrigger asChild>
+									<InfoIcon className="inline-block ml-1" size={12} />
+								</TooltipTrigger>
+								<TooltipContent>
+									<p>Calculated from the tasks fee</p>
+								</TooltipContent>
+							</Tooltip>
+						</div>
 						<h1 className="text-lg font-medium">
 							{project?.fee ? formatRupiah(project?.fee) : "N/A"}
 						</h1>
@@ -99,7 +115,17 @@ const ProjectDetail = () => {
 						</h1>
 					</div>
 					<div className="px-6">
-						<div className="text-muted-foreground text-xs">Total Image</div>
+						<div className="text-muted-foreground text-xs">
+							Total Image
+							<Tooltip>
+								<TooltipTrigger asChild>
+									<InfoIcon className="inline-block ml-1" size={12} />
+								</TooltipTrigger>
+								<TooltipContent>
+									<p>Counted from the number of tasks</p>
+								</TooltipContent>
+							</Tooltip>
+						</div>
 						<h1 className="text-lg font-medium">
 							{project?.imageCount || "N/A"}
 						</h1>

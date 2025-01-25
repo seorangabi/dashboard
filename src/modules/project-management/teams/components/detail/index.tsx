@@ -4,6 +4,7 @@ import TeamDetailBreadcrumb from "./Breadcrumb";
 import UpdateTeamDialog from "../main/UpdateTeamDialog";
 import { useRouter } from "next/router";
 import useTeamListQuery from "@/common/queries/teamListQuery";
+import { teamRoleLabel } from "@/common/constants/team";
 
 const TeamDetail = () => {
 	const router = useRouter();
@@ -33,11 +34,19 @@ const TeamDetail = () => {
 			</div>
 
 			<div className="border rounded-md p-4">
-				<div className="space-x-6 flex items-center [&>*]:border-r">
+				<div className="gap-y-5 grid grid-cols-3">
 					<div className="px-6">
 						<div className="text-muted-foreground text-xs">Team Name</div>
 						<h1 className="text-lg font-medium">{team?.name}</h1>
 					</div>
+					<div className="px-6">
+						<div className="text-muted-foreground text-xs">Role</div>
+						<h1 className="text-lg font-medium">
+							{team?.role ? teamRoleLabel[team?.role] : "N/A"}
+						</h1>
+					</div>
+					<div></div>
+
 					<div className="px-6">
 						<div className="text-muted-foreground text-xs">Bank Name</div>
 						<h1 className="text-lg font-medium">
