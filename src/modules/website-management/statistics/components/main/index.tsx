@@ -55,9 +55,7 @@ const Statistics = () => {
 			<div className="border rounded-md">
 				<div className="border-b grid grid-cols-1 items-center">
 					<div className="flex-1 py-10 px-6 flex">
-						<div className="text-2xl font-semibold">
-							Visitor & Punch My Head
-						</div>
+						<div className="text-2xl font-semibold">Visitor</div>
 						<div className="ml-5 w-[200px]">
 							<MonthPickerInput currentMonth={date} onMonthChange={setDate} />
 						</div>
