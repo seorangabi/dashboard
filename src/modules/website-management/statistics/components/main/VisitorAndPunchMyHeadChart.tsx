@@ -44,7 +44,6 @@ const VisitorAndPunchMyHeadChart: FC<{
 						axisLine={false}
 						tickMargin={8}
 						tickFormatter={(value) => value.slice(0, 2)}
-						// angle={-45}
 					/>
 					<ChartTooltip cursor={false} content={<ChartTooltipContent />} />
 					<ChartLegend content={<ChartLegendContent />} />
@@ -81,7 +80,6 @@ const VisitorAndPunchMyHeadChart: FC<{
 						fill="url(#visitor)"
 						fillOpacity={0.4}
 						stroke="var(--color-visitor)"
-						stackId="a"
 					/>
 					<Area
 						dataKey="punchMyHead"
@@ -89,7 +87,6 @@ const VisitorAndPunchMyHeadChart: FC<{
 						fill="url(#punchMyHead)"
 						fillOpacity={0.4}
 						stroke="var(--color-punchMyHead)"
-						stackId="a"
 					/>
 				</AreaChart>
 			</ChartContainer>
