@@ -20,18 +20,30 @@ import React, { type FC, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoaderCircle, Pencil } from "lucide-react";
+import { Check, LoaderCircle, Pencil } from "lucide-react";
 import { Textarea } from "@/common/components/ui/textarea";
 import DateTimePicker24h from "@/common/components/DateTimePicker24h";
 
-import { generateErrorMessage } from "@/common/lib/utils";
+import { cn, generateErrorMessage } from "@/common/lib/utils";
 import { toast } from "sonner";
 import useUpdateProjectMutation from "@/common/mutations/updateProjectMutation";
 import type { Project } from "@/common/types/project";
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from "@/common/components/ui/popover";
+import {
+	Command,
+	CommandEmpty,
+	CommandItem,
+	CommandList,
+} from "@/common/components/ui/command";
+import { PROJECT_RATIO_LABEL } from "../../constants";
 
 const formSchema = z.object({
 	name: z.string(),
-	fee: z.number(),
+	clientName: z.string(),
 	deadline: z.date(),
 	imageRatio: z.string(),
 	note: z.string().optional(),
@@ -42,6 +54,7 @@ const UpdateProjectDialog: FC<{
 	onSuccess?: () => void;
 }> = ({ project, onSuccess }) => {
 	const [open, setOpen] = useState(false);
+	const [openRatioDropdown, setOpenRatioDropdown] = useState(false);
 	const { mutateAsync, isPending } = useUpdateProjectMutation({});
 
 	const form = useForm<z.infer<typeof formSchema>>({
@@ -73,7 +86,7 @@ const UpdateProjectDialog: FC<{
 				if (newOpen)
 					form.reset({
 						name: project?.name || "",
-						fee: project?.fee || 0,
+						clientName: project?.clientName || "",
 						imageRatio: project?.imageRatio || "",
 						note: project?.note || "",
 						deadline: new Date(),
@@ -114,12 +127,12 @@ const UpdateProjectDialog: FC<{
 							/>
 							<FormField
 								control={form.control}
-								name="fee"
+								name="clientName"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Fee*</FormLabel>
+										<FormLabel>Client*</FormLabel>
 										<FormControl>
-											<Input type="number" placeholder="200.000" {...field} />
+											<Input placeholder="Client name" {...field} />
 										</FormControl>
 										<FormMessage />
 									</FormItem>
@@ -148,7 +161,52 @@ const UpdateProjectDialog: FC<{
 									<FormItem>
 										<FormLabel>Image Ratio*</FormLabel>
 										<FormControl>
-											<Input placeholder="1:1" {...field} />
+											<Popover
+												open={openRatioDropdown}
+												onOpenChange={setOpenRatioDropdown}
+											>
+												<PopoverTrigger asChild>
+													<div>
+														<Input
+															placeholder="1:1"
+															autoCorrect="off"
+															autoFocus={false}
+															autoComplete="off"
+															{...field}
+														/>
+													</div>
+												</PopoverTrigger>
+												<PopoverContent
+													className="w-[370px] p-0"
+													onOpenAutoFocus={(e) => e.preventDefault()}
+												>
+													<Command>
+														<CommandList>
+															<CommandEmpty>No option found.</CommandEmpty>
+															{PROJECT_RATIO_LABEL.map((ratio) => (
+																<CommandItem
+																	key={ratio}
+																	onSelect={() => {
+																		field.onChange(ratio);
+																		setOpenRatioDropdown(false);
+																	}}
+																	className="justify-between"
+																>
+																	{ratio}
+																	<Check
+																		className={cn(
+																			"mr-2 h-4 w-4",
+																			field.value === ratio
+																				? "opacity-100"
+																				: "opacity-0",
+																		)}
+																	/>
+																</CommandItem>
+															))}
+														</CommandList>
+													</Command>
+												</PopoverContent>
+											</Popover>
 										</FormControl>
 										<FormMessage />
 									</FormItem>

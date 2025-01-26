@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const formSchema = z.object({
+export const createProjectFormSchema = z.object({
 	name: z.string(),
 	deadline: z.date(),
 	imageRatio: z.string(),
@@ -18,4 +18,4 @@ export const formSchema = z.object({
 	note: z.string(),
 });
 
-export type FormSchema = z.infer<typeof formSchema>;
+export type FormSchema = z.infer<typeof createProjectFormSchema>;

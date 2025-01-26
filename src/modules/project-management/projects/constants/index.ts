@@ -13,3 +13,11 @@ export const PROJECT_STATUS_LABEL: Record<Project["status"], string> = {
 	DONE: "Done",
 	CANCELLED: "Cancelled",
 };
+
+export const PROJECT_RATIO_LABEL = [
+	"STANDART (1:1)",
+	"STANDART (16:9)",
+	"GIFs (1:1)",
+	"PFP (Profile Picture) (1:1)",
+	"BANNER (3:1)",
+];

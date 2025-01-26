@@ -27,19 +27,12 @@ import { Command, CommandList } from "cmdk";
 import { CommandEmpty, CommandItem } from "@/common/components/ui/command";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { formSchema, type FormSchema } from "./index.schema";
+import { createProjectFormSchema, type FormSchema } from "./index.schema";
 import Tasks from "./Tasks";
 import { milliseconds } from "date-fns";
 import DurationInput from "@/common/components/DurationInput";
 import { Textarea } from "@/common/components/ui/textarea";
-
-const options = [
-	{ value: "STANDART (1:1)" },
-	{ value: "STANDART (16:9)" },
-	{ value: "GIFs (1:1)" },
-	{ value: "PFP (Profile Picture) (1:1)" },
-	{ value: "BANNER (3:1)" },
-];
+import { PROJECT_RATIO_LABEL } from "../../constants";
 
 const CreateProject = () => {
 	const router = useRouter();
@@ -47,7 +40,7 @@ const CreateProject = () => {
 
 	const { mutateAsync, isPending } = useCreateProjectMutation({});
 	const form = useForm<FormSchema>({
-		resolver: zodResolver(formSchema),
+		resolver: zodResolver(createProjectFormSchema),
 		defaultValues: {
 			deadline: new Date(),
 			confirmationDuration: milliseconds({ minutes: 30 }),
@@ -170,20 +163,20 @@ const CreateProject = () => {
 												<Command>
 													<CommandList>
 														<CommandEmpty>No option found.</CommandEmpty>
-														{options.map((option) => (
+														{PROJECT_RATIO_LABEL.map((ratio) => (
 															<CommandItem
-																key={option.value}
+																key={ratio}
 																onSelect={() => {
-																	field.onChange(option.value);
+																	field.onChange(ratio);
 																	setOpenRatioDropdown(false);
 																}}
 																className="justify-between"
 															>
-																{option.value}
+																{ratio}
 																<Check
 																	className={cn(
 																		"mr-2 h-4 w-4",
-																		field.value === option.value
+																		field.value === ratio
 																			? "opacity-100"
 																			: "opacity-0",
 																	)}
