@@ -26,10 +26,11 @@ export type GetVisitorAndPunchMyHeadQuery = {
 };
 export type VisitorAndPunchMyHead = {
 	date: string;
-	visitor: number;
-	punchMyHead: number;
+	visitor: Record<string, number>;
+	punchMyHead: Record<string, number>;
 };
 export type GetVisitorAndPunchMyHeadResponse = ApiResponse<{
-	docs: ImageProductionPerWeek[];
+	countries: string[];
+	docs: VisitorAndPunchMyHead[];
 }>;
 // #endregion

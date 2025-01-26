@@ -1,42 +1,26 @@
 import {
 	type ChartConfig,
 	ChartContainer,
-	ChartLegend,
-	ChartLegendContent,
 	ChartTooltip,
 	ChartTooltipContent,
 } from "@/common/components/ui/chart";
 import { cn } from "@/common/lib/utils";
-import type { ImageProductionPerWeek } from "@/common/services/statistic.type";
-import type { FC } from "react";
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
+import type { GetVisitorAndPunchMyHeadResponse } from "@/common/services/statistic.type";
+import { useMemo, type FC } from "react";
+import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import { CHART_COLORS } from ".";
 
-const chartConfig = {
-	visitor: {
-		label: "Visitor",
-		color: "hsl(var(--chart-4))",
-	},
-	punchMyHead: {
-		label: "Punch",
-		color: "hsl(var(--chart-2))",
-	},
-} satisfies ChartConfig;
+const chartConfig = {} satisfies ChartConfig;
 
 const VisitorAndPunchMyHeadChart: FC<{
-	data: ImageProductionPerWeek[];
+	data: Record<string, unknown>[];
+	countries: string[];
 	className?: string;
-}> = ({ data, className }) => {
+}> = ({ data, countries, className }) => {
 	return (
 		<div className={cn("p-4", className)}>
 			<ChartContainer config={chartConfig} className="h-[400px] w-full">
-				<AreaChart
-					accessibilityLayer
-					data={data}
-					margin={{
-						left: 12,
-						right: 12,
-					}}
-				>
+				<BarChart accessibilityLayer data={data}>
 					<CartesianGrid vertical={false} />
 					<XAxis
 						dataKey="date"
@@ -45,50 +29,21 @@ const VisitorAndPunchMyHeadChart: FC<{
 						tickMargin={8}
 						tickFormatter={(value) => value.slice(0, 2)}
 					/>
-					<ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-					<ChartLegend content={<ChartLegendContent />} />
+					<ChartTooltip
+						content={<ChartTooltipContent hideLabel className="w-[180px]" />}
+						cursor={false}
+						defaultIndex={1}
+					/>
 
-					<defs>
-						<linearGradient id="punchMyHead" x1="0" y1="0" x2="0" y2="1">
-							<stop
-								offset="5%"
-								stopColor="var(--color-punchMyHead)"
-								stopOpacity={0.8}
-							/>
-							<stop
-								offset="95%"
-								stopColor="var(--color-punchMyHead)"
-								stopOpacity={0.1}
-							/>
-						</linearGradient>
-						<linearGradient id="visitor" x1="0" y1="0" x2="0" y2="1">
-							<stop
-								offset="5%"
-								stopColor="var(--color-visitor)"
-								stopOpacity={0.8}
-							/>
-							<stop
-								offset="95%"
-								stopColor="var(--color-visitor)"
-								stopOpacity={0.1}
-							/>
-						</linearGradient>
-					</defs>
-					<Area
-						dataKey="visitor"
-						type="linear"
-						fill="url(#visitor)"
-						fillOpacity={0.4}
-						stroke="var(--color-visitor)"
-					/>
-					<Area
-						dataKey="punchMyHead"
-						type="linear"
-						fill="url(#punchMyHead)"
-						fillOpacity={0.4}
-						stroke="var(--color-punchMyHead)"
-					/>
-				</AreaChart>
+					{countries.map((country, index) => (
+						<Bar
+							key={country}
+							dataKey={country}
+							stackId="a"
+							fill={CHART_COLORS[index] || "#000"}
+						/>
+					))}
+				</BarChart>
 			</ChartContainer>
 		</div>
 	);
