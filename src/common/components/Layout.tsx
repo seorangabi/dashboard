@@ -51,7 +51,7 @@ const projectManagementItems = [
 const websiteManagementItems = [
 	{
 		title: "Statistics",
-		url: "/admin/website-management",
+		url: "/admin/website-management/statistics",
 		icon: ChartNoAxesCombined,
 	},
 ];

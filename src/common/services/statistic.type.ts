@@ -18,3 +18,18 @@ export type GetImageProductionPerWeekResponse = ApiResponse<{
 	docs: ImageProductionPerWeek[];
 }>;
 // #endregion
+
+// #region GET /v1/statistic/visitor-and-punch-my-head
+export type GetVisitorAndPunchMyHeadQuery = {
+	year: number;
+	monthIndex: number;
+};
+export type VisitorAndPunchMyHead = {
+	date: string;
+	visitor: number;
+	punchMyHead: number;
+};
+export type GetVisitorAndPunchMyHeadResponse = ApiResponse<{
+	docs: ImageProductionPerWeek[];
+}>;
+// #endregion
