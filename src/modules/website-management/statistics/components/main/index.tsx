@@ -24,7 +24,7 @@ const Statistics = () => {
 
 	const { data } = useMyApiQuery({
 		options: {
-			// enabled: false,
+			enabled: false,
 		},
 	});
 
