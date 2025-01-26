@@ -7,7 +7,10 @@ import {
 } from "@/common/components/ui/chart";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import { cn } from "@/common/lib/utils";
-import type { VisitorAndPunchMyHead } from "@/common/services/statistic.type";
+import type {
+	ImageProductionPerWeek,
+	VisitorAndPunchMyHead,
+} from "@/common/services/statistic.type";
 import { format } from "date-fns";
 
 const chartConfig = {
@@ -20,7 +23,7 @@ const chartConfig = {
 const ImagePerWeekChart: FC<{
 	className?: string;
 	label: string;
-	data: VisitorAndPunchMyHead;
+	data: ImageProductionPerWeek;
 }> = ({ className, data, label }) => {
 	return (
 		<div className={cn("p-4", className)}>
