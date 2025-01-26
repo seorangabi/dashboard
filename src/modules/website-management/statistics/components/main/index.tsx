@@ -23,9 +23,7 @@ const Statistics = () => {
 	const [date, setDate] = useState<Date>(new Date());
 
 	const { data } = useMyApiQuery({
-		options: {
-			enabled: false,
-		},
+		options: {},
 	});
 
 	const { data: imageProductionPerWeekData, isLoading } =
