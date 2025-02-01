@@ -11,7 +11,7 @@ import {
 } from "@/common/components/ui/alert-dialog";
 import { Button } from "@/common/components/ui/button";
 import { generateErrorMessage } from "@/common/lib/utils";
-import useDeleteProjectMutation from "@/common/mutations/deleteProjectMutation";
+import useDeleteProjectMutation from "@/common/mutations/useDeleteProjectMutation";
 import type { Project } from "@/common/types/project";
 import { LoaderCircle, Trash } from "lucide-react";
 import React, { type FC } from "react";

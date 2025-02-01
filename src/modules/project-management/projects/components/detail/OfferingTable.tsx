@@ -2,7 +2,7 @@ import DataTable from "@/common/components/Table";
 import type { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { useRouter } from "next/router";
-import useOfferingListQuery from "@/common/queries/offeringListQuery";
+import useOfferingListQuery from "@/common/queries/useOfferingListQuery";
 import type { Offering } from "@/common/types/offering";
 import { OFFERING_STATUS_LABEL } from "../../constants";
 

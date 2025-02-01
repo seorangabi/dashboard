@@ -26,7 +26,7 @@ import DateTimePicker24h from "@/common/components/DateTimePicker24h";
 
 import { cn, generateErrorMessage } from "@/common/lib/utils";
 import { toast } from "sonner";
-import useUpdateProjectMutation from "@/common/mutations/updateProjectMutation";
+import useUpdateProjectMutation from "@/common/mutations/useUpdateProjectMutation";
 import type { Project } from "@/common/types/project";
 import {
 	Popover,

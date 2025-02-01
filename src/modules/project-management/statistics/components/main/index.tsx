@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import ImagePerWeekChart from "./ImagePerWeekChart";
 import MonthPickerInput from "@/common/components/MonthPickerInput";
-import useImageProductionPerWeekQuery from "@/common/queries/imageProductionPerWeekQuery";
+import useImageProductionPerWeekQuery from "@/common/queries/useImageProductionPerWeekQuery";
 import { Skeleton } from "@/common/components/ui/skeleton";
 import { cn } from "@/common/lib/utils";
 

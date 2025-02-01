@@ -1,5 +1,5 @@
 import { formatRupiah } from "@/common/lib/utils";
-import useTaskListQuery from "@/common/queries/taskListQuery";
+import useTaskListQuery from "@/common/queries/useTaskListQuery";
 import type { FC } from "react";
 import DeleteTaskDialog from "./DeleteTaskDialog";
 import CreateTaskDialog from "./CreateTaskDialog";

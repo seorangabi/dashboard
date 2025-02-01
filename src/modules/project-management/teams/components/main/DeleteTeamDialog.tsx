@@ -11,7 +11,7 @@ import {
 } from "@/common/components/ui/alert-dialog";
 import { Button } from "@/common/components/ui/button";
 import { generateErrorMessage } from "@/common/lib/utils";
-import useDeleteTeamMutation from "@/common/mutations/deleteTeamMutation";
+import useDeleteTeamMutation from "@/common/mutations/useDeleteTeamMutation";
 import { LoaderCircle, Trash } from "lucide-react";
 import React, { type FC } from "react";
 import { toast } from "sonner";

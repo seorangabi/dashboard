@@ -1,6 +1,6 @@
 import React from "react";
 import PayrollDetailBreadcrumb from "./Breadcrumb";
-import usePayrollListQuery from "@/common/queries/payrollListQuery";
+import usePayrollListQuery from "@/common/queries/usePayrollListQuery";
 import { useRouter } from "next/router";
 import { format } from "date-fns";
 import { Button } from "@/common/components/ui/button";

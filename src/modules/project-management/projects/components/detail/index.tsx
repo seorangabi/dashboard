@@ -3,7 +3,7 @@ import ProjectDetailBreadcrumb from "./Breadcrumb";
 import DeleteProjectDialog from "../main/DeleteProjectDialog";
 import UpdateProjectDialog from "../main/UpdateProjectDialog";
 import { useRouter } from "next/router";
-import useProjectListQuery from "@/common/queries/projectListQuery";
+import useProjectListQuery from "@/common/queries/useProjectListQuery";
 import { format } from "date-fns";
 import UpdateProjectStatusDialog from "./UpdateProjectStatusDialog";
 import { formatRupiah } from "@/common/lib/utils";

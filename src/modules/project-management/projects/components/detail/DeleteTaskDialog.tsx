@@ -11,7 +11,7 @@ import {
 } from "@/common/components/ui/alert-dialog";
 import { Button } from "@/common/components/ui/button";
 import { generateErrorMessage } from "@/common/lib/utils";
-import useDeleteTaskMutation from "@/common/mutations/deleteTaskMutation";
+import useDeleteTaskMutation from "@/common/mutations/useDeleteTaskMutation";
 import type { Task } from "@/common/types/task";
 import { LoaderCircle, Trash } from "lucide-react";
 import React, { type FC } from "react";

@@ -1,5 +1,5 @@
 import { type FC, useMemo, useState } from "react";
-import useTeamListQuery from "../queries/teamListQuery";
+import useTeamListQuery from "../queries/useTeamListQuery";
 import {
 	Popover,
 	PopoverContent,

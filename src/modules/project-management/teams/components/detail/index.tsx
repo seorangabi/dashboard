@@ -3,7 +3,7 @@ import DeleteTeamDialog from "../main/DeleteTeamDialog";
 import TeamDetailBreadcrumb from "./Breadcrumb";
 import UpdateTeamDialog from "../main/UpdateTeamDialog";
 import { useRouter } from "next/router";
-import useTeamListQuery from "@/common/queries/teamListQuery";
+import useTeamListQuery from "@/common/queries/useTeamListQuery";
 import { TEAM_ROLE_LABEL } from "@/modules/project-management/teams/constants";
 
 const TeamDetail = () => {

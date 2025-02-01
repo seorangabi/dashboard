@@ -15,7 +15,7 @@ import { Check, LoaderCircle } from "lucide-react";
 import DateTimePicker24h from "@/common/components/DateTimePicker24h";
 
 import { cn, generateErrorMessage } from "@/common/lib/utils";
-import useCreateProjectMutation from "@/common/mutations/createProjectMutation";
+import useCreateProjectMutation from "@/common/mutations/useCreateProjectMutation";
 import { toast } from "sonner";
 import SelectTeam from "@/common/components/SelectTeam";
 import {

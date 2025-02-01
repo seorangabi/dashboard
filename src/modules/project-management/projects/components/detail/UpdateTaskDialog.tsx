@@ -26,7 +26,7 @@ import { generateErrorMessage } from "@/common/lib/utils";
 import { toast } from "sonner";
 import CurrencyInput from "@/common/components/CurrencyInput";
 import type { Task } from "@/common/types/task";
-import useUpdateTaskMutation from "@/common/mutations/updateTaskMutation";
+import useUpdateTaskMutation from "@/common/mutations/useUpdateTaskMutation";
 import ImageUploader from "@/common/components/ImageUploader";
 
 const formSchema = z.object({

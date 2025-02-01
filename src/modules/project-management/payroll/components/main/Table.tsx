@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useMemo } from "react";
 import type { Payroll } from "@/common/types/payroll";
 import DeletePayrollDialog from "./DeletePayrollDialog";
-import usePayrollListQuery from "@/common/queries/payrollListQuery";
+import usePayrollListQuery from "@/common/queries/usePayrollListQuery";
 import { format } from "date-fns";
 import UpdatePayrollStatusDialog from "./UpdatePayrollStatusDialog";
 import useMainPageQueryState from "../../hooks/useMainPageQueryState";

@@ -24,7 +24,7 @@ import { Textarea } from "@/common/components/ui/textarea";
 
 import { generateErrorMessage } from "@/common/lib/utils";
 import { toast } from "sonner";
-import useCreateTaskMutation from "@/common/mutations/createTaskMutation";
+import useCreateTaskMutation from "@/common/mutations/useCreateTaskMutation";
 import CurrencyInput from "@/common/components/CurrencyInput";
 import ImageUploader from "@/common/components/ImageUploader";
 

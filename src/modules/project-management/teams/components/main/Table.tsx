@@ -8,7 +8,7 @@ import DeleteTeamDialog from "./DeleteTeamDialog";
 import UpdateTeamDialog from "./UpdateTeamDialog";
 import type { Team } from "@/common/types/team";
 import { useMemo } from "react";
-import useTeamListQuery from "@/common/queries/teamListQuery";
+import useTeamListQuery from "@/common/queries/useTeamListQuery";
 
 export const columns: ColumnDef<Team>[] = [
 	{

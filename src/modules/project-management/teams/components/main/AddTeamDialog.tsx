@@ -21,7 +21,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderCircle, Plus } from "lucide-react";
-import useCreateTeamMutation from "@/common/mutations/createTeamMutation";
+import useCreateTeamMutation from "@/common/mutations/useCreateTeamMutation";
 import { toast } from "sonner";
 import { generateErrorMessage } from "@/common/lib/utils";
 import {

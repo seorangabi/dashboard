@@ -2,7 +2,7 @@ import React, { type FC, useCallback, useState } from "react";
 import { type DropzoneOptions, useDropzone } from "react-dropzone";
 import { Input } from "./ui/input";
 import imageCompression, { type Options } from "browser-image-compression";
-import useUploadMutation from "../mutations/uploadMutation";
+import useUploadMutation from "../mutations/useUploadMutation";
 import { LoaderCircle } from "lucide-react";
 
 const ImageUploader: FC<{

@@ -23,7 +23,7 @@ import { LoaderCircle, Pencil } from "lucide-react";
 
 import { generateErrorMessage } from "@/common/lib/utils";
 import { toast } from "sonner";
-import useUpdateProjectMutation from "@/common/mutations/updateProjectMutation";
+import useUpdateProjectMutation from "@/common/mutations/useUpdateProjectMutation";
 import type { Project } from "@/common/types/project";
 import SelectTeam from "@/common/components/SelectTeam";
 

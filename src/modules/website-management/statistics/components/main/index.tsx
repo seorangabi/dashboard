@@ -2,8 +2,8 @@ import MonthPickerInput from "@/common/components/MonthPickerInput";
 import React, { useMemo, useState } from "react";
 import VisitorAndPunchMyHeadChart from "./VisitorAndPunchMyHeadChart";
 import { Skeleton } from "@/common/components/ui/skeleton";
-import useVisitorAndPunchMyHeadQuery from "@/common/queries/vistiorAndPunchMyHeadQuery";
-import useMyApiQuery from "@/common/queries/myApiQuery";
+import useVisitorAndPunchMyHeadQuery from "@/common/queries/useVistiorAndPunchMyHeadQuery";
+import useMyApiQuery from "@/common/queries/useMyApiQuery";
 
 export const CHART_COLORS = [
 	"rgb(231, 110, 80)",

@@ -6,7 +6,7 @@ import { Eye } from "lucide-react";
 import Link from "next/link";
 import DeleteProjectDialog from "./DeleteProjectDialog";
 import UpdateProjectDialog from "./UpdateProjectDialog";
-import useProjectListQuery from "@/common/queries/projectListQuery";
+import useProjectListQuery from "@/common/queries/useProjectListQuery";
 import { useMemo } from "react";
 import type { Project } from "@/common/types/project";
 import useMainPageQueryState from "../../hooks/useMainPageQueryState";
