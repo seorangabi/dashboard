@@ -37,7 +37,7 @@ export type UpdateTaskBody = {
 	fee?: number;
 	imageCount?: number;
 	note?: string;
-	attachmentUrl?: string;
+	attachments?: string[];
 };
 export type UpdateTaskResponse = ApiResponse<{ doc: Task }>;
 // #endregion

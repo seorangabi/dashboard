@@ -11,7 +11,7 @@ export const createProjectFormSchema = z.object({
 			fee: z.number(),
 			imageCount: z.number(),
 			note: z.string(),
-			attachmentUrl: z.string(),
+			attachments: z.array(z.string()),
 		}),
 	),
 	confirmationDuration: z.number(),

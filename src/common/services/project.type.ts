@@ -38,7 +38,7 @@ export type CreateProjectBody = {
 		fee: number;
 		imageCount: number;
 		note: string;
-		attachmentUrl: string;
+		attachments: string[];
 	}[];
 };
 export type CreateProjectResponse = ApiResponse<{ doc: Project }>;

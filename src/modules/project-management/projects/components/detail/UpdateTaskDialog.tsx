@@ -28,11 +28,12 @@ import CurrencyInput from "@/common/components/CurrencyInput";
 import type { Task } from "@/common/types/task";
 import useUpdateTaskMutation from "@/common/mutations/useUpdateTaskMutation";
 import ImageUploader from "@/common/components/ImageUploader";
+import MultipleImageUploader from "@/common/components/MultipleImageUploader";
 
 const formSchema = z.object({
 	fee: z.number(),
 	note: z.string(),
-	attachmentUrl: z.string(),
+	attachments: z.array(z.string()),
 });
 
 const UpdateTaskDialog: FC<{
@@ -57,7 +58,7 @@ const UpdateTaskDialog: FC<{
 				id: task.id,
 				fee: values.fee,
 				note: values.note,
-				attachmentUrl: values.attachmentUrl,
+				attachments: values.attachments,
 			});
 
 			toast.success("Task updated successfully");
@@ -77,7 +78,7 @@ const UpdateTaskDialog: FC<{
 					form.reset({
 						fee: task.fee,
 						note: task.note,
-						attachmentUrl: task.attachmentUrl,
+						attachments: task.attachments.map((attachment) => attachment.url),
 					});
 
 				setOpen(newOpen);
@@ -135,19 +136,19 @@ const UpdateTaskDialog: FC<{
 							</div>
 							<FormField
 								control={form.control}
-								name="attachmentUrl"
+								name="attachments"
 								render={({ field: { value, onChange } }) => (
 									<FormItem>
 										<FormLabel>Picture</FormLabel>
 										<FormControl>
-											<ImageUploader
+											<MultipleImageUploader
 												value={value}
-												onChange={({ url }) => {
-													onChange(url);
-													form.clearErrors("attachmentUrl");
+												onChange={(value) => {
+													onChange(value);
+													form.clearErrors("attachments");
 												}}
 												onError={(error) => {
-													form.setError("attachmentUrl", {
+													form.setError("attachments", {
 														type: "manual",
 														message: generateErrorMessage(error),
 													});

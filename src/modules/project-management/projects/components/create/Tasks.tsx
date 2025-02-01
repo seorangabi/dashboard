@@ -19,6 +19,7 @@ import CurrencyInput from "@/common/components/CurrencyInput";
 import type { FormSchema } from "./index.schema";
 import ImageUploader from "@/common/components/ImageUploader";
 import { generateErrorMessage } from "@/common/lib/utils";
+import MultipleImageUploader from "@/common/components/MultipleImageUploader";
 
 const Tasks: FC<{
 	form: UseFormReturn<FormSchema>;
@@ -37,7 +38,7 @@ const Tasks: FC<{
 					variant="ghost"
 					size="sm"
 					onClick={() =>
-						append({ fee: 0, note: "", imageCount: 1, attachmentUrl: "" })
+						append({ fee: 0, note: "", imageCount: 1, attachments: [] })
 					}
 				>
 					<Plus />
@@ -58,7 +59,7 @@ const Task: FC<{
 	remove: UseFieldArrayRemove;
 }> = ({ index, form, remove }) => {
 	return (
-		<div className="border p-4 rounded-lg grid gap-x-6 grid-cols-[1fr_300px] relative">
+		<div className="border p-4 rounded-lg grid gap-x-6 grid-cols-[1fr_1fr] relative">
 			<div className="flex gap-x-2">
 				<div className="w-10 rounded">{index + 1}</div>
 
@@ -105,6 +106,31 @@ const Task: FC<{
 			<div>
 				<FormField
 					control={form.control}
+					name={`tasks.${index}.attachments`}
+					render={({ field: { value, onChange } }) => (
+						<FormItem>
+							<FormLabel>Picture</FormLabel>
+							<FormControl>
+								<MultipleImageUploader
+									value={value}
+									onChange={(value) => {
+										onChange(value);
+										form.clearErrors(`tasks.${index}.attachments`);
+									}}
+									onError={(error) => {
+										form.setError(`tasks.${index}.attachments`, {
+											type: "manual",
+											message: generateErrorMessage(error),
+										});
+									}}
+								/>
+							</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+				{/* <FormField
+					control={form.control}
 					name={`tasks.${index}.attachmentUrl`}
 					render={({ field: { value, onChange } }) => (
 						<FormItem>
@@ -127,7 +153,7 @@ const Task: FC<{
 							<FormMessage />
 						</FormItem>
 					)}
-				/>
+				/> */}
 			</div>
 
 			<Button

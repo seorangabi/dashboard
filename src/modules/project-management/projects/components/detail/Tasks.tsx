@@ -4,6 +4,8 @@ import type { FC } from "react";
 import DeleteTaskDialog from "./DeleteTaskDialog";
 import CreateTaskDialog from "./CreateTaskDialog";
 import UpdateTaskDialog from "./UpdateTaskDialog";
+import { Button } from "@/common/components/ui/button";
+import { Eye } from "lucide-react";
 
 const Tasks: FC<{
 	projectId: string;
@@ -33,14 +35,39 @@ const Tasks: FC<{
 								<UpdateTaskDialog task={task} />
 							</div>
 							<div className="mb-2">Fee: {formatRupiah(task.fee)}</div>
-							<div className="grid grid-cols-[1fr_300px]">
+							<div className="grid grid-cols-[1fr_1fr]">
 								<div>{task.note}</div>
-								<div>
-									<img
-										className="object-contain w-full h-72"
-										src={task.attachmentUrl}
-										alt=""
-									/>
+								<div
+									className="grid gap-1"
+									style={{
+										gridTemplateColumns:
+											task?.attachments?.length > 1 ? "1fr 1fr" : "1fr",
+									}}
+								>
+									{task?.attachments.map((val) => {
+										return (
+											<div key={val.url} className="relative group">
+												<img
+													src={val.url}
+													alt="Attachment"
+													className="w-full"
+												/>
+
+												<div className="hidden group-hover:flex justify-center items-center absolute inset-0 top-0 bottom-0 left-0 right-0 z-10 bg-white/50">
+													<div className="space-x-1">
+														<Button
+															type="button"
+															onClick={() => {
+																window.open(val.url, "_blank");
+															}}
+														>
+															<Eye />
+														</Button>
+													</div>
+												</div>
+											</div>
+										);
+									})}
 								</div>
 							</div>
 						</div>
