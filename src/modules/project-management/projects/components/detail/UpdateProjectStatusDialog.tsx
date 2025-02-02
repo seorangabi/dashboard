@@ -69,6 +69,20 @@ const UpdateProjectStatusDialog: FC<{ project: Project | undefined }> = ({
 				if (key === ProjectStatus.DONE) continue;
 			}
 
+			if (project.status === ProjectStatus.DONE) {
+				if (key !== ProjectStatus.IN_PROGRESS && key !== ProjectStatus.DONE) {
+					continue;
+				}
+
+				if (key === ProjectStatus.IN_PROGRESS) {
+					temp.push({
+						label: "Revert To In Progress",
+						value: key,
+					});
+					continue;
+				}
+			}
+
 			temp.push({
 				label: PROJECT_STATUS_LABEL[key],
 				value: key,
@@ -113,10 +127,7 @@ const UpdateProjectStatusDialog: FC<{ project: Project | undefined }> = ({
 				<Button
 					variant="link"
 					size="sm"
-					disabled={
-						project?.status === ProjectStatus.DONE ||
-						project?.status === ProjectStatus.CANCELLED
-					}
+					disabled={project?.status === ProjectStatus.CANCELLED}
 				>
 					<Pencil />
 				</Button>
