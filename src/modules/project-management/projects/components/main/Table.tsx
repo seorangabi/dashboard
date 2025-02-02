@@ -13,29 +13,32 @@ import useMainPageQueryState from "../../hooks/useMainPageQueryState";
 import type { GetProjectListQuery } from "@/common/services/project.type";
 import { PROJECT_STATUS_LABEL } from "../../constants";
 import { format } from "date-fns";
+import UpdateProjectStatusDialog from "../detail/UpdateProjectStatusDialog";
 
 export const columns: ColumnDef<Project>[] = [
 	{
 		id: "name",
 		accessorKey: "name",
 		header: "Name",
-		cell: ({ row }) => <div className="capitalize">{row.getValue("name")}</div>,
+		cell: ({ row }) => <div>{row.getValue("name")}</div>,
 	},
 	{
 		id: "team",
 		header: "Team",
-		cell: ({ row }) => (
-			<div className="capitalize">{row.original?.team?.name ?? "N/A"}</div>
-		),
+		cell: ({ row }) => <div>{row.original?.team?.name ?? "N/A"}</div>,
 	},
 	{
 		id: "status",
 		header: "Status",
 		cell: ({ row }) => (
-			<div className="capitalize">
-				{PROJECT_STATUS_LABEL[row.original.status] ??
-					row.original.status ??
-					"N/A"}
+			<div className="flex items-center">
+				<div className="leading-0">
+					{PROJECT_STATUS_LABEL[row.original.status] ??
+						row.original.status ??
+						"N/A"}
+				</div>
+
+				<UpdateProjectStatusDialog project={row.original} />
 			</div>
 		),
 	},
@@ -43,8 +46,10 @@ export const columns: ColumnDef<Project>[] = [
 		id: "date",
 		header: "Date",
 		cell: ({ row }) => (
-			<div className="capitalize">
-				{format(row.original.createdAt, "dd MMM yyy")}
+			<div>
+				{row.original.createdAt
+					? format(row.original.createdAt, "dd MMM yyyy")
+					: "N/A"}
 			</div>
 		),
 	},
