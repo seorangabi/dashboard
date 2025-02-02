@@ -1,7 +1,7 @@
-import React, { useCallback, useState, type FC } from "react";
+import { useCallback, useState, type FC } from "react";
 import { Button, buttonVariants } from "./ui/button";
 import useUploadMutation from "../mutations/useUploadMutation";
-import { Delete, Eye, LoaderCircle, Trash } from "lucide-react";
+import { Eye, LoaderCircle, Trash } from "lucide-react";
 import { Input } from "./ui/input";
 import { cn } from "../lib/utils";
 import { type DropzoneOptions, useDropzone } from "react-dropzone";

@@ -1,4 +1,4 @@
-import React, { type FC } from "react";
+import type { FC } from "react";
 import {
 	type ChartConfig,
 	ChartContainer,
@@ -9,7 +9,6 @@ import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import { cn } from "@/common/lib/utils";
 import type {
 	ImageProductionPerWeek,
-	VisitorAndPunchMyHead,
 } from "@/common/services/statistic.type";
 import { format } from "date-fns";
 

@@ -1,4 +1,4 @@
-import React from "react";
+
 import AddTeamDialog from "./AddTeamDialog";
 import TeamsTable from "./Table";
 

@@ -1,7 +1,6 @@
 import Layout from "@/common/components/Layout";
 import Statistics from "@/modules/project-management/statistics/components/main";
 import type { NextPage } from "next";
-import React from "react";
 
 const StatisticsPage: NextPage = () => {
 	return (

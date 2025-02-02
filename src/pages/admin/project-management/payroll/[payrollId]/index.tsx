@@ -1,7 +1,6 @@
 import Layout from "@/common/components/Layout";
 import PayrollDetail from "@/modules/project-management/payroll/components/detail";
 import type { NextPage } from "next";
-import React from "react";
 
 const PayrollDetailPage: NextPage = () => {
 	return (

@@ -17,7 +17,6 @@ import type { FC } from "react";
 import { Textarea } from "@/common/components/ui/textarea";
 import CurrencyInput from "@/common/components/CurrencyInput";
 import type { FormSchema } from "./index.schema";
-import ImageUploader from "@/common/components/ImageUploader";
 import { generateErrorMessage } from "@/common/lib/utils";
 import MultipleImageUploader from "@/common/components/MultipleImageUploader";
 

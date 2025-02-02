@@ -24,7 +24,8 @@
 				"noBannedTypes": "off"
 			},
 			"correctness": {
-				"useExhaustiveDependencies": "off"
+				"useExhaustiveDependencies": "off",
+				"noUnusedImports": "error"
 			},
 			"style": {
 				"useSelfClosingElements": "off",

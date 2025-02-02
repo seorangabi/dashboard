@@ -14,7 +14,7 @@ import { generateErrorMessage } from "@/common/lib/utils";
 import useDeleteProjectMutation from "@/common/mutations/useDeleteProjectMutation";
 import type { Project } from "@/common/types/project";
 import { LoaderCircle, Trash } from "lucide-react";
-import React, { type FC } from "react";
+import type { FC } from "react";
 import { toast } from "sonner";
 
 const DeleteProjectDialog: FC<{

@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import ImagePerWeekChart from "./ImagePerWeekChart";
 import MonthPickerInput from "@/common/components/MonthPickerInput";
 import useImageProductionPerWeekQuery from "@/common/queries/useImageProductionPerWeekQuery";

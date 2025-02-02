@@ -3,7 +3,7 @@ import useVerifyGoogleAccountMutation from "@/common/mutations/useVerifyGoogleAc
 import { LoaderCircle } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 const LoginGoogleVerificationPage = () => {
 	const router = useRouter();

@@ -13,7 +13,7 @@ import { Button } from "@/common/components/ui/button";
 import { generateErrorMessage } from "@/common/lib/utils";
 import useUpdatePayrollMutation from "@/common/mutations/useUpdatePayrollMutation";
 import { LoaderCircle, Pencil } from "lucide-react";
-import React, { type FC } from "react";
+import type { FC } from "react";
 import { toast } from "sonner";
 
 const UpdatePayrollStatusDialog: FC<{ id: string }> = ({ id }) => {

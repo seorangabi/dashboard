@@ -1,4 +1,4 @@
-import React from "react";
+
 import DeleteTeamDialog from "../main/DeleteTeamDialog";
 import TeamDetailBreadcrumb from "./Breadcrumb";
 import UpdateTeamDialog from "../main/UpdateTeamDialog";

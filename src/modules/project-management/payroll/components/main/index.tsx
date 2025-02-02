@@ -1,6 +1,5 @@
 import { Button } from "@/common/components/ui/button";
 import { Plus } from "lucide-react";
-import React from "react";
 import PayrollTable from "./Table";
 import Link from "next/link";
 import PayrollSidebar from "./Sidebar";

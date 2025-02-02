@@ -1,4 +1,4 @@
-import React from "react";
+
 import ProjectsTable from "./Table";
 import ProjectSidebar from "./Sidebar";
 import Link from "next/link";

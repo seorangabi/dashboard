@@ -14,7 +14,7 @@ import { generateErrorMessage } from "@/common/lib/utils";
 import useDeleteTaskMutation from "@/common/mutations/useDeleteTaskMutation";
 import type { Task } from "@/common/types/task";
 import { LoaderCircle, Trash } from "lucide-react";
-import React, { type FC } from "react";
+import type { FC } from "react";
 import { toast } from "sonner";
 
 const DeleteTaskDialog: FC<{

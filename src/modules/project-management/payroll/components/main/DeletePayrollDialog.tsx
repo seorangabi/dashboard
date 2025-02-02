@@ -13,7 +13,7 @@ import { Button } from "@/common/components/ui/button";
 import { generateErrorMessage } from "@/common/lib/utils";
 import useDeletePayrollMutation from "@/common/mutations/useDeletePayrollMutation";
 import { LoaderCircle, Trash } from "lucide-react";
-import React, { type FC } from "react";
+import type { FC } from "react";
 import { toast } from "sonner";
 
 const DeletePayrollDialog: FC<{ id: string; disabled?: boolean }> = ({

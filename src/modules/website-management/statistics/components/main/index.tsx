@@ -1,5 +1,5 @@
 import MonthPickerInput from "@/common/components/MonthPickerInput";
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import VisitorAndPunchMyHeadChart from "./VisitorAndPunchMyHeadChart";
 import { Skeleton } from "@/common/components/ui/skeleton";
 import useVisitorAndPunchMyHeadQuery from "@/common/queries/useVistiorAndPunchMyHeadQuery";

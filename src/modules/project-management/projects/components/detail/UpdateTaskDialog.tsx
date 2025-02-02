@@ -15,7 +15,7 @@ import {
 	FormLabel,
 	FormMessage,
 } from "@/common/components/ui/form";
-import React, { type FC, useState } from "react";
+import { type FC, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -27,7 +27,6 @@ import { toast } from "sonner";
 import CurrencyInput from "@/common/components/CurrencyInput";
 import type { Task } from "@/common/types/task";
 import useUpdateTaskMutation from "@/common/mutations/useUpdateTaskMutation";
-import ImageUploader from "@/common/components/ImageUploader";
 import MultipleImageUploader from "@/common/components/MultipleImageUploader";
 
 const formSchema = z.object({

@@ -5,8 +5,7 @@ import {
 	ChartTooltipContent,
 } from "@/common/components/ui/chart";
 import { cn } from "@/common/lib/utils";
-import type { GetVisitorAndPunchMyHeadResponse } from "@/common/services/statistic.type";
-import { useMemo, type FC } from "react";
+import type { FC } from "react";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 import { CHART_COLORS } from ".";
 
