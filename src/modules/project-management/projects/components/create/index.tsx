@@ -80,7 +80,14 @@ const CreateProject = () => {
 								<FormItem>
 									<FormLabel>Name*</FormLabel>
 									<FormControl>
-										<Input placeholder="Name" {...field} />
+										<Input
+											placeholder="Name"
+											{...field}
+											onChange={(e) => {
+												const val = e.currentTarget.value;
+												field.onChange(val ? val.toUpperCase() : null);
+											}}
+										/>
 									</FormControl>
 									<FormMessage />
 								</FormItem>
@@ -93,7 +100,14 @@ const CreateProject = () => {
 								<FormItem>
 									<FormLabel>Client*</FormLabel>
 									<FormControl>
-										<Input placeholder="Client name" {...field} />
+										<Input
+											placeholder="Client name"
+											{...field}
+											onChange={(e) => {
+												const val = e.currentTarget.value;
+												field.onChange(val ? val.toUpperCase() : null);
+											}}
+										/>
 									</FormControl>
 									<FormMessage />
 								</FormItem>
@@ -153,6 +167,10 @@ const CreateProject = () => {
 														autoFocus={false}
 														autoComplete="off"
 														{...field}
+														onChange={(e) => {
+															const val = e.currentTarget.value;
+															field.onChange(val ? val.toUpperCase() : null);
+														}}
 													/>
 												</div>
 											</PopoverTrigger>
