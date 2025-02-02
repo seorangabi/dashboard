@@ -61,11 +61,13 @@ const UpdateProjectStatusDialog: FC<{ project: Project | undefined }> = ({
 		const keys = Object.keys(ProjectStatus) as ProjectStatus[];
 
 		for (const key of keys) {
-			if (
-				project.status !== ProjectStatus.OFFERING &&
-				key === ProjectStatus.OFFERING
-			)
-				continue;
+			if (project.status !== ProjectStatus.OFFERING) {
+				if (key === ProjectStatus.OFFERING) continue;
+			}
+
+			if (project.status === ProjectStatus.OFFERING) {
+				if (key === ProjectStatus.DONE) continue;
+			}
 
 			temp.push({
 				label: PROJECT_STATUS_LABEL[key],
