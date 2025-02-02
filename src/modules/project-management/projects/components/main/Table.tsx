@@ -12,6 +12,7 @@ import type { Project } from "@/common/types/project";
 import useMainPageQueryState from "../../hooks/useMainPageQueryState";
 import type { GetProjectListQuery } from "@/common/services/project.type";
 import { PROJECT_STATUS_LABEL } from "../../constants";
+import { format } from "date-fns";
 
 export const columns: ColumnDef<Project>[] = [
 	{
@@ -35,6 +36,15 @@ export const columns: ColumnDef<Project>[] = [
 				{PROJECT_STATUS_LABEL[row.original.status] ??
 					row.original.status ??
 					"N/A"}
+			</div>
+		),
+	},
+	{
+		id: "date",
+		header: "Date",
+		cell: ({ row }) => (
+			<div className="capitalize">
+				{format(row.original.createdAt, "dd MMM yyy")}
 			</div>
 		),
 	},
