@@ -42,6 +42,7 @@ const CreateProject = () => {
 	const form = useForm<FormSchema>({
 		resolver: zodResolver(createProjectFormSchema),
 		defaultValues: {
+			autoNumberTask: true,
 			deadline: new Date(),
 			confirmationDuration: milliseconds({ minutes: 30 }),
 		},

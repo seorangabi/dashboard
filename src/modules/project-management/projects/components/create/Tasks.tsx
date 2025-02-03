@@ -19,6 +19,8 @@ import CurrencyInput from "@/common/components/CurrencyInput";
 import type { FormSchema } from "./index.schema";
 import { generateErrorMessage } from "@/common/lib/utils";
 import MultipleImageUploader from "@/common/components/MultipleImageUploader";
+import { Switch } from "@/common/components/ui/switch";
+import { Label } from "@/common/components/ui/label";
 
 const Tasks: FC<{
 	form: UseFormReturn<FormSchema>;
@@ -30,18 +32,37 @@ const Tasks: FC<{
 
 	return (
 		<div>
-			<div className="flex items-center mb-2">
-				<div className="text-lg">Tasks</div>
-				<Button
-					type="button"
-					variant="ghost"
-					size="sm"
-					onClick={() =>
-						append({ fee: 0, note: "", imageCount: 1, attachments: [] })
-					}
-				>
-					<Plus />
-				</Button>
+			<div className="flex items-center justify-between mb-2">
+				<div className="flex items-center">
+					<div className="text-lg">Tasks</div>
+					<Button
+						type="button"
+						variant="ghost"
+						size="sm"
+						onClick={() =>
+							append({ fee: 0, note: "", imageCount: 1, attachments: [] })
+						}
+					>
+						<Plus />
+					</Button>
+				</div>
+
+				<FormField
+					control={form.control}
+					name="autoNumberTask"
+					render={({ field }) => (
+						<FormItem className="flex items-center space-x-2">
+							<FormControl>
+								<Switch
+									id="auto-number"
+									checked={field.value}
+									onCheckedChange={field.onChange}
+								/>
+							</FormControl>
+							<Label htmlFor="auto-number">Auto Number</Label>
+						</FormItem>
+					)}
+				/>
 			</div>
 			<div className="space-y-2">
 				{fields.map((field, index) => (

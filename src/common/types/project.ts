@@ -16,6 +16,7 @@ export type Project = {
 
 	isPaid: boolean;
 	payrollId: string | null;
+	autoNumberTask: boolean;
 
 	team?: Team; // query with: team
 };
