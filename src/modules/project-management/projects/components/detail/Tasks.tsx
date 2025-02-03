@@ -6,10 +6,12 @@ import CreateTaskDialog from "./CreateTaskDialog";
 import UpdateTaskDialog from "./UpdateTaskDialog";
 import { Button } from "@/common/components/ui/button";
 import { Eye } from "lucide-react";
+import type { Project } from "@/common/types/project";
 
 const Tasks: FC<{
 	projectId: string;
-}> = ({ projectId }) => {
+	project: Project | undefined;
+}> = ({ projectId, project }) => {
 	const { data } = useTaskListQuery({
 		query: {
 			project_id_eq: projectId,
@@ -22,9 +24,12 @@ const Tasks: FC<{
 	const docs = data?.data?.docs ?? [];
 	return (
 		<div className="mt-4">
-			<div className="flex mb-4">
-				<div className="text-2xl font-medium mr-2">Task List</div>
-				<CreateTaskDialog projectId={projectId} />
+			<div className="flex mb-4 justify-between items-center">
+				<div className="flex items-center">
+					<div className="text-2xl font-medium mr-2">Task List</div>
+					<CreateTaskDialog projectId={projectId} />
+				</div>
+				<div>Auto number: {project?.autoNumberTask ? "On" : "Off"}</div>
 			</div>
 			<div className="space-y-2">
 				{docs.map((task) => {

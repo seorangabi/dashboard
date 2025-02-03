@@ -40,6 +40,7 @@ export type CreateProjectBody = {
 		note: string;
 		attachments: string[];
 	}[];
+	autoNumberTask: boolean;
 };
 export type CreateProjectResponse = ApiResponse<{ doc: Project }>;
 // #endregion
@@ -57,6 +58,7 @@ export type UpdateProjectBody = {
 	teamId?: string;
 	clientName?: string;
 	status?: Project["status"];
+	autoNumberTask?: boolean;
 };
 export type UpdateProjectResponse = ApiResponse<{ doc: Project }>;
 // #endregion

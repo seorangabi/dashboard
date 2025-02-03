@@ -1,4 +1,3 @@
-
 import ProjectDetailBreadcrumb from "./Breadcrumb";
 import DeleteProjectDialog from "../main/DeleteProjectDialog";
 import UpdateProjectDialog from "../main/UpdateProjectDialog";
@@ -146,7 +145,7 @@ const ProjectDetail = () => {
 					<TabsTrigger value="offerings">Offerings</TabsTrigger>
 				</TabsList>
 				<TabsContent value="tasks">
-					<Tasks projectId={projectId} />
+					<Tasks projectId={projectId} project={project} />
 				</TabsContent>
 				<TabsContent value="offerings">
 					<OfferingsTable />

@@ -40,6 +40,8 @@ import {
 	CommandList,
 } from "@/common/components/ui/command";
 import { PROJECT_RATIO_LABEL } from "../../constants";
+import { Switch } from "@/common/components/ui/switch";
+import { Label } from "@/common/components/ui/label";
 
 const formSchema = z.object({
 	name: z.string(),
@@ -47,6 +49,7 @@ const formSchema = z.object({
 	deadline: z.date(),
 	imageRatio: z.string(),
 	note: z.string().optional(),
+	autoNumberTask: z.boolean(),
 });
 
 const UpdateProjectDialog: FC<{
@@ -89,7 +92,8 @@ const UpdateProjectDialog: FC<{
 						clientName: project?.clientName || "",
 						imageRatio: project?.imageRatio || "",
 						note: project?.note || "",
-						deadline: new Date(),
+						deadline: project?.deadline ? new Date() : undefined,
+						autoNumberTask: project?.autoNumberTask,
 					});
 
 				setOpen(newOpen);
@@ -226,6 +230,23 @@ const UpdateProjectDialog: FC<{
 											/>
 										</FormControl>
 										<FormMessage />
+									</FormItem>
+								)}
+							/>
+
+							<FormField
+								control={form.control}
+								name="autoNumberTask"
+								render={({ field }) => (
+									<FormItem className="flex items-center space-x-2">
+										<FormControl>
+											<Switch
+												id="auto-number"
+												checked={field.value}
+												onCheckedChange={field.onChange}
+											/>
+										</FormControl>
+										<Label htmlFor="auto-number">Auto Number</Label>
 									</FormItem>
 								)}
 							/>
