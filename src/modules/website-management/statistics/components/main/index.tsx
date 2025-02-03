@@ -79,7 +79,7 @@ const Statistics = () => {
 				</div>
 			</div>
 
-			<div className="mt-4">Test Location: {data?.country_name}</div>
+			<div className="mt-4">Your location: {data?.country_name}</div>
 		</div>
 	);
 };
