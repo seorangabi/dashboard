@@ -8,10 +8,12 @@ import { useMemo } from "react";
 import type { Payroll } from "@/common/types/payroll";
 import DeletePayrollDialog from "./DeletePayrollDialog";
 import usePayrollListQuery from "@/common/queries/usePayrollListQuery";
-import { format } from "date-fns";
+import { endOfDay, format, startOfDay } from "date-fns";
 import UpdatePayrollStatusDialog from "./UpdatePayrollStatusDialog";
 import useMainPageQueryState from "../../hooks/useMainPageQueryState";
 import type { GetPayrollListQuery } from "@/common/services/payroll.type";
+import { TableCell, TableFooter, TableRow } from "@/common/components/ui/table";
+import { formatRupiah } from "@/common/lib/utils";
 
 export const columns: ColumnDef<Payroll>[] = [
 	{
@@ -33,7 +35,6 @@ export const columns: ColumnDef<Payroll>[] = [
 	},
 	{
 		id: "status",
-		accessorKey: "status",
 		header: "Status",
 		cell: ({ row }) => (
 			<div>
@@ -51,12 +52,10 @@ export const columns: ColumnDef<Payroll>[] = [
 		),
 	},
 	{
-		id: "team",
-		header: "Created At",
+		id: "amount",
+		header: "Amount",
 		cell: ({ row }) => (
-			<div className="capitalize">
-				{format(row.original.createdAt, "d MMM yyyy")}
-			</div>
+			<div className="text-right">{formatRupiah(row.original.amount)}</div>
 		),
 	},
 	{
@@ -88,49 +87,51 @@ export const columns: ColumnDef<Payroll>[] = [
 ];
 
 const PayrollTable = () => {
-	const { query, setQuery } = useMainPageQueryState();
-	const page = Number.parseInt(query.page);
-	const pageSize = Number.parseInt(query.pageSize);
+	const { query } = useMainPageQueryState();
 
 	const { data: payrollData, isLoading } = usePayrollListQuery({
 		query: {
 			with: ["team"],
-			skip: (page - 1) * pageSize,
-			limit: pageSize,
 			sort: ["created_at:desc"],
 			team_id_eq: query.teamId,
 			status_eq: query.status as GetPayrollListQuery["status_eq"],
+			period_start_gte: new Date(startOfDay(query.periodStart)).toISOString(),
+			period_end_lte: new Date(endOfDay(query.periodEnd)).toISOString(),
 		},
 	});
-	const data = useMemo(() => {
-		if (!payrollData?.data?.docs?.length) return [];
-		return payrollData.data.docs;
+
+	const { docs, totalAmount } = useMemo(() => {
+		if (!payrollData?.data?.docs?.length) return { docs: [], totalAmount: 0 };
+
+		const docs = payrollData?.data?.docs;
+		let totalAmount = 0;
+
+		for (const payroll of docs) {
+			totalAmount += payroll.amount;
+		}
+
+		return { docs, totalAmount };
 	}, [payrollData]);
 
 	return (
-		<DataTable
-			isLoading={isLoading}
-			columns={columns}
-			data={data}
-			pagination={{
-				page,
-				pageSize,
-				hasNextPage: payrollData?.data?.pagination?.hasNext ?? false,
-				hasPreviousPage: payrollData?.data?.pagination?.hasPrev ?? false,
-				onNext: () => {
-					setQuery({
-						...query,
-						page: (page + 1).toString(),
-					});
-				},
-				onPrev: () => {
-					setQuery({
-						...query,
-						page: (page - 1).toString(),
-					});
-				},
-			}}
-		/>
+		<div>
+			<DataTable
+				isLoading={isLoading}
+				columns={columns}
+				data={docs}
+				footerComponent={
+					<TableFooter>
+						<TableRow>
+							<TableCell colSpan={3}>Total</TableCell>
+							<TableCell className="text-right">
+								{formatRupiah(totalAmount)}
+							</TableCell>
+							<TableCell></TableCell>
+						</TableRow>
+					</TableFooter>
+				}
+			/>
+		</div>
 	);
 };
 

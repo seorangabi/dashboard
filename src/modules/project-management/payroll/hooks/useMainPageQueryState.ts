@@ -1,10 +1,11 @@
+import { endOfWeek, format, startOfWeek } from "date-fns";
 import { useRouter } from "next/router";
 
 type Query = {
 	teamId?: string;
 	status?: string;
-	page: string;
-	pageSize: string;
+	periodStart: string;
+	periodEnd: string;
 };
 
 const useMainPageQueryState = () => {
@@ -12,15 +13,27 @@ const useMainPageQueryState = () => {
 
 	const teamId = (router.query.teamId || undefined) as string | undefined;
 	const status = (router.query.status || undefined) as string | undefined;
-	const page = (router.query.page || "1") as string;
-	const pageSize = (router.query.pageSize || "50") as string;
+	const periodStart = (router.query.periodStart ||
+		format(
+			startOfWeek(new Date(), {
+				weekStartsOn: 1,
+			}),
+			"yyyy-MM-dd",
+		)) as string;
+	const periodEnd = (router.query.periodEnd ||
+		format(
+			endOfWeek(new Date(), {
+				weekStartsOn: 1,
+			}),
+			"yyyy-MM-dd",
+		)) as string;
 
 	return {
 		query: {
-			page,
-			pageSize,
 			teamId,
 			status,
+			periodStart,
+			periodEnd,
 		},
 		setQuery: (query: Partial<Query>) => {
 			router.push({

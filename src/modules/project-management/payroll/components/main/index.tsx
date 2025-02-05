@@ -16,7 +16,9 @@ const Payroll = () => {
 				</Link>
 			</div>
 			<div className="grid grid-cols-[1fr_300px] gap-x-5">
-				<PayrollTable />
+				<div>
+					<PayrollTable />
+				</div>
 				<PayrollSidebar />
 			</div>
 		</div>

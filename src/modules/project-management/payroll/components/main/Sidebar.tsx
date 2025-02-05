@@ -13,6 +13,13 @@ import { useState } from "react";
 import useMainPageQueryState from "../../hooks/useMainPageQueryState";
 import { PAYROLL_STATUS_LABEL } from "../../constants";
 import type { Payroll } from "@/common/types/payroll";
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from "@/common/components/ui/popover";
+import { Calendar } from "@/common/components/ui/calendar";
+import { addDays, format } from "date-fns";
 
 const PayrollSidebar = () => {
 	const [key, setKey] = useState(+new Date());
@@ -24,6 +31,113 @@ const PayrollSidebar = () => {
 				<div className="border-b pb-2 text-muted-foreground mb-5">Filter</div>
 
 				<div className="space-y-3">
+					<div className="grid w-full items-center gap-1.5">
+						<Label>Period</Label>
+						<div className="grid grid-cols-2 gap-x-2">
+							<Popover>
+								<PopoverTrigger asChild>
+									<Button
+										variant={"outline"}
+										className={cn(
+											"w-full justify-start text-left font-normal",
+											!query.periodStart && "text-muted-foreground",
+										)}
+									>
+										{query.periodStart ? (
+											format(query.periodStart, "d MMM yyyy")
+										) : (
+											<span>Start</span>
+										)}
+									</Button>
+								</PopoverTrigger>
+								<PopoverContent className="w-auto p-0" align="start">
+									<Calendar
+										mode="single"
+										selected={new Date(query.periodStart)}
+										onSelect={(newDate) => {
+											setQuery({
+												...query,
+												periodStart: newDate
+													? format(newDate, "yyyy-MM-dd")
+													: undefined,
+											});
+										}}
+										initialFocus
+									/>
+								</PopoverContent>
+							</Popover>
+							<Popover>
+								<PopoverTrigger asChild>
+									<Button
+										variant={"outline"}
+										className={cn(
+											"w-full justify-start text-left font-normal",
+											!query.periodEnd && "text-muted-foreground",
+										)}
+									>
+										{query.periodEnd ? (
+											format(query.periodEnd, "d MMM yyyy")
+										) : (
+											<span>End</span>
+										)}
+									</Button>
+								</PopoverTrigger>
+								<PopoverContent className="w-auto p-0" align="start">
+									<Calendar
+										mode="single"
+										selected={new Date(query.periodEnd)}
+										onSelect={(newDate) => {
+											setQuery({
+												...query,
+												periodEnd: newDate
+													? format(newDate, "yyyy-MM-dd")
+													: undefined,
+											});
+										}}
+										initialFocus
+									/>
+								</PopoverContent>
+							</Popover>
+						</div>
+					</div>
+
+					<div className="grid grid-cols-2 gap-x-2">
+						<Button
+							variant="outline"
+							className="w-full"
+							onClick={() => {
+								setQuery({
+									...query,
+									periodStart: format(
+										addDays(query.periodStart, -7),
+										"yyyy-MM-dd",
+									),
+									periodEnd: format(addDays(query.periodEnd, -7), "yyyy-MM-dd"),
+								});
+							}}
+						>
+							Previous
+						</Button>
+						<Button
+							variant="outline"
+							className="w-full"
+							onClick={() => {
+								setQuery({
+									...query,
+									periodStart: format(
+										addDays(query.periodStart, 7),
+										"yyyy-MM-dd",
+									),
+									periodEnd: format(addDays(query.periodEnd, 7), "yyyy-MM-dd"),
+								});
+							}}
+						>
+							Next
+						</Button>
+					</div>
+
+					<hr />
+
 					<div className="grid w-full items-center gap-1.5">
 						<Label>Team</Label>
 						<SelectTeam

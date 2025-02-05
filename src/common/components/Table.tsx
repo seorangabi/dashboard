@@ -15,6 +15,7 @@ import {
 import { Pagination, PaginationContent, PaginationItem } from "./ui/pagination";
 import { Button } from "./ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import type { ReactNode } from "react";
 
 type DataTableProps<TData, TValue> = {
 	columns: ColumnDef<TData, TValue>[];
@@ -28,6 +29,7 @@ type DataTableProps<TData, TValue> = {
 		onNext: () => void;
 		onPrev: () => void;
 	};
+	footerComponent?: ReactNode;
 };
 
 const DataTable = <TData, TValue>({
@@ -35,6 +37,7 @@ const DataTable = <TData, TValue>({
 	data,
 	isLoading,
 	pagination,
+	footerComponent,
 }: DataTableProps<TData, TValue>) => {
 	const table = useReactTable({
 		data,
@@ -97,6 +100,8 @@ const DataTable = <TData, TValue>({
 						</TableRow>
 					)}
 				</TableBody>
+
+				{footerComponent}
 			</Table>
 
 			{!!pagination && !(pagination?.page === 1 && !pagination.hasNextPage) && (

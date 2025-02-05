@@ -10,6 +10,8 @@ export type GetPayrollListQuery = {
 	skip?: number;
 	limit?: number;
 	sort?: ("created_at:asc" | "created_at:desc")[];
+	period_start_gte?: string;
+	period_end_lte?: string;
 };
 export type GetPayrollListResponse = ApiResponse<{
 	docs: Payroll[];
