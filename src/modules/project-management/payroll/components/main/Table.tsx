@@ -26,6 +26,7 @@ export const columns: ColumnDef<Payroll>[] = [
 	{
 		id: "period",
 		header: "Period",
+		size: 200,
 		cell: ({ row }) => (
 			<div>
 				{format(row.original.periodStart, "d MMM yyyy")} -{" "}
@@ -53,18 +54,22 @@ export const columns: ColumnDef<Payroll>[] = [
 	},
 	{
 		id: "amount",
-		header: "Amount",
+		header: () => {
+			return <div className="text-right">Amount</div>;
+		},
 		cell: ({ row }) => (
 			<div className="text-right">{formatRupiah(row.original.amount)}</div>
 		),
 	},
 	{
 		id: "actions",
-		header: "Actions",
-		size: 100,
+		header: () => {
+			return <div className="text-center">Actions</div>;
+		},
+		size: 150,
 		cell: ({ row }) => {
 			return (
-				<div className="flex gap-x-2">
+				<div className="flex gap-x-2 justify-center">
 					<DeletePayrollDialog
 						id={row.original.id}
 						disabled={row.original.status === "PAID"}
