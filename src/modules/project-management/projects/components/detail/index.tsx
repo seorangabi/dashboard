@@ -20,7 +20,8 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from "@/common/components/ui/tooltip";
-import { InfoIcon } from "lucide-react";
+import { Eye, InfoIcon } from "lucide-react";
+import Link from "next/link";
 
 const OfferingsTable = dynamic(() => import("./OfferingTable"), {
 	ssr: false,
@@ -33,7 +34,7 @@ const ProjectDetail = () => {
 	const { data: ProjectListData } = useProjectListQuery({
 		query: {
 			id_eq: projectId,
-			with: ["team"],
+			with: ["team", "payroll"],
 		},
 		options: {
 			enabled: !!projectId,
@@ -127,6 +128,21 @@ const ProjectDetail = () => {
 						</div>
 						<h1 className="text-lg font-medium">
 							{project?.imageCount || "N/A"}
+						</h1>
+					</div>
+					<div className="px-6">
+						<div className="text-muted-foreground text-xs">Payroll Status</div>
+						<h1 className="text-lg font-medium">
+							{project?.isPaid ? "Paid" : "Unpaid"}
+							{!!project?.payroll?.id && (
+								<Link
+									href={`/admin/project-management/payroll/${project?.payroll?.id}`}
+									target="_blank"
+									className="ml-2 underline text-blue-500"
+								>
+									<Eye className="inline-block size-4" />
+								</Link>
+							)}
 						</h1>
 					</div>
 				</div>

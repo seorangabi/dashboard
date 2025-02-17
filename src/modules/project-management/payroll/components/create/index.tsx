@@ -36,7 +36,7 @@ import {
 import { Label } from "@/common/components/ui/label";
 import Link from "next/link";
 import useProjectListQuery from "@/common/queries/useProjectListQuery";
-import { startOfDay } from "date-fns";
+import { endOfDay, startOfDay } from "date-fns";
 import { useRouter } from "next/router";
 import { LoaderCircle } from "lucide-react";
 
@@ -66,6 +66,8 @@ const CreatePayroll = () => {
 	});
 
 	const teamId = form.watch("teamId");
+	const periodStart = form.watch("periodStart");
+	const periodEnd = form.watch("periodEnd");
 	const selectedProjects = form.watch("projects");
 
 	const { data: projectData } = useProjectListQuery({
@@ -73,9 +75,16 @@ const CreatePayroll = () => {
 			team_id_eq: teamId,
 			status_eq: "DONE",
 			is_paid_eq: false,
+			created_at_gte: periodStart
+				? new Date(startOfDay(periodStart)).toISOString()
+				: undefined,
+			created_at_lte: periodEnd
+				? new Date(endOfDay(periodEnd)).toISOString()
+				: undefined,
+			limit: 1000,
 		},
 		options: {
-			enabled: !!teamId,
+			enabled: !!teamId && !!periodStart && !!periodEnd,
 		},
 	});
 

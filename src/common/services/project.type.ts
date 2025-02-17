@@ -7,10 +7,12 @@ export type GetProjectListQuery = {
 	team_id_eq?: string;
 	status_eq?: "OFFERING" | "IN_PROGRESS" | "REVISION" | "DONE";
 	is_paid_eq?: boolean;
-	with?: "team"[];
+	with?: ("team" | "payroll")[];
 	skip?: number;
 	limit?: number;
 	sort?: ("created_at:asc" | "created_at:desc")[];
+	created_at_gte?: string;
+	created_at_lte?: string;
 };
 export type GetProjectListResponse = ApiResponse<{
 	docs: Project[];

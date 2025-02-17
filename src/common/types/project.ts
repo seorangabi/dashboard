@@ -1,4 +1,5 @@
 import type { DateTime } from ".";
+import type { Payroll } from "./payroll";
 import type { Team } from "./team";
 
 export type Project = {
@@ -19,6 +20,7 @@ export type Project = {
 	autoNumberTask: boolean;
 
 	team?: Team; // query with: team
+	payroll?: Payroll; // query with: payroll
 };
 
 export enum ProjectStatus {
