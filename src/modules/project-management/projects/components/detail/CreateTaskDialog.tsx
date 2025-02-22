@@ -26,24 +26,27 @@ import { generateErrorMessage } from "@/common/lib/utils";
 import { toast } from "sonner";
 import useCreateTaskMutation from "@/common/mutations/useCreateTaskMutation";
 import CurrencyInput from "@/common/components/CurrencyInput";
-import ImageUploader from "@/common/components/ImageUploader";
+import MultipleImageUploader from "@/common/components/MultipleImageUploader";
 
 const formSchema = z.object({
 	fee: z.number(),
 	note: z.string(),
-	attachmentUrl: z.string(),
+	attachments: z.array(z.string()),
 });
 
 const CreateTaskDialog: FC<{
 	projectId: string;
 	onSuccess?: () => void;
-}> = ({ projectId, onSuccess }) => {
+	nextTaskNumber: number;
+}> = ({ projectId, nextTaskNumber, onSuccess }) => {
 	const [open, setOpen] = useState(false);
 	const { mutateAsync, isPending } = useCreateTaskMutation({});
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
-		defaultValues: {},
+		defaultValues: {
+			attachments: [],
+		},
 	});
 
 	const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -53,7 +56,8 @@ const CreateTaskDialog: FC<{
 				fee: values.fee,
 				note: values.note,
 				imageCount: 1,
-				attachmentUrl: values.attachmentUrl,
+				taskNumber: nextTaskNumber,
+				attachments: values.attachments,
 			});
 
 			toast.success("Task created successfully");
@@ -73,6 +77,7 @@ const CreateTaskDialog: FC<{
 					form.reset({
 						note: "",
 						fee: 0,
+						attachments: [],
 					});
 
 				setOpen(newOpen);
@@ -129,19 +134,19 @@ const CreateTaskDialog: FC<{
 							</div>
 							<FormField
 								control={form.control}
-								name="attachmentUrl"
+								name="attachments"
 								render={({ field: { value, onChange } }) => (
 									<FormItem>
 										<FormLabel>Picture</FormLabel>
 										<FormControl>
-											<ImageUploader
+											<MultipleImageUploader
 												value={value}
-												onChange={({ url }) => {
-													onChange(url);
-													form.clearErrors("attachmentUrl");
+												onChange={(value) => {
+													onChange(value);
+													form.clearErrors("attachments");
 												}}
 												onError={(error) => {
-													form.setError("attachmentUrl", {
+													form.setError("attachments", {
 														type: "manual",
 														message: generateErrorMessage(error),
 													});

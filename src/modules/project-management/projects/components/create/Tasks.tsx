@@ -149,31 +149,6 @@ const Task: FC<{
 						</FormItem>
 					)}
 				/>
-				{/* <FormField
-					control={form.control}
-					name={`tasks.${index}.attachmentUrl`}
-					render={({ field: { value, onChange } }) => (
-						<FormItem>
-							<FormLabel>Picture</FormLabel>
-							<FormControl>
-								<ImageUploader
-									value={value}
-									onChange={({ url }) => {
-										onChange(url);
-										form.clearErrors(`tasks.${index}.attachmentUrl`);
-									}}
-									onError={(error) => {
-										form.setError(`tasks.${index}.attachmentUrl`, {
-											type: "manual",
-											message: generateErrorMessage(error),
-										});
-									}}
-								/>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/> */}
 			</div>
 
 			<Button

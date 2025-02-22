@@ -27,7 +27,10 @@ const Tasks: FC<{
 			<div className="flex mb-4 justify-between items-center">
 				<div className="flex items-center">
 					<div className="text-2xl font-medium mr-2">Task List</div>
-					<CreateTaskDialog projectId={projectId} />
+					<CreateTaskDialog
+						projectId={projectId}
+						nextTaskNumber={(docs.length ?? 0) + 1}
+					/>
 				</div>
 				<div>Auto number: {project?.autoNumberTask ? "On" : "Off"}</div>
 			</div>
