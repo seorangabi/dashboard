@@ -23,6 +23,7 @@ export type GetProjectListResponse = ApiResponse<{
 // #region DELETE /v1/project/:id
 export type DeleteProjectParam = {
 	id: string;
+	deleteThread?: boolean;
 };
 export type DeleteProjectResponse = ApiResponse<{ doc: Project }>;
 // #endregion

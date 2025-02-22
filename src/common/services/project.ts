@@ -18,7 +18,12 @@ const projectService = {
 		});
 	},
 	deleteProject: async ({ param }: { param: DeleteProjectParam }) => {
-		return apiInstance.delete<DeleteProjectResponse>(`/v1/project/${param.id}`);
+		const { id, ...restParam } = param;
+		return apiInstance.delete<DeleteProjectResponse>(`/v1/project/${id}`, {
+			params: {
+				...restParam,
+			},
+		});
 	},
 	createProject: async ({ body }: { body: CreateProjectBody }) => {
 		return apiInstance.post<CreateProjectResponse>("/v1/project", body);
