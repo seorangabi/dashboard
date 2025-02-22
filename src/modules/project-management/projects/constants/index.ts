@@ -8,6 +8,7 @@ export const OFFERING_STATUS_LABEL: Record<Offering["status"], string> = {
 };
 
 export const PROJECT_STATUS_LABEL: Record<Project["status"], string> = {
+	DRAFT: "Draft",
 	OFFERING: "Offering",
 	IN_PROGRESS: "In Progress",
 	DONE: "Done",

@@ -10,7 +10,6 @@ export type Project = {
 	deadline: DateTime; // default value for Offering
 	imageRatio: string; // default value for Offering
 	status: ProjectStatus;
-	createdAt: DateTime;
 	teamId: string;
 	imageCount: number;
 	clientName: string;
@@ -19,11 +18,15 @@ export type Project = {
 	payrollId: string | null;
 	autoNumberTask: boolean;
 
+	publishedAt: DateTime | null;
+	createdAt: DateTime;
+
 	team?: Team; // query with: team
 	payroll?: Payroll; // query with: payroll
 };
 
 export enum ProjectStatus {
+	DRAFT = "DRAFT",
 	OFFERING = "OFFERING",
 	IN_PROGRESS = "IN_PROGRESS",
 	DONE = "DONE",

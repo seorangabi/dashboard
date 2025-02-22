@@ -42,7 +42,9 @@ const DeleteProjectDialog: FC<{
 				<Button
 					variant="default"
 					size="sm"
-					disabled={project?.status !== "OFFERING"}
+					disabled={
+						project?.status !== "OFFERING" && project?.status !== "DRAFT"
+					}
 				>
 					<Trash />
 				</Button>

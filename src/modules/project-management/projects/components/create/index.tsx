@@ -11,7 +11,7 @@ import {
 import { Input } from "@/common/components/ui/input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Check, LoaderCircle } from "lucide-react";
+import { Check, InfoIcon, LoaderCircle } from "lucide-react";
 import DateTimePicker24h from "@/common/components/DateTimePicker24h";
 
 import { cn, generateErrorMessage } from "@/common/lib/utils";
@@ -33,6 +33,11 @@ import { milliseconds } from "date-fns";
 import DurationInput from "@/common/components/DurationInput";
 import { Textarea } from "@/common/components/ui/textarea";
 import { PROJECT_RATIO_LABEL } from "../../constants";
+import {
+	Alert,
+	AlertDescription,
+	AlertTitle,
+} from "@/common/components/ui/alert";
 
 const CreateProject = () => {
 	const router = useRouter();
@@ -244,14 +249,44 @@ const CreateProject = () => {
 						)}
 					/>
 
+					<Alert variant="default">
+						<InfoIcon className="h-4 w-4" />
+						<AlertTitle>Information</AlertTitle>
+						<AlertDescription>
+							If there are many tasks, it is recommended to add tasks after
+							saving the draft.
+						</AlertDescription>
+					</Alert>
+
 					<hr />
 					<Tasks form={form} />
 					<hr />
 
-					<Button type="submit" disabled={isPending}>
-						{isPending && <LoaderCircle className="animate-spin" />}
-						Create
-					</Button>
+					<div className="flex gap-x-2">
+						<Button
+							type="button"
+							onClick={() => {
+								form.setValue("isPublished", false);
+								form.handleSubmit(onSubmit)();
+							}}
+							disabled={isPending}
+						>
+							{isPending && <LoaderCircle className="animate-spin" />}
+							Create Draft
+						</Button>
+						<Button
+							type="button"
+							onClick={() => {
+								form.setValue("isPublished", true);
+								form.handleSubmit(onSubmit)();
+							}}
+							variant="outline"
+							disabled={isPending}
+						>
+							{isPending && <LoaderCircle className="animate-spin" />}
+							Create
+						</Button>
+					</div>
 				</form>
 			</Form>
 		</div>

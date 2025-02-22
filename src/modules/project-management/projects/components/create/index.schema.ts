@@ -17,6 +17,7 @@ export const createProjectFormSchema = z.object({
 	confirmationDuration: z.number(),
 	note: z.string(),
 	autoNumberTask: z.boolean(),
+	isPublished: z.boolean().optional().default(true),
 });
 
 export type FormSchema = z.infer<typeof createProjectFormSchema>;

@@ -43,6 +43,8 @@ export type CreateProjectBody = {
 		attachments: string[];
 	}[];
 	autoNumberTask: boolean;
+
+	isPublished?: boolean; // default: true
 };
 export type CreateProjectResponse = ApiResponse<{ doc: Project }>;
 // #endregion

@@ -60,8 +60,15 @@ const UpdateProjectStatusDialog: FC<{ project: Project | undefined }> = ({
 
 		const keys = Object.keys(ProjectStatus) as ProjectStatus[];
 
+		// TODO: refactor this
 		for (const key of keys) {
-			if (project.status !== ProjectStatus.OFFERING) {
+			if (project.status === ProjectStatus.DRAFT) {
+				if (key !== ProjectStatus.OFFERING) continue;
+			}
+			if (
+				project.status !== ProjectStatus.OFFERING &&
+				project.status !== ProjectStatus.DRAFT
+			) {
 				if (key === ProjectStatus.OFFERING) continue;
 			}
 
