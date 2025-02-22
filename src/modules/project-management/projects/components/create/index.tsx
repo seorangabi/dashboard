@@ -41,6 +41,9 @@ import {
 
 const CreateProject = () => {
 	const router = useRouter();
+	const [loadingDraft, setLoadingDraft] = useState(false);
+	const [loadingSubmit, setLoadingSubmit] = useState(false);
+
 	const [openRatioDropdown, setOpenRatioDropdown] = useState(false);
 
 	const { mutateAsync, isPending } = useCreateProjectMutation({});
@@ -55,13 +58,16 @@ const CreateProject = () => {
 
 	const onSubmit = async (values: FormSchema) => {
 		try {
-			await mutateAsync({
+			const result = await mutateAsync({
 				...values,
 				deadline: values.deadline.toISOString(),
 			});
 
 			toast.success("Project created successfully");
-			router.push("/admin/project-management/projects");
+
+			router.push(
+				`/admin/project-management/projects/${result?.data?.doc?.id}`,
+			);
 		} catch (error) {
 			console.error(error);
 			toast.error(generateErrorMessage(error));
@@ -265,25 +271,35 @@ const CreateProject = () => {
 					<div className="flex gap-x-2">
 						<Button
 							type="button"
-							onClick={() => {
+							onClick={async () => {
+								setLoadingDraft(true);
 								form.setValue("isPublished", false);
-								form.handleSubmit(onSubmit)();
+								await form
+									.handleSubmit(onSubmit)()
+									.finally(() => {
+										setLoadingDraft(false);
+									});
 							}}
-							disabled={isPending}
+							disabled={loadingDraft || loadingSubmit}
 						>
-							{isPending && <LoaderCircle className="animate-spin" />}
+							{loadingDraft && <LoaderCircle className="animate-spin" />}
 							Create Draft
 						</Button>
 						<Button
 							type="button"
-							onClick={() => {
+							onClick={async () => {
+								setLoadingSubmit(true);
 								form.setValue("isPublished", true);
-								form.handleSubmit(onSubmit)();
+								await form
+									.handleSubmit(onSubmit)()
+									.finally(() => {
+										setLoadingSubmit(false);
+									});
 							}}
 							variant="outline"
-							disabled={isPending}
+							disabled={loadingSubmit || loadingDraft}
 						>
-							{isPending && <LoaderCircle className="animate-spin" />}
+							{loadingSubmit && <LoaderCircle className="animate-spin" />}
 							Create
 						</Button>
 					</div>
