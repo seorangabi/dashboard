@@ -60,25 +60,25 @@ const ProjectDetail = () => {
 			</div>
 
 			<div className="border rounded-md p-4 mb-4">
-				<div className="gap-x-6 gap-y-5 grid grid-cols-3 [&>*]:border-r">
-					<div className="px-6">
+				<div className="gap-x-6 gap-y-5 grid grid-cols-1 md:grid-cols-3 md:[&>*]:border-r">
+					<div className="md:px-6">
 						<div className="text-muted-foreground text-xs">Project Name</div>
 						<h1 className="text-lg font-medium">{project?.name}</h1>
 					</div>
-					<div className="px-6">
+					<div className="md:px-6">
 						<div className="text-muted-foreground text-xs">Team</div>
 						<h1 className="text-lg font-medium">
 							{project?.team?.name || "N/A"}
 						</h1>
 					</div>
-					<div className="px-6">
+					<div className="md:px-6">
 						<div className="text-muted-foreground text-xs">Status</div>
 						<h1 className="text-lg font-medium">
 							{project?.status ? PROJECT_STATUS_LABEL[project?.status] : "N/A"}
 							<UpdateProjectStatusDialog project={project} />
 						</h1>
 					</div>
-					<div className="px-6">
+					<div className="md:px-6">
 						<div className="text-muted-foreground text-xs">
 							Total Fee
 							<Tooltip>
@@ -94,7 +94,7 @@ const ProjectDetail = () => {
 							{project?.fee ? formatRupiah(project?.fee) : "N/A"}
 						</h1>
 					</div>
-					<div className="px-6">
+					<div className="md:px-6">
 						<div className="text-muted-foreground text-xs">Deadline</div>
 						<h1 className="text-lg font-medium">
 							{project?.deadline
@@ -102,19 +102,19 @@ const ProjectDetail = () => {
 								: "N/A"}
 						</h1>
 					</div>
-					<div className="px-6">
+					<div className="md:px-6">
 						<div className="text-muted-foreground text-xs">Client Name</div>
 						<h1 className="text-lg font-medium">
 							{project?.clientName || "N/A"}
 						</h1>
 					</div>
-					<div className="px-6">
+					<div className="md:px-6">
 						<div className="text-muted-foreground text-xs">Image Ratio</div>
 						<h1 className="text-lg font-medium">
 							{project?.imageRatio || "N/A"}
 						</h1>
 					</div>
-					<div className="px-6">
+					<div className="md:px-6">
 						<div className="text-muted-foreground text-xs">
 							Total Image
 							<Tooltip>
@@ -130,7 +130,7 @@ const ProjectDetail = () => {
 							{project?.imageCount || "N/A"}
 						</h1>
 					</div>
-					<div className="px-6">
+					<div className="md:px-6">
 						<div className="text-muted-foreground text-xs">Payroll Status</div>
 						<h1 className="text-lg font-medium">
 							{project?.isPaid ? "Paid" : "Unpaid"}
@@ -149,7 +149,7 @@ const ProjectDetail = () => {
 
 				<hr className="my-3" />
 
-				<div className="px-6">
+				<div className="md:px-6">
 					<div className="text-muted-foreground text-xs">Description</div>
 					<h1 className="text-lg font-medium">{project?.note || "N/A"}</h1>
 				</div>

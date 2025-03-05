@@ -100,7 +100,7 @@ const ProjectsTable = () => {
 	}, [projectData]);
 
 	return (
-		<div>
+		<div className="order-2 md:order-1">
 			<DataTable
 				isLoading={isLoading}
 				columns={columns}

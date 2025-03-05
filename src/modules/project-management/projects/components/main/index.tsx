@@ -1,4 +1,3 @@
-
 import ProjectsTable from "./Table";
 import ProjectSidebar from "./Sidebar";
 import Link from "next/link";
@@ -16,7 +15,7 @@ const Projects = () => {
 					</Button>
 				</Link>
 			</div>
-			<div className="grid grid-cols-[1fr_300px] gap-x-5">
+			<div className="grid grid-cols-1 md:grid-cols-[1fr_300px] gap-5">
 				<ProjectsTable />
 				<ProjectSidebar />
 			</div>

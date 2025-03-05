@@ -79,9 +79,9 @@ const Task: FC<{
 	remove: UseFieldArrayRemove;
 }> = ({ index, form, remove }) => {
 	return (
-		<div className="border p-4 rounded-lg grid gap-x-6 grid-cols-[1fr_1fr] relative">
-			<div className="flex gap-x-2">
-				<div className="w-10 rounded">{index + 1}</div>
+		<div className="border p-4 rounded-lg grid gap-x-6 grid-cols-1 md:grid-cols-[1fr_1fr] relative">
+			<div className="flex flex-col md:flex-row gap-x-2">
+				<div className="w-10 rounded mb-4">{index + 1}</div>
 
 				<div className="w-full space-y-4">
 					<FormField

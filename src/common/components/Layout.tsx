@@ -11,6 +11,7 @@ import {
 	SidebarMenuButton,
 	SidebarMenuItem,
 	SidebarProvider,
+	SidebarTrigger,
 } from "./ui/sidebar";
 import {
 	ChartNoAxesCombined,
@@ -145,7 +146,7 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
 			<AppSidebar />
 
 			<main className="p-6 w-full mx-auto max-w-screen-2xl relative">
-				{/* <SidebarTrigger /> */}
+				<SidebarTrigger className="mb-3" />
 				{children}
 			</main>
 		</SidebarProvider>

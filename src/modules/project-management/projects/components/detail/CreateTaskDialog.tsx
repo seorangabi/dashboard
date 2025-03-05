@@ -88,13 +88,13 @@ const CreateTaskDialog: FC<{
 					<Plus />
 				</Button>
 			</DialogTrigger>
-			<DialogContent className="sm:max-w-[800px]">
+			<DialogContent className="sm:max-w-[800px] overflow-y-scroll max-h-[80%]">
 				<Form {...form}>
 					<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
 						<DialogHeader>
 							<DialogTitle>Create Task</DialogTitle>
 						</DialogHeader>
-						<div className="grid grid-cols-2 gap-x-5">
+						<div className="grid grid-cols-1 md:grid-cols-2 gap-x-5">
 							<div className="space-y-3">
 								<FormField
 									control={form.control}
