@@ -32,12 +32,12 @@ const Statistics = () => {
 	return (
 		<div>
 			<div className="border rounded-md">
-				<div className="border-b grid grid-cols-[1fr_300px] items-center">
-					<div className="flex-1 border-r py-10 px-6 flex">
-						<div className="text-2xl font-semibold">
+				<div className="border-b grid grid-cols-1 md:grid-cols-[1fr_300px] items-center">
+					<div className="flex-1 md:border-r py-10 px-6 flex flex-col md:flex-row">
+						<div className="text-xl md:text-2xl font-semibold">
 							Image Production Per Week
 						</div>
-						<div className="ml-5 w-[200px]">
+						<div className="md:ml-5 w-[200px]">
 							<MonthPickerInput currentMonth={date} onMonthChange={setDate} />
 						</div>
 					</div>
@@ -46,7 +46,7 @@ const Statistics = () => {
 						<div className="text-muted-foreground">Overall Image</div>
 					</div>
 				</div>
-				<div className="grid grid-cols-2">
+				<div className="grid grid-cols-1 md:grid-cols-2">
 					{!!imageProductionPerWeekData?.data?.docs?.length &&
 						!isLoading &&
 						imageProductionPerWeekData?.data.docs.map((week, index) => {

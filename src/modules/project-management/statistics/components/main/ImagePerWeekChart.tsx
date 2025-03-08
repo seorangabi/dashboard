@@ -7,9 +7,7 @@ import {
 } from "@/common/components/ui/chart";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import { cn } from "@/common/lib/utils";
-import type {
-	ImageProductionPerWeek,
-} from "@/common/services/statistic.type";
+import type { ImageProductionPerWeek } from "@/common/services/statistic.type";
 import { format } from "date-fns";
 
 const chartConfig = {
@@ -26,7 +24,7 @@ const ImagePerWeekChart: FC<{
 }> = ({ className, data, label }) => {
 	return (
 		<div className={cn("p-4", className)}>
-			<div className="flex justify-between mb-5 px-8">
+			<div className="flex justify-between text-xs md:text-base mb-5 px-8">
 				<div className="text-center">{label}</div>
 				<div>
 					{format(data.start, "d MMM yyyy")} - {format(data.end, "d MMM yyyy")}

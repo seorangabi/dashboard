@@ -1,4 +1,3 @@
-
 import DeleteTeamDialog from "../main/DeleteTeamDialog";
 import TeamDetailBreadcrumb from "./Breadcrumb";
 import UpdateTeamDialog from "../main/UpdateTeamDialog";
@@ -34,7 +33,7 @@ const TeamDetail = () => {
 			</div>
 
 			<div className="border rounded-md p-4">
-				<div className="gap-y-5 grid grid-cols-3">
+				<div className="gap-y-5 grid grid-cols-1 md:grid-cols-3">
 					<div className="px-6">
 						<div className="text-muted-foreground text-xs">Team Name</div>
 						<h1 className="text-lg font-medium">{team?.name}</h1>
@@ -45,7 +44,7 @@ const TeamDetail = () => {
 							{team?.role ? TEAM_ROLE_LABEL[team?.role] : "N/A"}
 						</h1>
 					</div>
-					<div></div>
+					<div className="hidden md:block"></div>
 
 					<div className="px-6">
 						<div className="text-muted-foreground text-xs">Bank Name</div>
