@@ -139,7 +139,7 @@ const CreatePayroll = () => {
 			<div>
 				<Form {...form}>
 					<form onSubmit={form.handleSubmit(onSubmit)} className="">
-						<div className="grid grid-cols-2 gap-x-6 gap-y-3">
+						<div className="grid md:grid-cols-2 gap-x-6 gap-y-3">
 							<FormField
 								control={form.control}
 								name="teamId"
@@ -219,7 +219,7 @@ const CreatePayroll = () => {
 								)}
 							/>
 						</div>
-						<div className="grid grid-cols-2 gap-6 mt-6">
+						<div className="grid md:grid-cols-2 gap-6 mt-6">
 							<div>
 								<Label>Projects Need To Be Paid</Label>
 								<div className="border rounded">

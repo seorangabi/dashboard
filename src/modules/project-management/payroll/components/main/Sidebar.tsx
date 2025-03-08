@@ -26,7 +26,7 @@ const PayrollSidebar = () => {
 	const { query, setQuery } = useMainPageQueryState();
 
 	return (
-		<div>
+		<div className="order-1 md:order-2">
 			<div className="border rounded-md py-3 px-2">
 				<div className="border-b pb-2 text-muted-foreground mb-5">Filter</div>
 

@@ -6,7 +6,7 @@ import PayrollSidebar from "./Sidebar";
 
 const Payroll = () => {
 	return (
-		<div>
+		<div className="w-full">
 			<div className="flex justify-between items-center mb-5">
 				<h1 className="text-2xl font-medium">Payroll</h1>
 				<Link href="/admin/project-management/payroll/create">
@@ -15,10 +15,8 @@ const Payroll = () => {
 					</Button>
 				</Link>
 			</div>
-			<div className="grid grid-cols-[1fr_300px] gap-x-5">
-				<div>
-					<PayrollTable />
-				</div>
+			<div className="grid grid-cols-1 md:grid-cols-[1fr_300px] gap-5">
+				<PayrollTable />
 				<PayrollSidebar />
 			</div>
 		</div>
