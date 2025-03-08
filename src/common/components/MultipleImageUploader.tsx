@@ -1,9 +1,8 @@
 import { useCallback, useState, type FC } from "react";
-import { Button, buttonVariants } from "./ui/button";
+import { Button } from "./ui/button";
 import useUploadMutation from "../mutations/useUploadMutation";
 import { Eye, LoaderCircle, Trash } from "lucide-react";
 import { Input } from "./ui/input";
-import { cn } from "../lib/utils";
 import { type DropzoneOptions, useDropzone } from "react-dropzone";
 import imageCompression, { type Options } from "browser-image-compression";
 
@@ -20,24 +19,29 @@ const MultipleImageUploader: FC<{
 		async (acceptedFiles) => {
 			setLoading(true);
 			try {
-				const file = acceptedFiles[0];
-				if (!file || !(file instanceof File)) {
-					throw new Error("File is not valid");
+				const temp: string[] = [];
+
+				for (const file of acceptedFiles) {
+					if (!file || !(file instanceof File)) {
+						throw new Error("File is not valid");
+					}
+
+					const compressedFile = await imageCompression(file, {
+						maxSizeMB: 2,
+						useWebWorker: true,
+						preserveExif: false,
+						...compressionOptions,
+					});
+
+					const response = await mutateAsync({
+						file: compressedFile,
+						forFeature: "task",
+					});
+
+					temp.push(response.doc.url);
 				}
 
-				const compressedFile = await imageCompression(file, {
-					maxSizeMB: 2,
-					useWebWorker: true,
-					preserveExif: false,
-					...compressionOptions,
-				});
-
-				const response = await mutateAsync({
-					file: compressedFile,
-					forFeature: "task",
-				});
-
-				onChange([...value, response.doc.url]);
+				onChange([...value, ...temp]);
 			} catch (error) {
 				onError(error);
 			} finally {
@@ -46,13 +50,13 @@ const MultipleImageUploader: FC<{
 		},
 		[value],
 	);
-	const { getRootProps, getInputProps } = useDropzone({
+	const { getRootProps, getInputProps, isDragActive } = useDropzone({
 		onDrop,
-		maxFiles: 1,
 		accept: {
 			"image/png": [],
 			"image/jpg": [],
 			"image/jpeg": [],
+			"image/webp": [],
 		},
 		disabled: loading,
 	});
@@ -104,14 +108,15 @@ const MultipleImageUploader: FC<{
 					})}
 				</div>
 
-				<div
-					{...getRootProps()}
-					className={cn(
-						buttonVariants({ variant: "outline", className: "w-full" }),
-					)}
-				>
-					<Input {...getInputProps()} type="file" />
-					Add Image
+				<div className="relative">
+					<div
+						{...getRootProps()}
+						className="mx-auto flex cursor-pointer flex-col items-center justify-center gap-y-2 rounded-lg border p-8"
+					>
+						<Input {...getInputProps()} type="file" />
+
+						{isDragActive ? <p>Drop the image!</p> : <p>Add Image</p>}
+					</div>
 				</div>
 			</div>
 		</div>
