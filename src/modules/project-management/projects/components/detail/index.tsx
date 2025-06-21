@@ -22,6 +22,7 @@ import {
 } from "@/common/components/ui/tooltip";
 import { Eye, InfoIcon } from "lucide-react";
 import Link from "next/link";
+import ProjectAttachments from "./Attachments";
 
 const OfferingsTable = dynamic(() => import("./OfferingTable"), {
 	ssr: false,
@@ -159,12 +160,16 @@ const ProjectDetail = () => {
 				<TabsList>
 					<TabsTrigger value="tasks">Tasks</TabsTrigger>
 					<TabsTrigger value="offerings">Offerings</TabsTrigger>
+					<TabsTrigger value="attachments">Attachments</TabsTrigger>
 				</TabsList>
 				<TabsContent value="tasks">
 					<Tasks projectId={projectId} project={project} />
 				</TabsContent>
 				<TabsContent value="offerings">
 					<OfferingsTable />
+				</TabsContent>
+				<TabsContent value="attachments">
+					<ProjectAttachments projectId={projectId} />
 				</TabsContent>
 			</Tabs>
 		</div>
