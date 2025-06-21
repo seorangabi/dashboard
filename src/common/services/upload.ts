@@ -2,7 +2,7 @@ import apiInstance from "../lib/axios";
 
 export type UploadBody = {
 	file: File;
-	forFeature: "task";
+	forFeature: "task" | "project";
 };
 
 export type UploadResponse = {

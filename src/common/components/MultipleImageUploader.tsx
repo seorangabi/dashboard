@@ -11,7 +11,15 @@ const MultipleImageUploader: FC<{
 	onChange: (value: string[]) => void;
 	onError: (error: unknown) => void;
 	compressionOptions?: Options;
-}> = ({ value, onChange, onError, compressionOptions }) => {
+	forFeature?: "task" | "project"; // Added forFeature prop
+}> = ({
+	value,
+	onChange,
+	onError,
+	compressionOptions,
+	forFeature = "task",
+}) => {
+	// Added default value
 	const { mutateAsync } = useUploadMutation({});
 	const [loading, setLoading] = useState(false);
 
@@ -35,7 +43,7 @@ const MultipleImageUploader: FC<{
 
 					const response = await mutateAsync({
 						file: compressedFile,
-						forFeature: "task",
+						forFeature: forFeature, // Now using the prop value instead of hardcoded "task"
 					});
 
 					temp.push(response.doc.url);
@@ -48,7 +56,7 @@ const MultipleImageUploader: FC<{
 				setLoading(false);
 			}
 		},
-		[value],
+		[value, forFeature], // Added forFeature to dependency array
 	);
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({
 		onDrop,

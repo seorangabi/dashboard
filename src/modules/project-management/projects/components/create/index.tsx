@@ -39,6 +39,9 @@ import {
 	AlertTitle,
 } from "@/common/components/ui/alert";
 
+// Import the MultipleUploader component
+import MultipleUploader from "@/common/components/MultipleUploader";
+
 const CreateProject = () => {
 	const router = useRouter();
 	const [loadingDraft, setLoadingDraft] = useState(false);
@@ -53,6 +56,7 @@ const CreateProject = () => {
 			autoNumberTask: true,
 			deadline: new Date(),
 			confirmationDuration: milliseconds({ minutes: 30 }),
+			attachments: [], // Initialize with empty array
 		},
 	});
 
@@ -248,6 +252,29 @@ const CreateProject = () => {
 										placeholder="Note"
 										className="resize-none min-h-24"
 										{...field}
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+
+					{/* Add File Attachments Component */}
+					<FormField
+						control={form.control}
+						name="attachments"
+						render={({ field }) => (
+							<FormItem className="w-full">
+								<FormLabel>Attachments</FormLabel>
+								<FormControl>
+									<MultipleUploader
+										value={field.value}
+										onChange={field.onChange}
+										onError={(error) =>
+											toast.error(generateErrorMessage(error))
+										}
+										forFeature="project"
+										maxSizeMB={5}
 									/>
 								</FormControl>
 								<FormMessage />
