@@ -49,3 +49,13 @@ cp .env.example .env.local
 ```bash
 yarn dev
 ```
+
+## Screenshot
+
+<img width="1440" alt="image" src="https://github.com/user-attachments/assets/ea891133-5574-4fba-b5d2-cced9b98ef36" />
+<img width="1440" alt="image" src="https://github.com/user-attachments/assets/7dc51a4f-c3bd-48ef-b06e-ab55b0885588" />
+<img width="1440" alt="image" src="https://github.com/user-attachments/assets/b5770b4e-4a81-4225-bd8c-2f942ecd216e" />
+<img width="1440" alt="image" src="https://github.com/user-attachments/assets/9e13414d-f7ac-48c8-9ad2-aded6fded1c4" />
+<img width="1440" alt="image" src="https://github.com/user-attachments/assets/c4c26a1b-2505-4394-9ebf-5cf0ad5d423f" />
+<img width="1440" alt="image" src="https://github.com/user-attachments/assets/195a8937-6633-401b-873a-1eae9cd3e559" />
+<img width="1440" alt="image" src="https://github.com/user-attachments/assets/b57b8ab2-a492-4265-b15a-073d8a41afc2" />
