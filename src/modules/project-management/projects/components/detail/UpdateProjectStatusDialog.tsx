@@ -38,6 +38,33 @@ const formSchema = z.object({
 	status: z.nativeEnum(ProjectStatus),
 });
 
+type StatusOption = {
+	status: ProjectStatus;
+	label?: string; // Optional custom label override
+};
+
+const statusMap: Record<ProjectStatus, StatusOption[]> = {
+	[ProjectStatus.DRAFT]: [
+		{ status: ProjectStatus.OFFERING },
+		{ status: ProjectStatus.CANCELLED },
+	],
+	[ProjectStatus.OFFERING]: [
+		{ status: ProjectStatus.IN_PROGRESS },
+		{ status: ProjectStatus.CANCELLED },
+	],
+	[ProjectStatus.IN_PROGRESS]: [
+		{ status: ProjectStatus.SUBMITTED },
+		{ status: ProjectStatus.CANCELLED },
+	],
+	[ProjectStatus.SUBMITTED]: [
+		{ status: ProjectStatus.IN_PROGRESS, label: "Revert To In Progress" },
+		{ status: ProjectStatus.DONE },
+		{ status: ProjectStatus.CANCELLED },
+	],
+	[ProjectStatus.DONE]: [],
+	[ProjectStatus.CANCELLED]: [],
+};
+
 const UpdateProjectStatusDialog: FC<{ project: Project | undefined }> = ({
 	project,
 }) => {
@@ -58,41 +85,15 @@ const UpdateProjectStatusDialog: FC<{ project: Project | undefined }> = ({
 			value: Project["status"];
 		}[] = [];
 
-		const keys = Object.keys(ProjectStatus) as ProjectStatus[];
+		// Get allowed next statuses from the statusMap
+		const allowedStatusOptions = statusMap[project.status];
 
-		// TODO: refactor this
-		for (const key of keys) {
-			if (project.status === ProjectStatus.DRAFT) {
-				if (key !== ProjectStatus.OFFERING) continue;
-			}
-			if (
-				project.status !== ProjectStatus.OFFERING &&
-				project.status !== ProjectStatus.DRAFT
-			) {
-				if (key === ProjectStatus.OFFERING) continue;
-			}
-
-			if (project.status === ProjectStatus.OFFERING) {
-				if (key === ProjectStatus.DONE) continue;
-			}
-
-			if (project.status === ProjectStatus.DONE) {
-				if (key !== ProjectStatus.IN_PROGRESS && key !== ProjectStatus.DONE) {
-					continue;
-				}
-
-				if (key === ProjectStatus.IN_PROGRESS) {
-					temp.push({
-						label: "Revert To In Progress",
-						value: key,
-					});
-					continue;
-				}
-			}
-
+		// Process each allowed status
+		for (const option of allowedStatusOptions) {
 			temp.push({
-				label: PROJECT_STATUS_LABEL[key],
-				value: key,
+				// Use custom label if provided, otherwise use default label
+				label: option.label || PROJECT_STATUS_LABEL[option.status],
+				value: option.status,
 			});
 		}
 
@@ -134,7 +135,10 @@ const UpdateProjectStatusDialog: FC<{ project: Project | undefined }> = ({
 				<Button
 					variant="link"
 					size="sm"
-					disabled={project?.status === ProjectStatus.CANCELLED}
+					disabled={
+						project?.status === ProjectStatus.CANCELLED ||
+						project?.status === ProjectStatus.DONE
+					}
 				>
 					<Pencil />
 				</Button>

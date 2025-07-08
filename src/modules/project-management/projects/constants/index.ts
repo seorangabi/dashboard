@@ -11,6 +11,7 @@ export const PROJECT_STATUS_LABEL: Record<Project["status"], string> = {
 	DRAFT: "Draft",
 	OFFERING: "Offering",
 	IN_PROGRESS: "In Progress",
+	SUBMITTED: "Submitted",
 	DONE: "Done",
 	CANCELLED: "Cancelled",
 };
